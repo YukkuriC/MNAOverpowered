@@ -1,0 +1,12 @@
+{
+    "mock": false,
+    "MR": {
+        "dependencies": [
+            "zaRGNexp"
+        ],
+        "project_id": "qJT4GBnW"
+    },
+    "CF": {
+        "project_id": "1374012"
+    }
+}
