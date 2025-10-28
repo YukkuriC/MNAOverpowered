@@ -9,6 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class MixinCastingResource implements ICastingResource {
     @Override
     public boolean hungerAffectsRegenRate() {
-        return MNAOPConfig.FastRegenManaIgnoresSaturation();
+        return !MNAOPConfig.FastRegenManaIgnoresSaturation();
     }
 }
