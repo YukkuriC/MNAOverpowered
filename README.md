@@ -1,6 +1,6 @@
 # MNAOverpowered
 
-another QoL mod for Mana and Artifice
+Another QoL addon containing small tweaks about easy gaming experiences for Mana and Artifice
 
 ## Feature(s)
 
