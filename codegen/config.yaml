@@ -1,0 +1,4 @@
+- name: FastRegenManaIgnoresSaturation
+  type: boolean
+  default: 'true'
+  descrip: "Speed-up casting resource regeneration, regardless of player's food saturation"
