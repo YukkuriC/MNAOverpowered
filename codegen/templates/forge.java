@@ -11,8 +11,8 @@ public class MNAOPConfig {
 
     // entries
     {%- for grp,lines in group_val(data,'type') %}
-    public ForgeConfigSpec.{{grp.capitalize()}}Value{% for line in lines %}
-            Cfg_{{line.name}} = BUILDER.comment("{{line.descrip}}").define("{{line.name}}", {{line.default}})
+    public static ForgeConfigSpec.{{grp.capitalize()}}Value{% for line in lines %}
+            Cfg_{{line.name}} = BUILDER.comment("{{line.descrip}}").define{% if line.type == 'boolean' %}{% else %}InRange{% endif %}("{{line.name}}", {{line.default}})
             {%- if loop.last %};{% else %},{% endif %}
         {%- endfor %}
     {%- endfor %}
@@ -21,7 +21,7 @@ public class MNAOPConfig {
     // interfaces
     {%- for line in data %}
     public static {{line.type}} {{line.name}}() {
-        return cache_FastRegenManaIgnoresSaturation;
+        return cache_{{line.name}};
     }
     {%- endfor %}
 

@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "mnaoverpowered.refmap.json",
   "mixins": [
-    "MixinCastingResource"
+    "MixinCastingResource",
+    "MixinConstructMilkCow",
+    "MixinWellspringSystem"
   ],
   "client": [
   ],
