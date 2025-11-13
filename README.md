@@ -8,7 +8,9 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
 ## Feature(s)
 
 -   Speed-up casting resource regeneration, regardless of player's food saturation
--   Eldrin Matrices no more diminish when placed more than 1, and will receive multiplier from Eldrin Wellsprings
+-   Eldrin Matrices:
+    -   no more diminish when placed more than 1
+    -   will receive multiplier from Eldrin Wellsprings
 -   Configurable construct's milking cooldown
     -   set to values < 0 to disable this feature
     -   the real cooldown will be a random value between 1-2 times of this set value
