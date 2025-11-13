@@ -14,3 +14,11 @@
   type: double
   default: "3, Double.MIN_VALUE, Double.MAX_VALUE"
   descrip: "Configurable construct's milking cooldown (in minutes);\\nset to values < 0 to disable this feature;\\nthe real cooldown will be a random value between 1-2 times of this set value"
+- name: NaturalWellspringMinStrength
+  type: double
+  default: "5, 0, Double.MAX_VALUE"
+  descrip: "Minimum strength for natural random wellsprings"
+- name: NaturalWellspringMaxStrength
+  type: double
+  default: "25, 0, Double.MAX_VALUE"
+  descrip: "Maximum strength for natural random wellsprings"

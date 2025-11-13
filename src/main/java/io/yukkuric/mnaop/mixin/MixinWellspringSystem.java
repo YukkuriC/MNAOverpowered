@@ -2,8 +2,10 @@ package io.yukkuric.mnaop.mixin;
 
 import com.mna.api.affinity.Affinity;
 import com.mna.api.capabilities.IWellspringNodeRegistry;
+import com.mna.api.capabilities.WellspringNode;
 import com.mna.capabilities.worlddata.WellspringNodeRegistry;
 import io.yukkuric.mnaop.MNAOPConfig;
+import io.yukkuric.mnaop.mixin_interface.IWellspringNode;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +17,7 @@ import java.util.UUID;
 
 @Mixin(WellspringNodeRegistry.class)
 public abstract class MixinWellspringSystem implements IWellspringNodeRegistry {
-    @Shadow
+    @Shadow(remap = false)
     @Final
     private static HashMap<UUID, HashMap<Affinity, Float>> player_diminishing_returns;
     @Inject(method = "insertPowerDiminishing", at = @At("HEAD"), cancellable = true, remap = false)
@@ -39,5 +41,17 @@ public abstract class MixinWellspringSystem implements IWellspringNodeRegistry {
         }
         cir.setReturnValue(ret);
         cir.cancel();
+    }
+
+    @Inject(method = "lambda$addRandomNode$2", at = @At("RETURN"), remap = false)
+    private static void afterGenRandomNode(CallbackInfoReturnable<WellspringNode> cir) {
+        var node = cir.getReturnValue();
+        var smin = MNAOPConfig.NaturalWellspringMinStrength();
+        var smax = MNAOPConfig.NaturalWellspringMaxStrength();
+        IWellspringNode.class.cast(node).setStrength(smin + Math.random() * (smax - smin));
+    }
+    @Inject(method = "lambda$addRandomNode$3", at = @At("RETURN"), remap = false)
+    private void afterGenRandomNode2(CallbackInfoReturnable<WellspringNode> cir) {
+        afterGenRandomNode(cir);
     }
 }

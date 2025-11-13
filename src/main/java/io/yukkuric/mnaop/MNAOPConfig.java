@@ -15,7 +15,9 @@ public class MNAOPConfig {
             Cfg_NonDiminishingEldrinMatrix = BUILDER.comment("Eldrin Matrices no more diminish when placed more than 1").define("NonDiminishingEldrinMatrix", true),
             Cfg_EmpoweredEldrinMatrix = BUILDER.comment("Eldrin Matrices will receive multiplier from Eldrin Wellsprings").define("EmpoweredEldrinMatrix", true);
     public static ForgeConfigSpec.DoubleValue
-            Cfg_ConstructMilkingCooldown = BUILDER.comment("Configurable construct's milking cooldown (in minutes);\nset to values < 0 to disable this feature;\nthe real cooldown will be a random value between 1-2 times of this set value").defineInRange("ConstructMilkingCooldown", 3, Double.MIN_VALUE, Double.MAX_VALUE);
+            Cfg_ConstructMilkingCooldown = BUILDER.comment("Configurable construct's milking cooldown (in minutes);\nset to values < 0 to disable this feature;\nthe real cooldown will be a random value between 1-2 times of this set value").defineInRange("ConstructMilkingCooldown", 3, Double.MIN_VALUE, Double.MAX_VALUE),
+            Cfg_NaturalWellspringMinStrength = BUILDER.comment("Minimum strength for natural random wellsprings").defineInRange("NaturalWellspringMinStrength", 5, 0, Double.MAX_VALUE),
+            Cfg_NaturalWellspringMaxStrength = BUILDER.comment("Maximum strength for natural random wellsprings").defineInRange("NaturalWellspringMaxStrength", 25, 0, Double.MAX_VALUE);
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     // interfaces
@@ -31,10 +33,16 @@ public class MNAOPConfig {
     public static double ConstructMilkingCooldown() {
         return cache_ConstructMilkingCooldown;
     }
+    public static double NaturalWellspringMinStrength() {
+        return cache_NaturalWellspringMinStrength;
+    }
+    public static double NaturalWellspringMaxStrength() {
+        return cache_NaturalWellspringMaxStrength;
+    }
 
     // caches
     private static boolean cache_FastRegenManaIgnoresSaturation, cache_NonDiminishingEldrinMatrix, cache_EmpoweredEldrinMatrix;
-    private static double cache_ConstructMilkingCooldown;
+    private static double cache_ConstructMilkingCooldown, cache_NaturalWellspringMinStrength, cache_NaturalWellspringMaxStrength;
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         // cache values according to template
@@ -42,5 +50,7 @@ public class MNAOPConfig {
         cache_NonDiminishingEldrinMatrix = Cfg_NonDiminishingEldrinMatrix.get();
         cache_EmpoweredEldrinMatrix = Cfg_EmpoweredEldrinMatrix.get();
         cache_ConstructMilkingCooldown = Cfg_ConstructMilkingCooldown.get();
+        cache_NaturalWellspringMinStrength = Cfg_NaturalWellspringMinStrength.get();
+        cache_NaturalWellspringMaxStrength = Cfg_NaturalWellspringMaxStrength.get();
     }
 }

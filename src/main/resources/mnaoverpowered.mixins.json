@@ -7,6 +7,7 @@
   "mixins": [
     "MixinCastingResource",
     "MixinConstructMilkCow",
+    "MixinWellspringNode",
     "MixinWellspringSystem"
   ],
   "client": [
