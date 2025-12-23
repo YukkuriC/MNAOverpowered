@@ -2,23 +2,40 @@
   type: boolean
   default: 'true'
   descrip: "Speed-up casting resource regeneration, regardless of player's food saturation"
+  category: misc
 - name: NonDiminishingEldrinMatrix
   type: boolean
   default: 'true'
   descrip: "Eldrin Matrices no more diminish when placed more than 1"
+  category: misc
 - name: EmpoweredEldrinMatrix
   type: boolean
   default: 'true'
   descrip: "Eldrin Matrices will receive multiplier from Eldrin Wellsprings"
+  category: misc
 - name: ConstructMilkingCooldown
   type: double
   default: "3, Double.MIN_VALUE, Double.MAX_VALUE"
   descrip: "Configurable construct's milking cooldown (in minutes);\\nset to values < 0 to disable this feature;\\nthe real cooldown will be a random value between 1-2 times of this set value"
+  category: misc
 - name: NaturalWellspringMinStrength
   type: double
   default: "5, 0, Double.MAX_VALUE"
   descrip: "Minimum strength for natural random wellsprings"
+  category: misc
 - name: NaturalWellspringMaxStrength
   type: double
   default: "25, 0, Double.MAX_VALUE"
   descrip: "Maximum strength for natural random wellsprings"
+  category: misc
+
+- name: UnlimitedOrrery
+  type: boolean
+  default: 'true'
+  descrip: "Unlocks the limit that a player can only have 1 orrery"
+  category: MagiChem
+- name: InstantConstructShlorps
+  type: boolean
+  default: 'true'
+  descrip: "Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators"
+  category: MagiChem

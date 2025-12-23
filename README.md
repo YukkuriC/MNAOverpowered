@@ -16,4 +16,12 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
     -   the real cooldown will be a random value between 1-2 times of this set value
 -   config for min/max strength of natural generated wellsprings
 
+---
+
+-   `MagiChem` stuff (only available when installed):
+    -   Unlocks the limit that a player can only have 1 orrery
+    -   Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators
+
+---
+
 -   _MORE TO BE ADDED_

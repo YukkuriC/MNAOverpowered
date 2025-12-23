@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "minVersion": "0.8",
   "package": "io.yukkuric.mnaop.mixin",
   "compatibilityLevel": "JAVA_8",
@@ -8,7 +8,10 @@
     "MixinCastingResource",
     "MixinConstructMilkCow",
     "MixinWellspringNode",
-    "MixinWellspringSystem"
+    "MixinWellspringSystem",
+    "magichem.MixinOrreryLimitBreak",
+    "magichem.MixinInstantConstructShlorper",
+    "magichem.MixinInstantConstructShlorper$MateriaSort"
   ],
   "client": [
   ],
