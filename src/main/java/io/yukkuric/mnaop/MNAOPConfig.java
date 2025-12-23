@@ -41,8 +41,14 @@ public class MNAOPConfig {
     }
 
     // caches
-    private static boolean cache_FastRegenManaIgnoresSaturation, cache_NonDiminishingEldrinMatrix, cache_EmpoweredEldrinMatrix;
-    private static double cache_ConstructMilkingCooldown, cache_NaturalWellspringMinStrength, cache_NaturalWellspringMaxStrength;
+    private static boolean
+            cache_FastRegenManaIgnoresSaturation,
+            cache_NonDiminishingEldrinMatrix,
+            cache_EmpoweredEldrinMatrix;
+    private static double
+            cache_ConstructMilkingCooldown,
+            cache_NaturalWellspringMinStrength,
+            cache_NaturalWellspringMaxStrength;
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         // cache values according to template

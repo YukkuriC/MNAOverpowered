@@ -27,7 +27,9 @@ public class MNAOPConfig {
 
     // caches
     {%- for grp,lines in group_val(data,'type') %}
-    private static {{grp}} {% for line in lines %}cache_{{line.name}}{%- if loop.last %};{% else %}, {% endif %}{%- endfor %}
+    private static {{grp}}{% for line in lines %}
+            cache_{{line.name}}{%- if loop.last %};{% else %},{% endif %}
+        {%- endfor %}
     {%- endfor %}
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
