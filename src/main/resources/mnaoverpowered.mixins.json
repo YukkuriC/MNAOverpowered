@@ -9,9 +9,10 @@
     "MixinConstructMilkCow",
     "MixinWellspringNode",
     "MixinWellspringSystem",
-    "magichem.MixinOrreryLimitBreak",
+    "fixes.FixManaPylon",
     "magichem.MixinInstantConstructShlorper",
-    "magichem.MixinInstantConstructShlorper$MateriaSort"
+    "magichem.MixinInstantConstructShlorper$MateriaSort",
+    "magichem.MixinOrreryLimitBreak"
   ],
   "client": [
   ],
