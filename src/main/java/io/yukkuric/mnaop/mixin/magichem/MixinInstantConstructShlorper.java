@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ConstructProvideMateria.class)
 public class MixinInstantConstructShlorper {
-    @WrapOperation(method = {"tick"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"), remap = false, require = 0)
+    @WrapOperation(method = {"tick"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"), require = 0)
     boolean highSpeedShlorp(Level instance, Entity entity, Operation<Boolean> original) {
         if (entity instanceof ShlorpEntity shlorp)
             EditShlorp(shlorp);
@@ -28,7 +28,7 @@ public class MixinInstantConstructShlorper {
 
     @Mixin(ConstructSortMateriaFromDevice.class)
     public static class MateriaSort {
-        @WrapOperation(method = {"doShlorpCreation"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"), remap = false, require = 0)
+        @WrapOperation(method = {"doShlorpCreation"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"), require = 0)
         boolean highSpeedShlorp(Level instance, Entity entity, Operation<Boolean> original) {
             if (entity instanceof ShlorpEntity shlorp)
                 EditShlorp(shlorp);
