@@ -14,7 +14,7 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
 -   Configurable construct's milking cooldown
     -   set to values < 0 to disable this feature
     -   the real cooldown will be a random value between 1-2 times of this set value
--   config for min/max strength of natural generated wellsprings
+-   Config for min/max strength of natural generated wellsprings
 -   Custom commands
     -   `(mnaop) locate wellspring [type]`: locate nearest wellspring from all, or of certain affinity
         - _currently only supporting those already generated :(_
