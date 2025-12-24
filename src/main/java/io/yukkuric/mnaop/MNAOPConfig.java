@@ -31,7 +31,7 @@ public class MNAOPConfig {
         if (MNAOPMod.ConfigGroupActive("MagiChem")) {
             BUILDER.push("MagiChem");
             Cfg_UnlimitedOrrery = BUILDER.comment("Unlocks the limit that a player can only have 1 orrery").define("UnlimitedOrrery", true);
-            Cfg_InstantConstructShlorps = BUILDER.comment("Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth routers").define("InstantConstructShlorps", true);
+            Cfg_InstantConstructShlorps = BUILDER.comment("Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators").define("InstantConstructShlorps", true);
             BUILDER.pop();
         }
     }
@@ -40,51 +40,27 @@ public class MNAOPConfig {
 
     // interfaces
     public static boolean FastRegenManaIgnoresSaturation() {
-        return cache_FastRegenManaIgnoresSaturation;
+        return Cfg_FastRegenManaIgnoresSaturation.get();
     }
     public static boolean NonDiminishingEldrinMatrix() {
-        return cache_NonDiminishingEldrinMatrix;
+        return Cfg_NonDiminishingEldrinMatrix.get();
     }
     public static boolean EmpoweredEldrinMatrix() {
-        return cache_EmpoweredEldrinMatrix;
+        return Cfg_EmpoweredEldrinMatrix.get();
     }
     public static double ConstructMilkingCooldown() {
-        return cache_ConstructMilkingCooldown;
+        return Cfg_ConstructMilkingCooldown.get();
     }
     public static double NaturalWellspringMinStrength() {
-        return cache_NaturalWellspringMinStrength;
+        return Cfg_NaturalWellspringMinStrength.get();
     }
     public static double NaturalWellspringMaxStrength() {
-        return cache_NaturalWellspringMaxStrength;
+        return Cfg_NaturalWellspringMaxStrength.get();
     }
     public static boolean UnlimitedOrrery() {
-        return cache_UnlimitedOrrery;
+        return Cfg_UnlimitedOrrery.get();
     }
     public static boolean InstantConstructShlorps() {
-        return cache_InstantConstructShlorps;
-    }
-
-    // caches
-    private static boolean
-            cache_FastRegenManaIgnoresSaturation,
-            cache_NonDiminishingEldrinMatrix,
-            cache_EmpoweredEldrinMatrix,
-            cache_UnlimitedOrrery,
-            cache_InstantConstructShlorps;
-    private static double
-            cache_ConstructMilkingCooldown,
-            cache_NaturalWellspringMinStrength,
-            cache_NaturalWellspringMaxStrength;
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
-        // cache values according to template
-        cache_FastRegenManaIgnoresSaturation = Cfg_FastRegenManaIgnoresSaturation.get();
-        cache_NonDiminishingEldrinMatrix = Cfg_NonDiminishingEldrinMatrix.get();
-        cache_EmpoweredEldrinMatrix = Cfg_EmpoweredEldrinMatrix.get();
-        cache_ConstructMilkingCooldown = Cfg_ConstructMilkingCooldown.get();
-        cache_NaturalWellspringMinStrength = Cfg_NaturalWellspringMinStrength.get();
-        cache_NaturalWellspringMaxStrength = Cfg_NaturalWellspringMaxStrength.get();
-        cache_UnlimitedOrrery = Cfg_UnlimitedOrrery.get();
-        cache_InstantConstructShlorps = Cfg_InstantConstructShlorps.get();
+        return Cfg_InstantConstructShlorps.get();
     }
 }

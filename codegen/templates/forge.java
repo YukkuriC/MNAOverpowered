@@ -39,21 +39,7 @@ public class MNAOPConfig {
     // interfaces
     {%- for line in data %}
     public static {{line.type}} {{line.name}}() {
-        return cache_{{line.name}};
+        return Cfg_{{line.name}}.get();
     }
     {%- endfor %}
-
-    // caches
-    {%- for grp,lines in group_val(data,'type') %}
-    private static {{grp}}{% for line in lines %}
-            cache_{{line.name}}{%- if loop.last %};{% else %},{% endif %}
-        {%- endfor %}
-    {%- endfor %}
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
-        // cache values according to template
-        {%- for line in data %}
-        cache_{{line.name}} = Cfg_{{line.name}}.get();
-        {%- endfor %}
-    }
 }
