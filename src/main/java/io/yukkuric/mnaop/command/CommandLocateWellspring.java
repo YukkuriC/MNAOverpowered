@@ -6,6 +6,7 @@ import com.mna.capabilities.worlddata.WorldMagicProvider;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import io.yukkuric.mnaop.MNAOPConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -27,7 +28,11 @@ public class CommandLocateWellspring {
             }
             return search(ctx, predicate);
         }, 2, Commands.literal("locate"), Commands.literal("wellspring"), Commands.argument("type", AffinityArgument.affinity()));
-        dispatcher.register((LiteralArgumentBuilder<CommandSourceStack>) subCmd);
+        dispatcher.register(((LiteralArgumentBuilder<CommandSourceStack>) subCmd).requires(src -> switch (MNAOPConfig.EnablesLocateWellspringCommand()) {
+            case ON -> true;
+            case OP_ONLY -> src.hasPermission(2);
+            default -> false;
+        }));
     }
 
     static int search(CommandContext<CommandSourceStack> ctx, Predicate<WellspringNode> predicate) {

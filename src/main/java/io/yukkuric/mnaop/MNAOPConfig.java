@@ -1,9 +1,7 @@
 package io.yukkuric.mnaop;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Mod.EventBusSubscriber(modid = MNAOPMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MNAOPConfig {
@@ -20,6 +18,8 @@ public class MNAOPConfig {
             Cfg_ConstructMilkingCooldown,
             Cfg_NaturalWellspringMinStrength,
             Cfg_NaturalWellspringMaxStrength;
+    public static ForgeConfigSpec.EnumValue
+            Cfg_EnablesLocateWellspringCommand;
 
     static {
         Cfg_FastRegenManaIgnoresSaturation = BUILDER.comment("Speed-up casting resource regeneration, regardless of player's food saturation").define("FastRegenManaIgnoresSaturation", true);
@@ -28,6 +28,11 @@ public class MNAOPConfig {
         Cfg_ConstructMilkingCooldown = BUILDER.comment("Configurable construct's milking cooldown (in minutes);\nset to values < 0 to disable this feature;\nthe real cooldown will be a random value between 1-2 times of this set value").defineInRange("ConstructMilkingCooldown", 3, Double.MIN_VALUE, Double.MAX_VALUE);
         Cfg_NaturalWellspringMinStrength = BUILDER.comment("Minimum strength for natural random wellsprings").defineInRange("NaturalWellspringMinStrength", 5, 0, Double.MAX_VALUE);
         Cfg_NaturalWellspringMaxStrength = BUILDER.comment("Maximum strength for natural random wellsprings").defineInRange("NaturalWellspringMaxStrength", 25, 0, Double.MAX_VALUE);
+        if (MNAOPMod.ConfigGroupActive("Commands")) {
+            BUILDER.push("Commands");
+            Cfg_EnablesLocateWellspringCommand = BUILDER.comment("Whether this command is available to normal players or OPs").defineEnum("EnablesLocateWellspringCommand", MNAOPEnums.CommandStatus.OP_ONLY);
+            BUILDER.pop();
+        }
         if (MNAOPMod.ConfigGroupActive("MagiChem")) {
             BUILDER.push("MagiChem");
             Cfg_UnlimitedOrrery = BUILDER.comment("Unlocks the limit that a player can only have 1 orrery").define("UnlimitedOrrery", true);
@@ -56,6 +61,9 @@ public class MNAOPConfig {
     }
     public static double NaturalWellspringMaxStrength() {
         return Cfg_NaturalWellspringMaxStrength.get();
+    }
+    public static MNAOPEnums.CommandStatus EnablesLocateWellspringCommand() {
+        return (MNAOPEnums.CommandStatus) Cfg_EnablesLocateWellspringCommand.get();
     }
     public static boolean UnlimitedOrrery() {
         return Cfg_UnlimitedOrrery.get();

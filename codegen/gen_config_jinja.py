@@ -33,6 +33,14 @@ if 'prepare data':
             grouper[key].append(l)
         return res
 
+    def define_sub(line):
+        type = line['type']
+        if type in ('int', 'double'):
+            return 'InRange'
+        if type == 'enum':
+            return 'Enum'
+        return ''
+
     def to_java_type(raw):
         if raw == 'int':
             return 'Integer'
