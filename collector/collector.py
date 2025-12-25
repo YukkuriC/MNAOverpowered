@@ -6,7 +6,7 @@ os.chdir(os.path.dirname(__file__))
 def do_collect():
     res = []
     for path in glob.glob('../build/libs/*.jar'):
-        if 'sources' in path or 'dev' in path:
+        if any(x in path for x in ('source', 'dev', 'all')):
             continue
         print(path)
         shutil.copy(path, '.')
