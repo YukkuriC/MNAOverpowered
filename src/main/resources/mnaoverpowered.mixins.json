@@ -9,7 +9,9 @@
     "MixinConstructMilkCow",
     "MixinWellspringNode",
     "MixinWellspringSystem",
+    "fixes.FixItemFilterWithHollow",
     "fixes.FixManaPylon",
+    "fixes.FixTieredRecipeSorter",
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak"

@@ -29,6 +29,8 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
 
 -   Unofficial fixes for some known issues
     -   `Pylon: Mana` burns all constructs' mana with distance more than 16
+    -   lodestar filter with hollow inside loses its contents ([Mithion/Mana-And-Artifice/#1176](https://github.com/Mithion/Mana-And-Artifice/issues/1176))
+    -   potential crash & wrong tier for items ([Mithion/Mana-And-Artifice/#1182](https://github.com/Mithion/Mana-And-Artifice/issues/1182))
 
 ---
 
