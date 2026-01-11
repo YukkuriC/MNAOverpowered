@@ -13,7 +13,9 @@ public class MNAOPConfig {
             Cfg_NonDiminishingEldrinMatrix,
             Cfg_EmpoweredEldrinMatrix,
             Cfg_UnlimitedOrrery,
-            Cfg_InstantConstructShlorps;
+            Cfg_InstantConstructShlorps,
+            Cfg_ShowReadableAdmixtureFormula,
+            Cfg_ShowDistillationResults;
     public static ForgeConfigSpec.DoubleValue
             Cfg_ConstructMilkingCooldown,
             Cfg_NaturalWellspringMinStrength,
@@ -37,6 +39,8 @@ public class MNAOPConfig {
             BUILDER.push("MagiChem");
             Cfg_UnlimitedOrrery = BUILDER.comment("Unlocks the limit that a player can only have 1 orrery").define("UnlimitedOrrery", true);
             Cfg_InstantConstructShlorps = BUILDER.comment("Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators").define("InstantConstructShlorps", true);
+            Cfg_ShowReadableAdmixtureFormula = BUILDER.comment("Displays each admixture's translated formula and overall essentia value").define("ShowReadableAdmixtureFormula", true);
+            Cfg_ShowDistillationResults = BUILDER.comment("Displays distillation contents for all items supported").define("ShowDistillationResults", true);
             BUILDER.pop();
         }
     }
@@ -70,5 +74,11 @@ public class MNAOPConfig {
     }
     public static boolean InstantConstructShlorps() {
         return Cfg_InstantConstructShlorps.get();
+    }
+    public static boolean ShowReadableAdmixtureFormula() {
+        return Cfg_ShowReadableAdmixtureFormula.get();
+    }
+    public static boolean ShowDistillationResults() {
+        return Cfg_ShowDistillationResults.get();
     }
 }

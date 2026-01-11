@@ -45,3 +45,13 @@
   default: 'true'
   descrip: "Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators"
   category: MagiChem
+- name: ShowReadableAdmixtureFormula
+  type: boolean
+  default: 'true'
+  descrip: "Displays each admixture's translated formula and overall essentia value"
+  category: MagiChem
+- name: ShowDistillationResults
+  type: boolean
+  default: 'true'
+  descrip: "Displays distillation contents for all items supported"
+  category: MagiChem
