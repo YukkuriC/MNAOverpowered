@@ -4,6 +4,7 @@
   "package": "io.yukkuric.mnaop.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "mnaoverpowered.refmap.json",
+  "plugin": "io.yukkuric.mnaop.mixin_interface.MNAOPMixinPlugin",
   "mixins": [
     "MixinCastingResource",
     "MixinConstructMilkCow",
