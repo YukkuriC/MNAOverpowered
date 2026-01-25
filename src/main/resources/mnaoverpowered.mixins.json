@@ -13,6 +13,7 @@
     "fixes.FixItemFilterWithHollow",
     "fixes.FixManaPylon",
     "fixes.FixTieredRecipeSorter",
+    "magichem.AccessorConstructProvideMateria",
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak"
