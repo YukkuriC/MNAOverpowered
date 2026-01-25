@@ -23,7 +23,7 @@ public class MixinInstantConstructShlorper {
     private static void EditShlorp(ShlorpEntity shlorp) {
         if (!MNAOPConfig.InstantConstructShlorps()) return;
         shlorp.setInstantPayload();
-        shlorp.speed *= 32;
+        shlorp.speed *= 10;
     }
 
     @Mixin(ConstructSortMateriaFromDevice.class)
