@@ -2,7 +2,7 @@ package io.yukkuric.mnaop.construct.magichem;
 
 import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.entities.constructs.ai.ConstructProvideMateria;
-import com.aranaira.magichem.foundation.IMateriaProvisionRequester;
+import com.aranaira.magichem.foundation.*;
 import com.aranaira.magichem.registry.ConstructTasksRegistry;
 import com.mna.api.ManaAndArtificeMod;
 import com.mna.api.entities.construct.IConstruct;
@@ -122,7 +122,10 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
                 var be = construct.asEntity().level().getBlockEntity(pos);
                 if (be instanceof IRouterBlockEntity router) be = router.getMaster();
                 if (be instanceof IMateriaProvisionRequester) targetsExtracted.add(be.getBlockPos());
-                // TODO collect actuators
+                // collect actuators
+                if (be instanceof ICanTakePlugins root) {
+                    for (var p : root.getPlugins()) targetsExtracted.add(p.getBlockPos());
+                }
             }
         }
         construct.getDiagnostics().pushDiagnosticMessage(
