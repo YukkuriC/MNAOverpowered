@@ -1,6 +1,8 @@
 package io.yukkuric.mnaop.construct.magichem;
 
+import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.entities.constructs.ai.ConstructProvideMateria;
+import com.aranaira.magichem.foundation.IMateriaProvisionRequester;
 import com.aranaira.magichem.registry.ConstructTasksRegistry;
 import com.mna.api.ManaAndArtificeMod;
 import com.mna.api.entities.construct.IConstruct;
@@ -27,19 +29,12 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
     private int craftCount;
     private int markExecIndex;
     private boolean leaveOneInContainer;
-    private final ConstructProvideMateria worker;
+    private ConstructProvideMateria worker;
     private final List<BlockPos> targetsExtracted = new ArrayList<>();
-    private final AccessorConstructProvideMateria workerEx;
+    private AccessorConstructProvideMateria workerEx;
 
     public ConstructBatchProvideMateria(IConstruct<?> construct, ResourceLocation guiIcon) {
         super(construct, guiIcon);
-        worker = new ConstructProvideMateria(construct, ConstructTasksRegistry.PROVIDE_MATERIA.getIconTexture());
-        workerEx = AccessorConstructProvideMateria.class.cast(worker);
-    }
-    @Override
-    public void setConstruct(IConstruct<?> construct) {
-        worker.setConstruct(construct);
-        super.setConstruct(construct);
     }
     @Override
     public ResourceLocation getType() {
@@ -82,10 +77,6 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
                 leaveOneInContainer = booleanParam.getValue();
             }
         });
-
-        workerEx.setCraftCount(craftCount);
-        workerEx.setLeaveOneInContainer(leaveOneInContainer);
-        workerEx.setArea(area);
     }
     @Override
     public boolean isFullyConfigured() {
@@ -120,17 +111,24 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
         super.start();
         markExecIndex = -1;
         targetsExtracted.clear();
-        if (targetBookOfMark != null && targetBookOfMark.getItem() instanceof BookOfMarks book) {
+        if (targetBookOfMark != null && targetBookOfMark.getItem() instanceof BookOfMarks) {
             var inv = new ItemInventoryBase(targetBookOfMark);
             for (int i = 0; i < BookOfMarks.INVENTORY_SIZE; i++) {
                 var innerMark = inv.getStackInSlot(i);
                 if (innerMark.isEmpty() || !(innerMark.getItem() instanceof ItemRuneMarking rune)) continue;
                 var pos = rune.getLocation(innerMark);
-                // TODO validate
+                // validate
+                if (pos == null) continue;
+                var be = construct.asEntity().level().getBlockEntity(pos);
+                if (be instanceof IRouterBlockEntity router) be = router.getMaster();
+                if (be instanceof IMateriaProvisionRequester) targetsExtracted.add(be.getBlockPos());
                 // TODO collect actuators
-                targetsExtracted.add(pos);
             }
         }
+        construct.getDiagnostics().pushDiagnosticMessage(
+                String.format("Loaded %d tasks.", targetsExtracted.size()),
+                guiIcon, false
+        );
     }
     @Override
     public void tick() {
@@ -146,9 +144,18 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
     }
     void startNextTask() {
         markExecIndex++;
+        construct.getDiagnostics().pushDiagnosticMessage(
+                String.format("Starting task #%d...", markExecIndex),
+                guiIcon, false
+        );
         if (markExecIndex >= targetsExtracted.size()) return;
+        worker = new ConstructProvideMateria(construct, ConstructTasksRegistry.PROVIDE_MATERIA.getIconTexture());
+        worker.setConstruct(construct);
+        workerEx = AccessorConstructProvideMateria.class.cast(worker);
         workerEx.setDeviceTargetPos(targetsExtracted.get(markExecIndex));
+        workerEx.setCraftCount(craftCount);
+        workerEx.setLeaveOneInContainer(leaveOneInContainer);
+        workerEx.setArea(area);
         worker.onTaskSet();
-        worker.start();
     }
 }
