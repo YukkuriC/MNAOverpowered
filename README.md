@@ -7,6 +7,8 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
 
 ## Feature(s)
 
+_note: all features that currently can't be turned off are marked with `☆`_
+
 -   Speed-up casting resource regeneration, regardless of player's food saturation
 -   Eldrin Matrices:
     -   no more diminish when placed more than 1
@@ -27,6 +29,9 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
     -   Tooltip enhanced:
         -   displays each admixture's translated formula and overall essentia value
         -   displays distillation contents for all items supported
+    - `☆` Custom construct task nodes
+        -   Batch provide materia to all locations inside a Book of Marks
+            -   including actuators connected to the root machine (starting from `v0.5.2-pre16`)
 
 ---
 

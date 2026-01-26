@@ -21,7 +21,7 @@ import static io.yukkuric.mnaop.MNAOPHelpers.IsMagiChemLoaded;
 @Mod(MNAOPMod.MODID)
 public class MNAOPMod {
     public static final String MODID = "mnaoverpowered";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public MNAOPMod() {
         // IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

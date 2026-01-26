@@ -1,8 +1,10 @@
 package io.yukkuric.mnaop.construct.magichem;
 
+import com.aranaira.magichem.block.entity.ext.AbstractDirectionalPluginBlockEntity;
 import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.entities.constructs.ai.ConstructProvideMateria;
-import com.aranaira.magichem.foundation.*;
+import com.aranaira.magichem.foundation.ICanTakePlugins;
+import com.aranaira.magichem.foundation.IMateriaProvisionRequester;
 import com.aranaira.magichem.registry.ConstructTasksRegistry;
 import com.mna.api.ManaAndArtificeMod;
 import com.mna.api.entities.construct.IConstruct;
@@ -11,6 +13,7 @@ import com.mna.api.entities.construct.ai.parameter.*;
 import com.mna.inventory.ItemInventoryBase;
 import com.mna.items.runes.BookOfMarks;
 import com.mna.items.runes.ItemRuneMarking;
+import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.mixin.magichem.AccessorConstructProvideMateria;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +27,8 @@ import java.util.List;
 import static io.yukkuric.mnaop.construct.magichem.TaskExMagiChemRegistry.BATCH_PROVIDE_MATERIA;
 
 public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatchProvideMateria> {
+    private static boolean GET_PLUGINS_WORKING = true;
+
     private AABB area;
     private ItemStack targetBookOfMark;
     private int craftCount;
@@ -123,8 +128,14 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
                 if (be instanceof IRouterBlockEntity router) be = router.getMaster();
                 if (be instanceof IMateriaProvisionRequester) targetsExtracted.add(be.getBlockPos());
                 // collect actuators
-                if (be instanceof ICanTakePlugins root) {
-                    for (var p : root.getPlugins()) targetsExtracted.add(p.getBlockPos());
+                if (GET_PLUGINS_WORKING && be instanceof ICanTakePlugins root) {
+                    List<AbstractDirectionalPluginBlockEntity> plugins;
+                    try {
+                        for (var p : root.getPlugins()) targetsExtracted.add(p.getBlockPos());
+                    } catch (Throwable e) {
+                        MNAOPMod.LOGGER.error("UNSUPPORTED", e);
+                        GET_PLUGINS_WORKING = false;
+                    }
                 }
             }
         }
