@@ -2,6 +2,7 @@ package io.yukkuric.mnaop;
 
 import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.command.MNAOPCommands;
+import io.yukkuric.mnaop.construct.TaskExRegistry;
 import io.yukkuric.mnaop.magichem.MagiChemEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,6 +27,7 @@ public class MNAOPMod {
         // IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
         eventBus.register(this);
+        eventBus.register(TaskExRegistry.class);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MNAOPConfig.SPEC);
         eventBus.addListener((RegisterCommandsEvent event) -> MNAOPCommands.register(event.getDispatcher()));
     }

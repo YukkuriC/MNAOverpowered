@@ -1,15 +1,15 @@
 package io.yukkuric.mnaop.construct;
 
-import com.aranaira.magichem.MagiChemMod;
 import com.mna.api.ManaAndArtificeMod;
 import io.yukkuric.mnaop.MNAOPHelpers;
+import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.construct.magichem.TaskExMagiChemRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegisterEvent;
 
 @Mod.EventBusSubscriber(
-        modid = MagiChemMod.MODID,
+        modid = MNAOPMod.MODID,
         bus = Mod.EventBusSubscriber.Bus.MOD
 )
 public class TaskExRegistry {

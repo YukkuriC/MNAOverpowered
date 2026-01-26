@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(ConstructProvideMateria.class)
+@Mixin(value = ConstructProvideMateria.class, remap = false)
 public interface AccessorConstructProvideMateria {
     @Accessor("area")
     AABB getArea();
