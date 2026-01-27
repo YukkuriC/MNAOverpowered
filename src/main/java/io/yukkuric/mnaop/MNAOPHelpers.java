@@ -10,4 +10,7 @@ public class MNAOPHelpers {
     public static ResourceLocation modLoc(String path) {
         return ResourceLocation.tryBuild(MNAOPMod.MODID, path);
     }
+    public static String getConstructFeedbackLang(String sub) {
+        return "mnaop.constructs.feedback." + sub;
+    }
 }

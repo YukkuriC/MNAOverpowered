@@ -10,14 +10,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(value = ConstructProvideMateria.class, remap = false)
 public interface AccessorConstructProvideMateria {
     @Accessor("area")
-    AABB getArea();
-    @Accessor("craftCount")
-    int getCraftCount();
-    @Accessor("deviceTargetPos")
-    BlockPos getDeviceTargetPos();
-    @Accessor("leaveOneInContainer")
-    boolean getLeaveOneInContainer();
-    @Accessor("area")
     @Mutable
     void setArea(AABB v);
     @Accessor("craftCount")

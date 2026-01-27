@@ -1,5 +1,7 @@
 {
   "commands.locate.wellspring.info": "[%s, ~, %s] (strength=%.2f)",
   "construct.mnaoverpowered:batch_provide_materia": "Batch Provide Materia",
-  "gui.mna.parameter.provide_materia.point.batch": "What alchemical devices should the construct provide materia to? (provided using a Book of Marks)"
+  "gui.mna.parameter.provide_materia.point.batch": "What alchemical devices should the construct provide materia to? (provided using a Book of Marks)",
+  "mnaop.constructs.feedback.batch_provide_materia.summary": "Loaded %d tasks from %d marks.",
+  "mnaop.constructs.feedback.batch_provide_materia.sub_task": "Starting task #%d (target: %s)..."
 }

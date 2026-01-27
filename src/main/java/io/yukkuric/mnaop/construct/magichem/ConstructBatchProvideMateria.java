@@ -13,6 +13,7 @@ import com.mna.api.entities.construct.ai.parameter.*;
 import com.mna.inventory.ItemInventoryBase;
 import com.mna.items.runes.BookOfMarks;
 import com.mna.items.runes.ItemRuneMarking;
+import io.yukkuric.mnaop.MNAOPHelpers;
 import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.mixin.magichem.AccessorConstructProvideMateria;
 import net.minecraft.core.BlockPos;
@@ -28,6 +29,9 @@ import static io.yukkuric.mnaop.construct.magichem.TaskExMagiChemRegistry.BATCH_
 
 public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatchProvideMateria> {
     private static boolean GET_PLUGINS_WORKING = true;
+    private static String FEEDBACK_SUMMARY = MNAOPHelpers.getConstructFeedbackLang("batch_provide_materia.summary");
+    private static String FEEDBACK_SUB = MNAOPHelpers.getConstructFeedbackLang("batch_provide_materia.sub_task");
+    private static ResourceLocation WORKER_ICON = ConstructTasksRegistry.PROVIDE_MATERIA.getIconTexture();
 
     private AABB area;
     private ItemStack targetBookOfMark;
@@ -116,6 +120,7 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
         super.start();
         markExecIndex = -1;
         targetsExtracted.clear();
+        int cntMarks = 0;
         if (targetBookOfMark != null && targetBookOfMark.getItem() instanceof BookOfMarks) {
             var inv = new ItemInventoryBase(targetBookOfMark);
             for (int i = 0; i < BookOfMarks.INVENTORY_SIZE; i++) {
@@ -124,6 +129,7 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
                 var pos = rune.getLocation(innerMark);
                 // validate
                 if (pos == null) continue;
+                cntMarks++;
                 var be = construct.asEntity().level().getBlockEntity(pos);
                 if (be instanceof IRouterBlockEntity router) be = router.getMaster();
                 if (be instanceof IMateriaProvisionRequester) targetsExtracted.add(be.getBlockPos());
@@ -140,7 +146,7 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
             }
         }
         construct.getDiagnostics().pushDiagnosticMessage(
-                String.format("Loaded %d tasks.", targetsExtracted.size()),
+                translate(FEEDBACK_SUMMARY, targetsExtracted.size(), cntMarks),
                 guiIcon, false
         );
     }
@@ -148,25 +154,30 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
     public void tick() {
         super.tick();
         if (shouldStartNextTask()) startNextTask();
-        if (!worker.isFinished()) worker.tick();
+        if (worker != null && !worker.isFinished()) worker.tick();
         if (markExecIndex >= targetsExtracted.size()) setSuccessCode();
     }
     boolean shouldStartNextTask() {
-        if (markExecIndex < 0) return true;
-        // TODO skip forceFail wait
+        if (markExecIndex < 0 || worker == null) return true;
         return worker.isFinished();
     }
     void startNextTask() {
         markExecIndex++;
-        construct.getDiagnostics().pushDiagnosticMessage(
-                String.format("Starting task #%d...", markExecIndex),
-                guiIcon, false
-        );
         if (markExecIndex >= targetsExtracted.size()) return;
-        worker = new ConstructProvideMateria(construct, ConstructTasksRegistry.PROVIDE_MATERIA.getIconTexture());
+        var targetPos = targetsExtracted.get(markExecIndex);
+        var targetBlock = construct.asEntity().level().getBlockState(targetPos);
+        construct.getDiagnostics().pushDiagnosticMessage(
+                translate(
+                        FEEDBACK_SUB,
+                        markExecIndex,
+                        translate(targetBlock)
+                ),
+                WORKER_ICON, false
+        );
+        worker = new ConstructProvideMateria(construct, WORKER_ICON);
         worker.setConstruct(construct);
         workerEx = AccessorConstructProvideMateria.class.cast(worker);
-        workerEx.setDeviceTargetPos(targetsExtracted.get(markExecIndex));
+        workerEx.setDeviceTargetPos(targetPos);
         workerEx.setCraftCount(craftCount);
         workerEx.setLeaveOneInContainer(leaveOneInContainer);
         workerEx.setArea(area);
