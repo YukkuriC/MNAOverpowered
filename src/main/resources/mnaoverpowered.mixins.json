@@ -12,6 +12,7 @@
     "MixinWellspringSystem",
     "fixes.FixItemFilterWithHollow",
     "fixes.FixManaPylon",
+    "fixes.FixSpellAdjusterRegisterLock",
     "fixes.FixTieredRecipeSorter",
     "magichem.AccessorConstructProvideMateria",
     "magichem.MixinInstantConstructShlorper",
