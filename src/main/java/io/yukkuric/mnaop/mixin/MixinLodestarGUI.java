@@ -1,0 +1,96 @@
+package io.yukkuric.mnaop.mixin;
+
+import com.mna.gui.base.GuiJEIDisable;
+import com.mna.gui.block.GuiLodestarV2;
+import com.mna.gui.containers.block.ContainerLodestar;
+import com.mna.gui.widgets.lodestar.LodestarGroup;
+import com.mna.gui.widgets.lodestar.LodestarNode;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
+import java.util.UUID;
+
+@Mixin(GuiLodestarV2.class)
+public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> {
+    public MixinLodestarGUI(ContainerLodestar p_i51105_1_, Inventory p_i51105_2_, Component p_i51105_3_) {
+        super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
+    }
+
+    @Shadow
+    private LodestarGroup selectedGroup;
+    @Shadow
+    private LodestarNode selectedNode;
+    @Shadow
+    protected abstract CompoundTag saveLogic();
+
+    @Shadow
+    protected abstract void nodeSubClick(LodestarNode node);
+    @Shadow
+    public abstract LodestarNode getNodeById(String id);
+    @Shadow
+    protected abstract void insertNode(LodestarNode node);
+    @Shadow
+    protected abstract void selectNode(LodestarNode node);
+    @Shadow
+    protected abstract void groupClicked(LodestarGroup group, boolean forDelete);
+    @Shadow
+    private List<LodestarGroup> nodeGroups;
+    @Shadow
+    protected abstract List<LodestarNode> getNodesInGroup(LodestarGroup group);
+    private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
+        var saved = original.toCompoundTag(0, 0);
+        saved.putString("id", UUID.randomUUID().toString());
+        saved.putBoolean("start", false);
+        var newNode = LodestarNode.fromCompoundTag(saved, dy, dx, menu.isLowTier(), b -> nodeSubClick((LodestarNode) b), this::getNodeById);
+        insertNode(newNode);
+        return newNode;
+    }
+    private LodestarGroup duplicate(LodestarGroup original, int dx, int dy) {
+        var saved = original.toCompoundTag(0, 0);
+        var newGroup = LodestarGroup.fromCompound(saved, dy, dx, menu.isLowTier(), this::groupClicked);
+        nodeGroups.add(newGroup);
+        return newGroup;
+    }
+
+    @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"))
+    void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
+        if (!Screen.hasControlDown() || Screen.hasShiftDown() || Screen.hasAltDown()) return;
+
+        switch (pKeyCode) {
+            case 68: /* ctrl+D duplicate */ {
+                Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.format("selected group=%s; selected node=%s", selectedGroup, selectedNode)));
+                var changed = false;
+                if (selectedGroup != null) {
+                    // 0. dupe group
+                    int dx = 20, dy = selectedGroup.getHeight() + 10;
+                    var newGroup = duplicate(selectedGroup, dx, dy);
+
+                    // TODO
+                    // 1. pick inner nodes & collect connections
+                    var allNodes = getNodesInGroup(selectedGroup);
+                    // 2. dupe each
+                    // 3. rebuild connections
+
+                    this.selectedGroup = newGroup;
+                    changed = true;
+                } else if (selectedNode != null) {
+                    var newNode = duplicate(selectedNode, 20, 40);
+                    selectNode(newNode);
+                    changed = true;
+                }
+
+                // apply changes
+                if (changed) this.menu.setTileLogic(saveLogic());
+            }
+        }
+    }
+}
