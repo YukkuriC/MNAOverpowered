@@ -35,11 +35,11 @@ _note: all features that currently can't be turned off are marked with `☆`_
 
 ---
 
-- Unofficial fixes for some known issues
+- `☆` Unofficial fixes for some known issues
     - `Pylon: Mana` burns all constructs' mana with distance more than 16
-    - lodestar filter with hollow inside loses its contents ([Mithion/Mana-And-Artifice/#1176](https://github.com/Mithion/Mana-And-Artifice/issues/1176))
-    - potential crash & wrong tier for items ([Mithion/Mana-And-Artifice/#1182](https://github.com/Mithion/Mana-And-Artifice/issues/1182))
-    - occasional startup crash caused by concurrent registry ([Mithion/Mana-And-Artifice/#1213](https://github.com/Mithion/Mana-And-Artifice/issues/1213))
+    - lodestar filter with hollow inside loses its contents ([#1176](https://github.com/Mithion/Mana-And-Artifice/issues/1176))
+    - potential crash & wrong tier for items ([#1182](https://github.com/Mithion/Mana-And-Artifice/issues/1182))
+    - occasional startup crash caused by concurrent registry ([#1213](https://github.com/Mithion/Mana-And-Artifice/issues/1213))
 
 ---
 
