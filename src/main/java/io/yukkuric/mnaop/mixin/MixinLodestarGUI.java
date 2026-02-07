@@ -67,8 +67,6 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
 
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"), cancellable = true)
     void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (filterBox.isFocused() || groupBox.isFocused()) return;
-
         if (mnaop$handleCtrlKeys(pKeyCode)) cir.setReturnValue(true);
     }
     @Unique
