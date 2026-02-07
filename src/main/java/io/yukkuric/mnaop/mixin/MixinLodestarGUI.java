@@ -5,6 +5,7 @@ import com.mna.gui.block.GuiLodestarV2;
 import com.mna.gui.containers.block.ContainerLodestar;
 import com.mna.gui.widgets.lodestar.LodestarGroup;
 import com.mna.gui.widgets.lodestar.LodestarNode;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
@@ -71,7 +72,9 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     // keyboard shortcuts
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"), cancellable = true)
     void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal("key=" + pKeyCode));
         if (mnaop$handleCtrlKeys(pKeyCode)) cir.setReturnValue(true);
+        if (mnaop$handleNormalKeys(pKeyCode)) cir.setReturnValue(true);
     }
     @Unique
     private boolean mnaop$handleCtrlKeys(int pKeyCode) {
@@ -120,6 +123,27 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
                 // apply changes
                 if (changed) this.menu.setTileLogic(saveLogic());
 
+                return true;
+            }
+        }
+
+        return false;
+    }
+    @Unique
+    private boolean mnaop$handleNormalKeys(int pKeyCode) {
+        if (Screen.hasControlDown() || Screen.hasAltDown()) return false;
+
+        switch (pKeyCode) {
+            case 259: // delete selected
+            case 261: {
+                if (selectedGroup != null) {
+                    groupClicked(selectedGroup, true);
+                    selectedGroup = null;
+                } else if (selectedNode != null) {
+                    deleteNode(selectedNode);
+                } else return false;
+
+                this.menu.setTileLogic(saveLogic());
                 return true;
             }
         }

@@ -23,6 +23,7 @@ _note: all features that currently can't be turned off are marked with `☆`_
 - `☆` Lodestar editing screen enhanced
     - `Ctrl + D` when selecting a group or node to make a full copy
         - including group-included nodes and their inner connections
+    - Pressing `Delete` or `BackSpace` to remove current selected group or node
     - Removing a group holding `Shift` to wipe its node contents too
 
 ---
