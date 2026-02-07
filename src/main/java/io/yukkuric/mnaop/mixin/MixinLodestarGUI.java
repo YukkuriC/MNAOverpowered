@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -81,7 +82,7 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         if (!Screen.hasControlDown() || Screen.hasShiftDown() || Screen.hasAltDown()) return false;
 
         switch (pKeyCode) {
-            case 68: /* ctrl+D duplicate */ {
+            case GLFW.GLFW_KEY_D: /* ctrl+D duplicate */ {
                 if (selectedGroup != null) {
                     // 0. dupe group
                     int dx = 20, dy = selectedGroup.getHeight() + 10;
@@ -130,8 +131,8 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         if (Screen.hasControlDown() || Screen.hasAltDown()) return false;
 
         switch (pKeyCode) {
-            case 259: // delete selected
-            case 261: {
+            case GLFW.GLFW_KEY_BACKSPACE: // delete selected
+            case GLFW.GLFW_KEY_DELETE: {
                 if (selectedGroup != null) {
                     groupClicked(selectedGroup, true);
                     selectedGroup = null;
