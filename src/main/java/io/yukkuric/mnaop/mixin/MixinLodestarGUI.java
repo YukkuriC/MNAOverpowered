@@ -5,12 +5,12 @@ import com.mna.gui.block.GuiLodestarV2;
 import com.mna.gui.containers.block.ContainerLodestar;
 import com.mna.gui.widgets.lodestar.LodestarGroup;
 import com.mna.gui.widgets.lodestar.LodestarNode;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -46,6 +46,10 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     protected abstract List<LodestarNode> getNodesInGroup(LodestarGroup group);
     @Shadow
     protected abstract void deselectNode();
+    @Shadow
+    private EditBox filterBox;
+    @Shadow
+    private EditBox groupBox;
     private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
         var saved = original.toCompoundTag(0, 0);
         saved.putString("id", UUID.randomUUID().toString());
@@ -61,9 +65,15 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         return newGroup;
     }
 
-    @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"))
+    @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"), cancellable = true)
     void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (!Screen.hasControlDown() || Screen.hasShiftDown() || Screen.hasAltDown()) return;
+        if (filterBox.isFocused() || groupBox.isFocused()) return;
+
+        if (mnaop$handleCtrlKeys(pKeyCode)) cir.setReturnValue(true);
+    }
+    @Unique
+    private boolean mnaop$handleCtrlKeys(int pKeyCode) {
+        if (!Screen.hasControlDown() || Screen.hasShiftDown() || Screen.hasAltDown()) return false;
 
         switch (pKeyCode) {
             case 68: /* ctrl+D duplicate */ {
@@ -107,7 +117,11 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
 
                 // apply changes
                 if (changed) this.menu.setTileLogic(saveLogic());
+
+                return true;
             }
         }
+
+        return false;
     }
 }

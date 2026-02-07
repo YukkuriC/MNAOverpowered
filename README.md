@@ -20,6 +20,9 @@ _note: all features that currently can't be turned off are marked with `☆`_
 - Custom commands
     - `(mnaop) locate wellspring [type]`: locate nearest wellspring from all, or of certain affinity
         - _currently only supporting those already generated :(_
+- `☆` Lodestar editing screen enhanced
+    - `Ctrl + D` when selecting a group or node to make a full copy
+        - including group-included nodes and their inner connections
 
 ---
 
