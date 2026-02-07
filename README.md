@@ -7,7 +7,8 @@ Another QoL addon containing small tweaks about easy gaming experiences for Mana
 
 ## Feature(s)
 
-_note: all features that currently can't be turned off are marked with `☆`_
+_note: all features that currently can't be turned off are marked with `☆`_  
+_note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than `mnaoverpowered-common.toml` are marked with `△`, editing which requires a full restart for changes to apply_
 
 - Speed-up casting resource regeneration, regardless of player's food saturation
 - Eldrin Matrices:
@@ -20,7 +21,7 @@ _note: all features that currently can't be turned off are marked with `☆`_
 - Custom commands
     - `(mnaop) locate wellspring [type]`: locate nearest wellspring from all, or of certain affinity
         - _currently only supporting those already generated :(_
-- `☆` Lodestar editing screen enhanced
+- `△` Lodestar editing screen enhanced
     - `Ctrl + D` when selecting a group or node to make a full copy
         - including group-included nodes and their inner connections
     - Pressing `Delete` or `BackSpace` to remove current selected group or node
@@ -34,13 +35,13 @@ _note: all features that currently can't be turned off are marked with `☆`_
     - Tooltip enhanced:
         - displays each admixture's translated formula and overall essentia value
         - displays distillation contents for all items supported
-    - `☆` Custom construct task nodes
+    - `△` Custom construct task nodes
         - Batch provide materia to all locations inside a Book of Marks
             - including actuators connected to the root machine (starting from `v0.5.2-pre16`)
 
 ---
 
-- `☆` Unofficial fixes for some known issues
+- `△` Unofficial fixes for some known issues
     - `Pylon: Mana` burns all constructs' mana with distance more than 16
     - lodestar filter with hollow inside loses its contents ([#1176](https://github.com/Mithion/Mana-And-Artifice/issues/1176))
     - potential crash & wrong tier for items ([#1182](https://github.com/Mithion/Mana-And-Artifice/issues/1182))
