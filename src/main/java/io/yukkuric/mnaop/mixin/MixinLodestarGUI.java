@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.*;
@@ -50,6 +51,8 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     private EditBox filterBox;
     @Shadow
     private EditBox groupBox;
+    @Shadow
+    protected abstract void deleteNode(LodestarNode node);
     private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
         var saved = original.toCompoundTag(0, 0);
         saved.putString("id", UUID.randomUUID().toString());
@@ -65,6 +68,7 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         return newGroup;
     }
 
+    // keyboard shortcuts
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"), cancellable = true)
     void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
         if (mnaop$handleCtrlKeys(pKeyCode)) cir.setReturnValue(true);
@@ -121,5 +125,14 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         }
 
         return false;
+    }
+
+    // shift-click delete whole group
+    @Inject(method = "groupClicked", at = @At("HEAD"), remap = false)
+    void handleGroupShiftDelete(LodestarGroup group, boolean forDelete, CallbackInfo ci) {
+        if (forDelete && Screen.hasShiftDown()) {
+            var nodes = getNodesInGroup(group);
+            for (var node : nodes) deleteNode(node);
+        }
     }
 }
