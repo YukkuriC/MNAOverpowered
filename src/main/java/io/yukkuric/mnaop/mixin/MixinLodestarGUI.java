@@ -82,7 +82,6 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
 
         switch (pKeyCode) {
             case 68: /* ctrl+D duplicate */ {
-                var changed = false;
                 if (selectedGroup != null) {
                     // 0. dupe group
                     int dx = 20, dy = selectedGroup.getHeight() + 10;
@@ -113,16 +112,13 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
 
                     this.selectedGroup = newGroup;
                     deselectNode();
-                    changed = true;
                 } else if (selectedNode != null) {
                     var newNode = duplicate(selectedNode, 20, 40);
                     selectNode(newNode);
-                    changed = true;
-                }
+                } else return false;
 
                 // apply changes
-                if (changed) this.menu.setTileLogic(saveLogic());
-
+                this.menu.setTileLogic(saveLogic());
                 return true;
             }
         }
