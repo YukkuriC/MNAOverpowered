@@ -5,6 +5,7 @@ import com.mna.gui.block.GuiLodestarV2;
 import com.mna.gui.containers.block.ContainerLodestar;
 import com.mna.gui.widgets.lodestar.LodestarGroup;
 import com.mna.gui.widgets.lodestar.LodestarNode;
+import io.yukkuric.mnaop.mixin_interface.IUndoStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -55,6 +56,12 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     private EditBox groupBox;
     @Shadow
     protected abstract void deleteNode(LodestarNode node);
+    @Shadow
+    protected abstract void loadLogic(CompoundTag input);
+    @Shadow
+    private List<LodestarNode> nodes;
+    @Shadow
+    protected abstract void recenterView();
     private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
         var saved = original.toCompoundTag(0, 0);
         saved.putString("id", UUID.randomUUID().toString());
@@ -75,7 +82,8 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
         Minecraft.getInstance().player.sendSystemMessage(Component.literal("key=" + pKeyCode));
         if (mnaop$handleCtrlKeys(pKeyCode)) cir.setReturnValue(true);
-        if (mnaop$handleNormalKeys(pKeyCode)) cir.setReturnValue(true);
+        else if (mnaop$handleNormalKeys(pKeyCode)) cir.setReturnValue(true);
+        else if (mnaop$handleCtrlShiftKeys(pKeyCode)) cir.setReturnValue(true);
     }
     @Unique
     private boolean mnaop$handleCtrlKeys(int pKeyCode) {
@@ -122,6 +130,16 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
                 this.menu.setTileLogic(saveLogic());
                 return true;
             }
+            case GLFW.GLFW_KEY_Z:/* ctrl+Z undo */ {
+                var newData = IUndoStack.class.cast(menu).undo();
+                if (newData != null) mnaop$forceReloadLogic(newData);
+                return true;
+            }
+            case GLFW.GLFW_KEY_Y:/* ctrl+Y redo */ {
+                var newData = IUndoStack.class.cast(menu).redo();
+                if (newData != null) mnaop$forceReloadLogic(newData);
+                return true;
+            }
         }
 
         return false;
@@ -146,6 +164,28 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         }
 
         return false;
+    }
+    @Unique
+    private boolean mnaop$handleCtrlShiftKeys(int pKeyCode) {
+        if (!Screen.hasControlDown() || Screen.hasShiftDown() || Screen.hasAltDown()) return false;
+
+        switch (pKeyCode) {
+            case GLFW.GLFW_KEY_Z:/* ctrl+Shift+Z redo */ {
+                var newData = IUndoStack.class.cast(menu).redo();
+                if (newData != null) mnaop$forceReloadLogic(newData);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    @Unique
+    private void mnaop$forceReloadLogic(CompoundTag data) {
+        nodes.clear();
+        nodeGroups.clear();
+        selectedNode = null;
+        selectedGroup = null;
+        loadLogic(data);
     }
 
     // shift-click delete whole group
