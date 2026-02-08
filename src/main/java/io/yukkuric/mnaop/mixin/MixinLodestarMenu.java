@@ -35,6 +35,15 @@ public abstract class MixinLodestarMenu implements IUndoStack {
     public CompoundTag redo() {
         return swapStack(redoStack, undoStack);
     }
+    @Override
+    public void makeChange(CompoundTag data) {
+        if (!spareFlag) {
+            redoStack.clear();
+            if (curState == null) curState = getLogic();
+            pushStackWithLimit(undoStack, curState);
+        }
+        curState = data;
+    }
     private CompoundTag swapStack(LinkedList<CompoundTag> frm, LinkedList<CompoundTag> to) {
         if (frm.isEmpty()) return null;
         var newData = frm.pop();
@@ -53,11 +62,6 @@ public abstract class MixinLodestarMenu implements IUndoStack {
     @Inject(method = "setTileLogic", at = @At("HEAD"), remap = false)
     private void wrapSave(CompoundTag logic, CallbackInfo ci) {
         if (!lodestar.getLevel().isClientSide) return;
-        if (!spareFlag) {
-            redoStack.clear();
-            if (curState == null) curState = getLogic();
-            pushStackWithLimit(undoStack, curState);
-        }
-        curState = logic;
+        makeChange(logic);
     }
 }

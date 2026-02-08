@@ -81,6 +81,9 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         nodeGroups.add(newGroup);
         return newGroup;
     }
+    private void makeChange() {
+        IUndoStack.class.cast(menu).makeChange(saveLogic());
+    }
 
     // keyboard shortcuts
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"), cancellable = true)
@@ -131,7 +134,7 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
                 } else return false;
 
                 // apply changes
-                this.menu.setTileLogic(saveLogic());
+                makeChange();
                 return true;
             }
             case GLFW.GLFW_KEY_Z:/* ctrl+Z undo */ {
@@ -162,7 +165,7 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
                     deleteNode(selectedNode);
                 } else return false;
 
-                this.menu.setTileLogic(saveLogic());
+                makeChange();
                 return true;
             }
         }
@@ -204,7 +207,7 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     // add sync when changing groups & dragging nodes
     @Inject(method = "groupClicked", at = @At("RETURN"), remap = false)
     void syncOnGroupDelete(LodestarGroup group, boolean forDelete, CallbackInfo ci) {
-        if (forDelete) menu.setTileLogic(saveLogic());
+        if (forDelete) makeChange();
     }
     private boolean wasDragging = false;
     @Inject(method = "mouseDragged", at = @At(value = "HEAD"))
@@ -216,7 +219,7 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     void markOnGroupDrag(double mouse_x, double mouse_y, int button, CallbackInfoReturnable<Boolean> cir) {
         if (wasDragging) {
             wasDragging = false;
-            menu.setTileLogic(saveLogic());
+            makeChange();
         }
     }
 }

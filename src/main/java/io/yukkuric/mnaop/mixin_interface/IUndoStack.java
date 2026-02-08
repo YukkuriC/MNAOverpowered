@@ -5,4 +5,5 @@ import net.minecraft.nbt.CompoundTag;
 public interface IUndoStack {
     CompoundTag undo();
     CompoundTag redo();
+    void makeChange(CompoundTag data);
 }
