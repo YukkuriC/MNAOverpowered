@@ -3,9 +3,7 @@ package io.yukkuric.mnaop.mixin;
 import com.mna.blocks.tileentities.LodestarTile;
 import com.mna.gui.containers.block.ContainerLodestar;
 import io.yukkuric.mnaop.mixin_interface.IUndoStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,6 +14,8 @@ import java.util.LinkedList;
 
 @Mixin(ContainerLodestar.class)
 public abstract class MixinLodestarMenu implements IUndoStack {
+    private static final int MAX_UNDO_COUNT = 200;
+
     @Shadow
     public abstract void setTileLogic(CompoundTag logic);
     @Shadow
@@ -56,7 +56,7 @@ public abstract class MixinLodestarMenu implements IUndoStack {
     }
     private void pushStackWithLimit(LinkedList<CompoundTag> stack, CompoundTag data) {
         stack.push(data);
-        Minecraft.getInstance().player.sendSystemMessage(Component.translatable("undo=%s redo=%s", undoStack.size(), redoStack.size()));
+        if (stack.size() > MAX_UNDO_COUNT) stack.removeLast(); // pop = removeFirst
     }
 
     @Inject(method = "setTileLogic", at = @At("HEAD"), remap = false)
