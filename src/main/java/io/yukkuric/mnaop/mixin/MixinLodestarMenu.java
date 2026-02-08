@@ -55,7 +55,8 @@ public abstract class MixinLodestarMenu implements IUndoStack {
         if (!lodestar.getLevel().isClientSide) return;
         if (!spareFlag) {
             redoStack.clear();
-            if (curState != null) pushStackWithLimit(undoStack, curState);
+            if (curState == null) curState = getLogic();
+            pushStackWithLimit(undoStack, curState);
         }
         curState = logic;
     }
