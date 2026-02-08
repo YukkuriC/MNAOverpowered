@@ -1,5 +1,7 @@
 package io.yukkuric.mnaop.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mna.gui.base.GuiJEIDisable;
 import com.mna.gui.block.GuiLodestarV2;
 import com.mna.gui.containers.block.ContainerLodestar;
@@ -67,6 +69,12 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     private LodestarGroup draggingGroup;
     @Shadow
     private LodestarNode draggingNode;
+    @Shadow
+    private int scroll_pos_y;
+    @Shadow
+    private int scroll_pos_x;
+    @Shadow
+    public static float Zoom;
     private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
         var saved = original.toCompoundTag(0, 0);
         saved.putString("id", UUID.randomUUID().toString());
@@ -193,6 +201,9 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         selectedNode = null;
         selectedGroup = null;
         loadLogic(data);
+        if (data.contains("scroll_x")) scroll_pos_x = data.getInt("scroll_x");
+        if (data.contains("scroll_y")) scroll_pos_y = data.getInt("scroll_y");
+        if (data.contains("scroll_scale")) Zoom = data.getFloat("scroll_scale");
     }
 
     // shift-click delete whole group
@@ -221,5 +232,20 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
             wasDragging = false;
             makeChange();
         }
+    }
+
+    // counter scroll offsets
+    @WrapMethod(method = "saveLogic", remap = false)
+    CompoundTag recordOffsets(Operation<CompoundTag> original) {
+        var oldX = scroll_pos_x;
+        var oldY = scroll_pos_y;
+        scroll_pos_x = scroll_pos_y = 0;
+        var ret = original.call();
+        scroll_pos_x = oldX;
+        scroll_pos_y = oldY;
+        ret.putInt("scroll_x", oldX);
+        ret.putInt("scroll_y", oldY);
+        ret.putFloat("scroll_scale", Zoom);
+        return ret;
     }
 }
