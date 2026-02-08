@@ -6,7 +6,6 @@ import com.mna.gui.containers.block.ContainerLodestar;
 import com.mna.gui.widgets.lodestar.LodestarGroup;
 import com.mna.gui.widgets.lodestar.LodestarNode;
 import io.yukkuric.mnaop.mixin_interface.IUndoStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
@@ -62,6 +61,12 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     private List<LodestarNode> nodes;
     @Shadow
     protected abstract void recenterView();
+    @Shadow
+    private LodestarGroup creatingGroup;
+    @Shadow
+    private LodestarGroup draggingGroup;
+    @Shadow
+    private LodestarNode draggingNode;
     private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
         var saved = original.toCompoundTag(0, 0);
         saved.putString("id", UUID.randomUUID().toString());
@@ -80,7 +85,6 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
     // keyboard shortcuts
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lcom/mna/gui/base/GuiJEIDisable;keyPressed(III)Z"), cancellable = true)
     void handleExtraKeys(int pKeyCode, int pScanCode, int pModifiers, CallbackInfoReturnable<Boolean> cir) {
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal("key=" + pKeyCode));
         if (mnaop$handleCtrlKeys(pKeyCode)) cir.setReturnValue(true);
         else if (mnaop$handleNormalKeys(pKeyCode)) cir.setReturnValue(true);
         else if (mnaop$handleCtrlShiftKeys(pKeyCode)) cir.setReturnValue(true);
@@ -194,6 +198,25 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         if (forDelete && Screen.hasShiftDown()) {
             var nodes = getNodesInGroup(group);
             for (var node : nodes) deleteNode(node);
+        }
+    }
+
+    // add sync when changing groups & dragging nodes
+    @Inject(method = "groupClicked", at = @At("RETURN"), remap = false)
+    void syncOnGroupDelete(LodestarGroup group, boolean forDelete, CallbackInfo ci) {
+        if (forDelete) menu.setTileLogic(saveLogic());
+    }
+    private boolean wasDragging = false;
+    @Inject(method = "mouseDragged", at = @At(value = "HEAD"))
+    void markOnGroupDrag(double mouseX, double mouseY, int button, double deltaX, double deltaY, CallbackInfoReturnable<Boolean> cir) {
+        if (creatingGroup != null || draggingGroup != null || draggingNode != null)
+            wasDragging = true;
+    }
+    @Inject(method = "mouseReleased", at = @At(value = "RETURN"))
+    void markOnGroupDrag(double mouse_x, double mouse_y, int button, CallbackInfoReturnable<Boolean> cir) {
+        if (wasDragging) {
+            wasDragging = false;
+            menu.setTileLogic(saveLogic());
         }
     }
 }
