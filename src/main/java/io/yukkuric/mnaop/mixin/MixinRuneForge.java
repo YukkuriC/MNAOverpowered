@@ -1,5 +1,7 @@
 package io.yukkuric.mnaop.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mna.api.blocks.tile.TileEntityWithInventory;
 import com.mna.blocks.runeforging.RuneforgeBlock;
 import com.mna.blocks.tileentities.RuneForgeTile;
@@ -58,5 +60,14 @@ public abstract class MixinRuneForge extends TileEntityWithInventory implements 
     @Inject(method = "hasRepairUpgrade", at = @At("HEAD"), remap = false, cancellable = true)
     void hookRepair(CallbackInfoReturnable<Boolean> cir) {
         generalHook("REPAIR", cir);
+    }
+
+    @WrapMethod(method = "tickLogic_repair", remap = false)
+    void fasterRepair(Operation<Void> original) {
+        var tickCount = getBlockState().getValue(RuneforgeBlock.SPEED) ? 6 : 1;
+        while (tickCount > 0) {
+            tickCount--;
+            original.call();
+        }
     }
 }
