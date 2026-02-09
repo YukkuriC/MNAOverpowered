@@ -8,6 +8,7 @@
   "mixins": [
     "MixinCastingResource",
     "MixinConstructMilkCow",
+    "MixinLodestarMenu",
     "MixinWellspringNode",
     "MixinWellspringSystem",
     "fixes.FixItemFilterWithHollow",
