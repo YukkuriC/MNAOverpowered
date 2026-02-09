@@ -7,12 +7,12 @@
   type: boolean
   default: 'true'
   descrip: "Eldrin Matrices no more diminish when placed more than 1"
-  category: misc
+  category: Blocks
 - name: EmpoweredEldrinMatrix
   type: boolean
   default: 'true'
   descrip: "Eldrin Matrices will receive multiplier from Eldrin Wellsprings"
-  category: misc
+  category: Blocks
 - name: ConstructMilkingCooldown
   type: double
   default: "3, Double.MIN_VALUE, Double.MAX_VALUE"
@@ -28,6 +28,12 @@
   default: "25, 0, Double.MAX_VALUE"
   descrip: "Maximum strength for natural random wellsprings"
   category: misc
+- name: RuneForgeHybridCrystalUpgrade
+  type: boolean
+  default: 'true'
+  descrip: "Allowing Rune Forges to enable multiple upgrades at once; note: still need a pair of pedestals and crystals to work"
+  category: Blocks
+
 - name: EnablesLocateWellspringCommand
   type: enum
   default: OP_ONLY

@@ -12,6 +12,7 @@ public class MNAOPConfig {
             Cfg_FastRegenManaIgnoresSaturation,
             Cfg_NonDiminishingEldrinMatrix,
             Cfg_EmpoweredEldrinMatrix,
+            Cfg_RuneForgeSingleCrystalUpgrade,
             Cfg_UnlimitedOrrery,
             Cfg_InstantConstructShlorps,
             Cfg_ShowReadableAdmixtureFormula,
@@ -25,11 +26,16 @@ public class MNAOPConfig {
 
     static {
         Cfg_FastRegenManaIgnoresSaturation = BUILDER.comment("Speed-up casting resource regeneration, regardless of player's food saturation").define("FastRegenManaIgnoresSaturation", true);
-        Cfg_NonDiminishingEldrinMatrix = BUILDER.comment("Eldrin Matrices no more diminish when placed more than 1").define("NonDiminishingEldrinMatrix", true);
-        Cfg_EmpoweredEldrinMatrix = BUILDER.comment("Eldrin Matrices will receive multiplier from Eldrin Wellsprings").define("EmpoweredEldrinMatrix", true);
         Cfg_ConstructMilkingCooldown = BUILDER.comment("Configurable construct's milking cooldown (in minutes);\nset to values < 0 to disable this feature;\nthe real cooldown will be a random value between 1-2 times of this set value").defineInRange("ConstructMilkingCooldown", 3, Double.MIN_VALUE, Double.MAX_VALUE);
         Cfg_NaturalWellspringMinStrength = BUILDER.comment("Minimum strength for natural random wellsprings").defineInRange("NaturalWellspringMinStrength", 5, 0, Double.MAX_VALUE);
         Cfg_NaturalWellspringMaxStrength = BUILDER.comment("Maximum strength for natural random wellsprings").defineInRange("NaturalWellspringMaxStrength", 25, 0, Double.MAX_VALUE);
+        if (MNAOPMod.ConfigGroupActive("Blocks")) {
+            BUILDER.push("Blocks");
+            Cfg_NonDiminishingEldrinMatrix = BUILDER.comment("Eldrin Matrices no more diminish when placed more than 1").define("NonDiminishingEldrinMatrix", true);
+            Cfg_EmpoweredEldrinMatrix = BUILDER.comment("Eldrin Matrices will receive multiplier from Eldrin Wellsprings").define("EmpoweredEldrinMatrix", true);
+            Cfg_RuneForgeSingleCrystalUpgrade = BUILDER.comment("Allowing single-crystal upgrade for Rune Forges, as well as enabling multiple upgrades at once.").define("RuneForgeSingleCrystalUpgrade", true);
+            BUILDER.pop();
+        }
         if (MNAOPMod.ConfigGroupActive("Commands")) {
             BUILDER.push("Commands");
             Cfg_EnablesLocateWellspringCommand = BUILDER.comment("Whether this command is available to normal players or OPs").defineEnum("EnablesLocateWellspringCommand", MNAOPEnums.CommandStatus.OP_ONLY);
@@ -65,6 +71,9 @@ public class MNAOPConfig {
     }
     public static double NaturalWellspringMaxStrength() {
         return Cfg_NaturalWellspringMaxStrength.get();
+    }
+    public static boolean RuneForgeSingleCrystalUpgrade() {
+        return Cfg_RuneForgeSingleCrystalUpgrade.get();
     }
     public static MNAOPEnums.CommandStatus EnablesLocateWellspringCommand() {
         return (MNAOPEnums.CommandStatus) Cfg_EnablesLocateWellspringCommand.get();

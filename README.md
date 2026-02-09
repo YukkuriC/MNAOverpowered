@@ -11,9 +11,12 @@ _note: all features that currently can't be turned off are marked with `☆`_
 _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than `mnaoverpowered-common.toml` are marked with `△`, editing which requires a full restart for changes to apply_
 
 - Speed-up casting resource regeneration, regardless of player's food saturation
-- Eldrin Matrices:
-    - no more diminish when placed more than 1
-    - will receive multiplier from Eldrin Wellsprings
+- Block changes:
+    - Eldrin Matrices:
+        - no more diminish when placed more than 1
+        - will receive multiplier from Eldrin Wellsprings
+    - Rune Forges can grant both upgrades using hybrid crystal pairs
+        - _note: still need a pair of pedestals and crystals to work_
 - Configurable construct's milking cooldown
     - set to values < 0 to disable this feature
     - the real cooldown will be a random value between 1-2 times of this set value
