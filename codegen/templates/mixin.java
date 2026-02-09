@@ -12,12 +12,14 @@ import java.util.Set;
 
 public class MNAOPMixinConfigFile {
     static final String CONFIG_PATH = "config/mnaoverpowered-mixin.ini";
-    static final String KEY_DeniedMixinClasses = "DeniedMixinClasses";
-    static final String KEY_DeniedConstructTasks = "DeniedConstructTasks";
+    {%- for cfg in data %}
+    static final String KEY_{{ cfg.name }} = "{{ cfg.name }}";
+    {%- endfor %}
 
     final Path configPath = Path.of(CONFIG_PATH);
-    final Set<String> DeniedMixinClasses = new HashSet<>();
-    final Set<String> DeniedConstructTasks = new HashSet<>();
+    {%- for cfg in data %}
+    final Set<String> {{ cfg.name }} = new HashSet<>();
+    {%- endfor %}
     void dumpSet(String raw, Set<String> target) {
         target.clear();
         for (var sub : raw.split(",")) {
@@ -28,8 +30,9 @@ public class MNAOPMixinConfigFile {
     }
     void processConfigLine(String key, String val) {
         switch (key) {
-            case KEY_DeniedMixinClasses -> dumpSet(val, DeniedMixinClasses);
-            case KEY_DeniedConstructTasks -> dumpSet(val, DeniedConstructTasks);
+            {%- for cfg in data %}
+            case KEY_{{ cfg.name }} -> dumpSet(val, {{ cfg.name }});
+            {%- endfor %}
         }
     }
 
@@ -72,12 +75,12 @@ public class MNAOPMixinConfigFile {
     }
     private void saveInner() throws IOException {
         var sb = new StringBuilder();
-        sb.append("# mixin classes that will be ignored before load; input their names separated by comma\n");
-        sb.append("# e.g. MixinCastingResource, MixinInstantConstructShlorper\n");
-        sb.append(String.format("%s=%s\n", KEY_DeniedMixinClasses, String.join(", ", DeniedMixinClasses)));
-        sb.append("# construct tasks that won't be registered; input their registry IDs (without namespace) separated by comma\n");
-        sb.append("# e.g. batch_provide_materia\n");
-        sb.append(String.format("%s=%s\n", KEY_DeniedConstructTasks, String.join(", ", DeniedConstructTasks)));
+        {%- for cfg in data %}
+            {%- for line in cfg.descrip.strip().split('\n') %}
+        sb.append("# {{ line }}\n");
+            {%- endfor %}
+        sb.append(String.format("%s=%s\n", KEY_{{ cfg.name }}, String.join(", ", {{ cfg.name }})));
+        {%- endfor %}
         Files.writeString(configPath, sb.toString(), StandardCharsets.UTF_8);
     }
 }

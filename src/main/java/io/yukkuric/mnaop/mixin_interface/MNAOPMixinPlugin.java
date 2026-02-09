@@ -15,7 +15,7 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
         INSTANCE = this;
     }
     public static boolean isConstructTaskDenied(String path) {
-        return INSTANCE.CFG.deniedConstructTasks.contains(path);
+        return INSTANCE.CFG.DeniedConstructTasks.contains(path);
     }
 
     final MNAOPMixinConfigFile CFG = new MNAOPMixinConfigFile();
@@ -35,7 +35,7 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetCls, String mixinCls) {
         var raw = mixinCls.split("\\.");
         var mixinClsName = raw[raw.length - 1];
-        if (CFG.deniedMixinClasses.contains(mixinClsName)) {
+        if (CFG.DeniedMixinClasses.contains(mixinClsName)) {
             MNAOPMod.LOGGER.warn("Denied mixin class: {}", mixinCls);
             return false;
         }

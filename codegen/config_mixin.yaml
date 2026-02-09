@@ -1,0 +1,8 @@
+- name: DeniedMixinClasses
+  descrip: |
+    mixin classes that will be ignored before load; input their names separated by comma
+    e.g. MixinCastingResource, MixinInstantConstructShlorper
+- name: DeniedConstructTasks
+  descrip: |
+    construct tasks that won't be registered; input their registry IDs (without namespace) separated by comma
+    e.g. batch_provide_materia
