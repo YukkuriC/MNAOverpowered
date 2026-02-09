@@ -26,7 +26,8 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
         - including group-included nodes and their inner connections
     - Pressing `Delete` or `BackSpace` to remove current selected group or node
     - Removing a group holding `Shift` to wipe its node contents too
-    - `Ctrl + Z` to undo; `Ctrl + Y` or `Ctrl + Shift + Z` to redo
+    - (experimental) `Ctrl + Z` to undo; `Ctrl + Y` or `Ctrl + Shift + Z` to redo
+        - ONLY DURING SCREEN OPEN, will lose all undos after closing menu and saving changes
 
 ---
 
