@@ -12,7 +12,8 @@ public class MNAOPConfig {
             Cfg_FastRegenManaIgnoresSaturation,
             Cfg_NonDiminishingEldrinMatrix,
             Cfg_EmpoweredEldrinMatrix,
-            Cfg_RuneForgeSingleCrystalUpgrade,
+            Cfg_RuneForgeHybridCrystalUpgrade,
+            Cfg_CodexArcanaShiftQuery,
             Cfg_UnlimitedOrrery,
             Cfg_InstantConstructShlorps,
             Cfg_ShowReadableAdmixtureFormula,
@@ -33,7 +34,12 @@ public class MNAOPConfig {
             BUILDER.push("Blocks");
             Cfg_NonDiminishingEldrinMatrix = BUILDER.comment("Eldrin Matrices no more diminish when placed more than 1").define("NonDiminishingEldrinMatrix", true);
             Cfg_EmpoweredEldrinMatrix = BUILDER.comment("Eldrin Matrices will receive multiplier from Eldrin Wellsprings").define("EmpoweredEldrinMatrix", true);
-            Cfg_RuneForgeSingleCrystalUpgrade = BUILDER.comment("Allowing single-crystal upgrade for Rune Forges, as well as enabling multiple upgrades at once.").define("RuneForgeSingleCrystalUpgrade", true);
+            Cfg_RuneForgeHybridCrystalUpgrade = BUILDER.comment("Allowing Rune Forges to enable multiple upgrades at once; note: still need a pair of pedestals and crystals to work").define("RuneForgeHybridCrystalUpgrade", true);
+            BUILDER.pop();
+        }
+        if (MNAOPMod.ConfigGroupActive("Display")) {
+            BUILDER.push("Display");
+            Cfg_CodexArcanaShiftQuery = BUILDER.comment("Shift-right click blocks using Codex Arcana to open related entry (like what Patchouli does)").define("CodexArcanaShiftQuery", true);
             BUILDER.pop();
         }
         if (MNAOPMod.ConfigGroupActive("Commands")) {
@@ -72,8 +78,11 @@ public class MNAOPConfig {
     public static double NaturalWellspringMaxStrength() {
         return Cfg_NaturalWellspringMaxStrength.get();
     }
-    public static boolean RuneForgeSingleCrystalUpgrade() {
-        return Cfg_RuneForgeSingleCrystalUpgrade.get();
+    public static boolean RuneForgeHybridCrystalUpgrade() {
+        return Cfg_RuneForgeHybridCrystalUpgrade.get();
+    }
+    public static boolean CodexArcanaShiftQuery() {
+        return Cfg_CodexArcanaShiftQuery.get();
     }
     public static MNAOPEnums.CommandStatus EnablesLocateWellspringCommand() {
         return (MNAOPEnums.CommandStatus) Cfg_EnablesLocateWellspringCommand.get();

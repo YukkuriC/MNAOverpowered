@@ -33,6 +33,11 @@
   default: 'true'
   descrip: "Allowing Rune Forges to enable multiple upgrades at once; note: still need a pair of pedestals and crystals to work"
   category: Blocks
+- name: CodexArcanaShiftQuery
+  type: boolean
+  default: 'true'
+  descrip: "Shift-right click blocks using Codex Arcana to open related entry (like what Patchouli does)"
+  category: Display
 
 - name: EnablesLocateWellspringCommand
   type: enum

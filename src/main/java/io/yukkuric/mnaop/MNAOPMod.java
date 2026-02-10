@@ -2,10 +2,14 @@ package io.yukkuric.mnaop;
 
 import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.command.MNAOPCommands;
+import io.yukkuric.mnaop.gui.GuideBookQueryHandler;
 import io.yukkuric.mnaop.magichem.MagiChemEvents;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -47,6 +51,16 @@ public class MNAOPMod {
                 MinecraftForge.EVENT_BUS.addListener(MagiChemEvents::HandleTooltips);
                 MinecraftForge.EVENT_BUS.addListener(MagiChemEvents::HandleLoggedIn);
             }
+
+            // book shift-click
+
+            MinecraftForge.EVENT_BUS.addListener((PlayerInteractEvent.RightClickBlock e) -> GuideBookQueryHandler.pushQueryEntry(e.getEntity(), e.getLevel()));
+        }
+        @SubscribeEvent
+        public static void registerOverlays(RegisterGuiOverlaysEvent e) {
+            e.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "codex_query",
+                    (gui, poseStack, partialTick, width, height) -> GuideBookQueryHandler.renderQueryEntry(poseStack)
+            );
         }
     }
 }

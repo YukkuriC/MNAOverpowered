@@ -35,7 +35,7 @@ public abstract class MixinRuneForge extends TileEntityWithInventory implements 
         }
     }
     private void generalHook(String target, CallbackInfoReturnable<Boolean> cir) {
-        if (!MNAOPConfig.RuneForgeSingleCrystalUpgrade()) return;
+        if (!MNAOPConfig.RuneForgeHybridCrystalUpgrade()) return;
         switch (getBlockState().getValue(RuneforgeBlock.FACING)) {
             case EAST, WEST -> generalHookSided(target, Direction.NORTH, Direction.SOUTH, cir);
             case NORTH, SOUTH -> generalHookSided(target, Direction.EAST, Direction.WEST, cir);

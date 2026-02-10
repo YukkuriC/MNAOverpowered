@@ -2,6 +2,8 @@
   "commands.locate.wellspring.info": "[%s, ~, %s] (强度=%.2f)",
   "construct.mnaoverpowered:batch_provide_materia": "批量供应原质",
   "gui.mna.parameter.provide_materia.point.batch": "构装体应该向哪一台炼金设备供应原质？（使用标记之书提供）",
+  "mnaop.codex.query.sneak": "潜行右键以查看",
+  "mnaop.codex.query.view": "右键以查看",
   "mnaop.constructs.feedback.batch_provide_materia.summary": "已从 %2$d 个标记加载 %1$d 个任务。",
   "mnaop.constructs.feedback.batch_provide_materia.sub_task": "开始任务 #%d （目标：%s）……"
 }
