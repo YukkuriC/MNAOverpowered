@@ -1,7 +1,6 @@
 package io.yukkuric.mnaop.mixin_interface;
 
-import io.yukkuric.mnaop.MNAOPMod;
-import net.minecraft.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +21,7 @@ public class MNAOPMixinConfigFile {
         target.clear();
         for (var sub : raw.split(",")) {
             sub = sub.trim();
-            if (StringUtil.isNullOrEmpty(sub)) continue;
+            if (StringUtils.isEmpty(sub)) continue;
             target.add(sub);
         }
     }
@@ -47,11 +46,11 @@ public class MNAOPMixinConfigFile {
         try {
             task.run();
         } catch (Throwable e) {
-            MNAOPMod.LOGGER.error("Error when {}ing mixin config: {}", name, e.getLocalizedMessage());
+            MNAOPMixinPlugin.LOGGER.error("Error when {}ing mixin config: {}", name, e.getLocalizedMessage());
             try (var sw = new StringWriter()) {
                 try (var writer = new PrintWriter(sw)) {
                     e.printStackTrace(writer);
-                    MNAOPMod.LOGGER.error(sw.toString());
+                    MNAOPMixinPlugin.LOGGER.error(sw.toString());
                 }
             } catch (Throwable ignored) {
             }
@@ -64,7 +63,7 @@ public class MNAOPMixinConfigFile {
             if (line.startsWith("#")) continue;
             var raw = line.split("=", -1);
             if (raw.length != 2) {
-                MNAOPMod.LOGGER.error("Error when reading mixin config line: need exactly 1 '='\nline: " + line);
+                MNAOPMixinPlugin.LOGGER.error("Error when reading mixin config line: need exactly 1 '='\nline: " + line);
                 continue;
             }
             processConfigLine(raw[0].trim(), raw[1].trim());

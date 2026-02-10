@@ -1,8 +1,10 @@
 package io.yukkuric.mnaop.mixin_interface;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
+import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.MNAOPMod;
 import org.objectweb.asm.tree.ClassNode;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 public class MNAOPMixinPlugin implements IMixinConfigPlugin {
+    static final Logger LOGGER = LogUtils.getLogger();
+
     public static MNAOPMixinPlugin INSTANCE;
     public MNAOPMixinPlugin() {
         INSTANCE = this;
