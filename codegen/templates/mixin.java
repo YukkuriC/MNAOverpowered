@@ -65,7 +65,7 @@ public class MNAOPMixinConfigFile {
         var lines = Files.readString(configPath, StandardCharsets.UTF_8).split("\n");
         for (var line : lines) {
             if (line.startsWith("#")) continue;
-            var raw = line.split("=");
+            var raw = line.split("=", -1);
             if (raw.length != 2) {
                 MNAOPMod.LOGGER.error("Error when reading mixin config line: need exactly 1 '='\nline: " + line);
                 continue;
