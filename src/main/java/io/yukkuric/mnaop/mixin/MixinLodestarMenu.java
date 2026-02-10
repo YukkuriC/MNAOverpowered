@@ -16,11 +16,11 @@ import java.util.LinkedList;
 public abstract class MixinLodestarMenu implements IUndoStack {
     private static final int MAX_UNDO_COUNT = 200;
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract void setTileLogic(CompoundTag logic);
-    @Shadow
+    @Shadow(remap = false)
     private LodestarTile lodestar;
-    @Shadow
+    @Shadow(remap = false)
     public abstract CompoundTag getLogic();
     private LinkedList<CompoundTag> undoStack = new LinkedList<>();
     private LinkedList<CompoundTag> redoStack = new LinkedList<>();

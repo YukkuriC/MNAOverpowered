@@ -8,7 +8,6 @@ import com.mna.gui.containers.block.ContainerLodestar;
 import com.mna.gui.widgets.lodestar.LodestarGroup;
 import com.mna.gui.widgets.lodestar.LodestarNode;
 import io.yukkuric.mnaop.mixin_interface.IUndoStack;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,52 +27,46 @@ public abstract class MixinLodestarGUI extends GuiJEIDisable<ContainerLodestar> 
         super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
     }
 
-    @Shadow
+    @Shadow(remap = false)
     private LodestarGroup selectedGroup;
-    @Shadow
+    @Shadow(remap = false)
     private LodestarNode selectedNode;
-    @Shadow
+    @Shadow(remap = false)
     protected abstract CompoundTag saveLogic();
 
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void nodeSubClick(LodestarNode node);
-    @Shadow
+    @Shadow(remap = false)
     public abstract LodestarNode getNodeById(String id);
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void insertNode(LodestarNode node);
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void selectNode(LodestarNode node);
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void groupClicked(LodestarGroup group, boolean forDelete);
-    @Shadow
+    @Shadow(remap = false)
     private List<LodestarGroup> nodeGroups;
-    @Shadow
+    @Shadow(remap = false)
     protected abstract List<LodestarNode> getNodesInGroup(LodestarGroup group);
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void deselectNode();
-    @Shadow
-    private EditBox filterBox;
-    @Shadow
-    private EditBox groupBox;
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void deleteNode(LodestarNode node);
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void loadLogic(CompoundTag input);
-    @Shadow
+    @Shadow(remap = false)
     private List<LodestarNode> nodes;
-    @Shadow
-    protected abstract void recenterView();
-    @Shadow
+    @Shadow(remap = false)
     private LodestarGroup creatingGroup;
-    @Shadow
+    @Shadow(remap = false)
     private LodestarGroup draggingGroup;
-    @Shadow
+    @Shadow(remap = false)
     private LodestarNode draggingNode;
-    @Shadow
+    @Shadow(remap = false)
     private int scroll_pos_y;
-    @Shadow
+    @Shadow(remap = false)
     private int scroll_pos_x;
-    @Shadow
+    @Shadow(remap = false)
     public static float Zoom;
     private LodestarNode duplicate(LodestarNode original, int dx, int dy) {
         var saved = original.toCompoundTag(0, 0);

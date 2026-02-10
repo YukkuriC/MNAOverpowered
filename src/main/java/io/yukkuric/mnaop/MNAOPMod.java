@@ -22,6 +22,7 @@ public class MNAOPMod {
     public static final String MODID = "mnaoverpowered";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    @SuppressWarnings("removal")
     public MNAOPMod() {
         // IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus eventBus = MinecraftForge.EVENT_BUS;

@@ -8,6 +8,6 @@ import java.util.HashMap;
 
 @Mixin(LodestarNode.class)
 public interface AccessorLodestarNode {
-    @Accessor
+    @Accessor(remap = false)
     HashMap<Integer, String> getConnections();
 }
