@@ -1,10 +1,9 @@
 package io.yukkuric.mnaop.mixin_interface;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
-import com.mojang.logging.LogUtils;
-import io.yukkuric.mnaop.MNAOPMod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -12,11 +11,13 @@ import java.util.List;
 import java.util.Set;
 
 public class MNAOPMixinPlugin implements IMixinConfigPlugin {
-    static final Logger LOGGER = LogUtils.getLogger();
+    static final Logger LOGGER = LogManager.getLogger("mnaop-mixin");
+    ;
 
     public static MNAOPMixinPlugin INSTANCE;
     public MNAOPMixinPlugin() {
         INSTANCE = this;
+        LOGGER.info("mixin loaded");
     }
     public static boolean isConstructTaskDenied(String path) {
         return INSTANCE.CFG.DeniedConstructTasks.contains(path);
@@ -39,8 +40,12 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetCls, String mixinCls) {
         var raw = mixinCls.split("\\.");
         var mixinClsName = raw[raw.length - 1];
-        if (CFG.DeniedMixinClasses.contains(mixinClsName)) {
-            MNAOPMod.LOGGER.warn("Denied mixin class: {}", mixinCls);
+        var shouldDeny = CFG.DeniedMixinClasses.contains(mixinClsName);
+        if (!shouldDeny && mixinClsName.contains("$")) {
+            shouldDeny = CFG.DeniedMixinClasses.contains(mixinClsName.split("\\$")[0]);
+        }
+        if (shouldDeny) {
+            LOGGER.warn("Denied mixin class: {}", mixinCls);
             return false;
         }
         return true;
