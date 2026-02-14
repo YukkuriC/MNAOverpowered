@@ -7,12 +7,16 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     static final Logger LOGGER = LogManager.getLogger("mnaop-mixin");
-    ;
+    static final Map<String, String> modCheckTargets = new HashMap<>() {
+        {
+            put("magichem", "com.aranaira.magichem.MagiChemMod");
+            put("computercraft", "dan200.computercraft.ComputerCraft");
+        }
+    };
 
     public static MNAOPMixinPlugin INSTANCE;
     public MNAOPMixinPlugin() {
@@ -38,11 +42,20 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     }
     @Override
     public boolean shouldApplyMixin(String targetCls, String mixinCls) {
-        var raw = mixinCls.split("\\.");
-        var mixinClsName = raw[raw.length - 1];
-        var shouldDeny = CFG.DeniedMixinClasses.contains(mixinClsName);
-        if (!shouldDeny && mixinClsName.contains("$")) {
-            shouldDeny = CFG.DeniedMixinClasses.contains(mixinClsName.split("\\$")[0]);
+        // by interop check
+        for (var modid : modCheckTargets.entrySet())
+            if (mixinCls.contains(modid.getKey()) && !classExists(modid.getValue())) {
+                LOGGER.warn("Skipped mixin class: {} (mod {} missing)", mixinCls, modid.getKey());
+                return false;
+            }
+
+        // by blacklist config
+        var shouldDeny = false;
+        for (var key : CFG.DeniedMixinClasses) {
+            if (mixinCls.contains(key)) {
+                shouldDeny = true;
+                break;
+            }
         }
         if (shouldDeny) {
             LOGGER.warn("Denied mixin class: {}", mixinCls);
@@ -62,5 +75,12 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     }
     @Override
     public void postApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {
+    }
+
+    private boolean classExists(String path) {
+        var resourcePath = path.replace('.', '/') + ".class";
+        var classLoader = Thread.currentThread().getContextClassLoader();
+        var resource = classLoader.getResource(resourcePath);
+        return resource != null;
     }
 }
