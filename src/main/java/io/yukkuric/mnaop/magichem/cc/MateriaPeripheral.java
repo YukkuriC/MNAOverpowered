@@ -12,7 +12,7 @@ import java.util.List;
 import static com.aranaira.magichem.block.entity.ext.AbstractMateriaStorageMultiTypeBlockEntity.materiaMap;
 
 public class MateriaPeripheral implements GenericPeripheral {
-    public static final String ID = MNAOPMod.MODID + ":mirror_labyrinth";
+    public static final String ID = MNAOPMod.MODID + ":materia_holder";
     public static MateriaPeripheral INSTANCE = new MateriaPeripheral();
 
     @Override
