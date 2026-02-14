@@ -43,6 +43,8 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
     - `△` Custom construct task nodes
         - Batch provide materia to all locations inside a Book of Marks
             - including actuators connected to the root machine (starting from `v0.5.2-pre16`)
+    - `☆` CC:Tweaked interop:
+        - peripheral support for multi-materia blocks (e.g. Mirror Labyrinth)
 
 ---
 

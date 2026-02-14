@@ -4,6 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 
 public class MNAOPHelpers {
+    public static boolean IsModLoaded(String modId) {
+        return ModList.get().isLoaded(modId);
+    }
     public static boolean IsMagiChemLoaded() {
         return ModList.get().isLoaded("magichem");
     }

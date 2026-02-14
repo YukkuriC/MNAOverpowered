@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.command.MNAOPCommands;
 import io.yukkuric.mnaop.gui.GuideBookQueryHandler;
 import io.yukkuric.mnaop.magichem.MagiChemEvents;
+import io.yukkuric.mnaop.magichem.cc.MagiChemCCInterop;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
 import static io.yukkuric.mnaop.MNAOPHelpers.IsMagiChemLoaded;
+import static io.yukkuric.mnaop.MNAOPHelpers.IsModLoaded;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(MNAOPMod.MODID)
@@ -32,6 +34,11 @@ public class MNAOPMod {
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MNAOPConfig.SPEC);
         eventBus.addListener((RegisterCommandsEvent event) -> MNAOPCommands.register(event.getDispatcher()));
+
+        // interop
+        if (IsMagiChemLoaded()) {
+            if (IsModLoaded("computercraft")) MagiChemCCInterop.Init();
+        }
     }
 
     public static boolean ConfigGroupActive(String grp) {
@@ -53,7 +60,6 @@ public class MNAOPMod {
             }
 
             // book shift-click
-
             MinecraftForge.EVENT_BUS.addListener((PlayerInteractEvent.RightClickBlock e) -> GuideBookQueryHandler.pushQueryEntry(e.getEntity(), e.getLevel()));
         }
         @SubscribeEvent

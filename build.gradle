@@ -96,6 +96,8 @@ dependencies {
     // implementation fg.deobf("curse.maven:magichem-982204:7190149")
     implementation fg.deobf("magichem:magichem:0.5.2-pre15")
 
+    implementation fg.deobf("curse.maven:cc-tweaked-282001:5714507")
+
     // mixinextras
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.0")) {

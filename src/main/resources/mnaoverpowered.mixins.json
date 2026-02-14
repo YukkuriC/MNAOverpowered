@@ -19,7 +19,8 @@
     "magichem.AccessorConstructProvideMateria",
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
-    "magichem.MixinOrreryLimitBreak"
+    "magichem.MixinOrreryLimitBreak",
+    "magichem.computercraft.MixinLabyrinthPeripheral"
   ],
   "client": [
     "AccessorLodestarNode",
