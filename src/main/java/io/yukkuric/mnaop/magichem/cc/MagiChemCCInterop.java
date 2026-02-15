@@ -5,5 +5,6 @@ import dan200.computercraft.api.ComputerCraftAPI;
 public class MagiChemCCInterop {
     public static void Init() {
         ComputerCraftAPI.registerGenericSource(MateriaPeripheral.INSTANCE);
+        ComputerCraftAPI.registerGenericSource(AlchemicalRecipePeripheral.INSTANCE);
     }
 }
