@@ -1,6 +1,7 @@
 package io.yukkuric.mnaop.magichem.cc;
 
 import com.aranaira.magichem.block.entity.ext.AbstractMateriaStorageMultiTypeBlockEntity;
+import com.aranaira.magichem.block.entity.ext.AbstractMateriaStorageSingleTypeBlockEntity;
 import com.aranaira.magichem.item.MateriaItem;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
@@ -44,5 +45,22 @@ public class MateriaPeripheral implements GenericPeripheral {
     public float getPercent(AbstractMateriaStorageMultiTypeBlockEntity be, String id) throws LuaException {
         var mat = toMateria(id);
         return be.getCurrentStockPercent(mat);
+    }
+
+    @LuaFunction(mainThread = true)
+    public String getMateriaType(AbstractMateriaStorageSingleTypeBlockEntity be) {
+        return be.getMateriaType().getMateriaName();
+    }
+    @LuaFunction(mainThread = true)
+    public int getAmount(AbstractMateriaStorageSingleTypeBlockEntity be) throws LuaException {
+        return be.getCurrentStock();
+    }
+    @LuaFunction(mainThread = true)
+    public int getLimit(AbstractMateriaStorageSingleTypeBlockEntity be, String id) throws LuaException {
+        return be.getStorageLimit();
+    }
+    @LuaFunction(mainThread = true)
+    public float getPercent(AbstractMateriaStorageSingleTypeBlockEntity be, String id) throws LuaException {
+        return be.getCurrentStockPercent();
     }
 }
