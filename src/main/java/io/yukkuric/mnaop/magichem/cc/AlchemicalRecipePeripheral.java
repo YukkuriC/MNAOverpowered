@@ -1,5 +1,7 @@
 package io.yukkuric.mnaop.magichem.cc;
 
+import com.aranaira.magichem.block.entity.AlchemicalNexusBlockEntity;
+import com.aranaira.magichem.block.entity.routers.AlchemicalNexusRouterBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
 import com.mojang.authlib.GameProfile;
 import dan200.computercraft.api.detail.VanillaDetailRegistries;
@@ -13,8 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class AlchemicalRecipePeripheral implements GenericPeripheral {
     public static final String ID = MNAOPMod.MODID + ":recipe_holder";
@@ -41,5 +42,17 @@ public class AlchemicalRecipePeripheral implements GenericPeripheral {
             workerSetRecipe = new FakePlayer(beReal.getLevel().getServer().overworld(), new GameProfile(UUID.randomUUID(), "worker"));
         }
         return be.setRecipe(new ItemStack(stack), workerSetRecipe);
+    }
+
+    // nexus stages
+    @LuaFunction(mainThread = true)
+    public List<Integer> getStage(AlchemicalNexusBlockEntity be) {
+        return List.of(be.getCraftingStage(), be.getAnimStage());
+    }
+    @LuaFunction(mainThread = true)
+    public List<Integer> getStage(AlchemicalNexusRouterBlockEntity be) throws LuaException {
+        var master = be.getMaster();
+        if (master == null) throw new LuaException("Router missing master");
+        return getStage(master);
     }
 }
