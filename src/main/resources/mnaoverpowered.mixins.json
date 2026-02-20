@@ -21,6 +21,9 @@
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
     "magichem.computercraft.MixinLabyrinthPeripheral",
+    "magichem.computercraft.MixinLatestUserExtended",
+    "magichem.computercraft.MixinLatestUserExtended$Menu_Style1",
+    "magichem.computercraft.MixinLatestUserExtended$Menu_Style2",
     "magichem.computercraft.MixinNexusLatestUser"
   ],
   "client": [

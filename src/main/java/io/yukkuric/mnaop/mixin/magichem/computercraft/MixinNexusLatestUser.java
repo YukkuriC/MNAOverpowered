@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Mixin(AlchemicalNexusBlockEntity.class)
 public class MixinNexusLatestUser extends BlockEntity implements IHasLastUser {
-    @Shadow
+    @Shadow(remap = false)
     protected UUID initiatingPlayer;
 
     public MixinNexusLatestUser() {
