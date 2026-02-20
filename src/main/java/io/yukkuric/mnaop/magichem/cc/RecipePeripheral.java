@@ -1,7 +1,5 @@
 package io.yukkuric.mnaop.magichem.cc;
 
-import com.aranaira.magichem.block.entity.AlchemicalNexusBlockEntity;
-import com.aranaira.magichem.block.entity.routers.AlchemicalNexusRouterBlockEntity;
 import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
 import com.mojang.authlib.GameProfile;
@@ -19,7 +17,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 
 public class RecipePeripheral implements GenericPeripheral {
     public static final String ID = MNAOPMod.MODID + ":recipe_holder";
@@ -33,8 +32,14 @@ public class RecipePeripheral implements GenericPeripheral {
 
     @LuaFunction(mainThread = true)
     public Map<String, ?> getRecipe(IHasDeviceRecipeSlot be) {
-        var stack = be.getRecipeItem();
-        if (stack.isEmpty()) return null;
+        ItemStack stack = null;
+        try {
+            stack = be.getRecipeItem();
+        } catch (Throwable e) {
+            MNAOPMod.LOGGER.error("error in {}.getRecipe: {}", be.getClass().getSimpleName(), e);
+        }
+        if (stack == null || stack.isEmpty()) return null;
+
         return VanillaDetailRegistries.ITEM_STACK.getBasicDetails(stack);
     }
     @LuaFunction(mainThread = true)
@@ -62,6 +67,11 @@ public class RecipePeripheral implements GenericPeripheral {
             worker = workerSetRecipe;
         }
 
-        return be.setRecipe(new ItemStack(stack), worker);
+        try {
+            return be.setRecipe(new ItemStack(stack), worker);
+        } catch (Throwable e) {
+            MNAOPMod.LOGGER.error("error in {}.setRecipe: {}", be.getClass().getSimpleName(), e);
+            return -1;
+        }
     }
 }

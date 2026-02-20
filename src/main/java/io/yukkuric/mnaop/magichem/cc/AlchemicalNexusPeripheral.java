@@ -32,7 +32,7 @@ public class AlchemicalNexusPeripheral implements GenericPeripheral {
 
     // item requirements & supply
     @LuaFunction(mainThread = true)
-    public List<Map<String, Object>> getItemRequirements(AlchemicalNexusBlockEntity be) {
+    public List<Map<String, Object>> getStageItemRequirements(AlchemicalNexusBlockEntity be) {
         var recipe = be.getCurrentRecipe();
         if (recipe == null) return List.of();
         var stage = recipe.getStages(false).get(be.getCraftingStage());

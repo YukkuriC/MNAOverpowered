@@ -39,7 +39,7 @@ public class AlchemicalNexusRouterPeripheral implements GenericPeripheral {
 
     // item requirements & supply
     @LuaFunction(mainThread = true)
-    public List<Map<String, Object>> getItemRequirements(AlchemicalNexusRouterBlockEntity be) throws LuaException {
-        return MASTER.getItemRequirements(master(be));
+    public List<Map<String, Object>> getStageItemRequirements(AlchemicalNexusRouterBlockEntity be) throws LuaException {
+        return MASTER.getStageItemRequirements(master(be));
     }
 }
