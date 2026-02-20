@@ -4,7 +4,6 @@ import com.aranaira.magichem.block.entity.*;
 import com.aranaira.magichem.gui.*;
 import io.yukkuric.mnaop.mixin_interface.magichem.IHasLastUser;
 import net.minecraft.nbt.*;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -37,9 +36,9 @@ public class MixinLatestUserExtended extends BlockEntity implements IHasLastUser
     }
     @Override
     public void setLastUser(Player newUser) {
+        if (newUser.level().isClientSide) return;
         lastUser = newUser == null ? null : newUser.getUUID();
         setChanged();
-        newUser.sendSystemMessage(Component.literal("new user=" + newUser));
     }
 
     @Inject(method = "load", at = @At("HEAD"))
