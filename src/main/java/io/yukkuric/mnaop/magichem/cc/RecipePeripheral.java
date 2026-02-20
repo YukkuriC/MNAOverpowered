@@ -21,9 +21,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
-public class AlchemicalRecipePeripheral implements GenericPeripheral {
+public class RecipePeripheral implements GenericPeripheral {
     public static final String ID = MNAOPMod.MODID + ":recipe_holder";
-    public static AlchemicalRecipePeripheral INSTANCE = new AlchemicalRecipePeripheral();
+    public static RecipePeripheral INSTANCE = new RecipePeripheral();
     private static FakePlayer workerSetRecipe;
 
     @Override
@@ -63,17 +63,5 @@ public class AlchemicalRecipePeripheral implements GenericPeripheral {
         }
 
         return be.setRecipe(new ItemStack(stack), worker);
-    }
-
-    // nexus stages
-    @LuaFunction(mainThread = true)
-    public List<Integer> getStage(AlchemicalNexusBlockEntity be) {
-        return List.of(be.getCraftingStage(), be.getAnimStage());
-    }
-    @LuaFunction(mainThread = true)
-    public List<Integer> getStage(AlchemicalNexusRouterBlockEntity be) throws LuaException {
-        var master = be.getMaster();
-        if (master == null) throw new LuaException("Router missing master");
-        return getStage(master);
     }
 }
