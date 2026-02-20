@@ -2,6 +2,7 @@ package io.yukkuric.mnaop.magichem.cc;
 
 import com.aranaira.magichem.block.entity.AlchemicalNexusBlockEntity;
 import com.aranaira.magichem.block.entity.routers.AlchemicalNexusRouterBlockEntity;
+import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
 import com.mojang.authlib.GameProfile;
 import dan200.computercraft.api.detail.VanillaDetailRegistries;
@@ -9,7 +10,10 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.GenericPeripheral;
 import io.yukkuric.mnaop.MNAOPMod;
+import io.yukkuric.mnaop.mixin_interface.magichem.IHasLastUser;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.FakePlayer;
@@ -35,13 +39,30 @@ public class AlchemicalRecipePeripheral implements GenericPeripheral {
     }
     @LuaFunction(mainThread = true)
     public int setRecipe(IHasDeviceRecipeSlot be, String input) throws LuaException {
+        // validate target
         var stack = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(input));
         if (stack == null) throw new LuaException("Invalid item id: " + input);
-        if (!(be instanceof BlockEntity beReal)) throw new LuaException("Peripheral not Block Entity, why?");
-        if (workerSetRecipe == null) {
-            workerSetRecipe = new FakePlayer(beReal.getLevel().getServer().overworld(), new GameProfile(UUID.randomUUID(), "worker"));
+
+        // validate block
+        if (be instanceof IRouterBlockEntity router) {
+            var master = router.getMaster();
+            if (!(master instanceof IHasDeviceRecipeSlot masterBE))
+                throw new LuaException("Router has no valid master, why?");
+            be = masterBE;
         }
-        return be.setRecipe(new ItemStack(stack), workerSetRecipe);
+        if (!(be instanceof BlockEntity beReal)) throw new LuaException("Peripheral not Block Entity, why?");
+
+        // grab user
+        ServerPlayer worker = null;
+        if (be instanceof IHasLastUser holder) worker = holder.getLastUser((ServerLevel) beReal.getLevel());
+        if (worker == null) {
+            if (workerSetRecipe == null) {
+                workerSetRecipe = new FakePlayer(beReal.getLevel().getServer().overworld(), new GameProfile(UUID.randomUUID(), "worker"));
+            }
+            worker = workerSetRecipe;
+        }
+
+        return be.setRecipe(new ItemStack(stack), worker);
     }
 
     // nexus stages

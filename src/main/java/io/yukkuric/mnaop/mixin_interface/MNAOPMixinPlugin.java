@@ -14,7 +14,7 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     static final Map<String, String> modCheckTargets = new HashMap<>() {
         {
             put("magichem", "com.aranaira.magichem.MagiChemMod");
-//            put("computercraft", "dan200.computercraft.ComputerCraft");
+            put("computercraft", "dan200.computercraft.ComputerCraft");
         }
     };
 
