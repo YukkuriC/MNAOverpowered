@@ -12,6 +12,7 @@
     "MixinRuneForge",
     "MixinWellspringNode",
     "MixinWellspringSystem",
+    "computercraft.AccessorInventoryMethods",
     "fixes.FixItemFilterWithHollow",
     "fixes.FixManaPylon",
     "fixes.FixSpellAdjusterRegisterLock",

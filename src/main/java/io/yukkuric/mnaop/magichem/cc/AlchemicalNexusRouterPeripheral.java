@@ -5,6 +5,7 @@ import com.aranaira.magichem.block.entity.routers.AlchemicalNexusRouterBlockEnti
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.GenericPeripheral;
+import dan200.computercraft.api.peripheral.IComputerAccess;
 import io.yukkuric.mnaop.MNAOPMod;
 
 import java.util.List;
@@ -41,5 +42,9 @@ public class AlchemicalNexusRouterPeripheral implements GenericPeripheral {
     @LuaFunction(mainThread = true)
     public List<Map<String, Object>> getStageItemRequirements(AlchemicalNexusRouterBlockEntity be) throws LuaException {
         return MASTER.getStageItemRequirements(master(be));
+    }
+    @LuaFunction(mainThread = true)
+    public int fillRequiredItems(AlchemicalNexusRouterBlockEntity be, IComputerAccess computer, String fromName) throws LuaException {
+        return MASTER.fillRequiredItems(master(be), computer, fromName);
     }
 }
