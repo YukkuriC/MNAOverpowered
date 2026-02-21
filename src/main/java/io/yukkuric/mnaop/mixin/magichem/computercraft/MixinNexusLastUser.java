@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.UUID;
 
 @Mixin(AlchemicalNexusBlockEntity.class)
-public class MixinNexusLatestUser extends BlockEntity implements IHasLastUser {
+public class MixinNexusLastUser extends BlockEntity implements IHasLastUser {
     @Shadow(remap = false)
     protected UUID initiatingPlayer;
 
-    public MixinNexusLatestUser() {
+    public MixinNexusLastUser() {
         super(null, null, null);
     }
     @Override

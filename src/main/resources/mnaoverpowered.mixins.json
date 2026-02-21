@@ -21,10 +21,10 @@
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
-    "magichem.computercraft.MixinLatestUserExtended",
-    "magichem.computercraft.MixinLatestUserExtended$Menu_Style1",
-    "magichem.computercraft.MixinLatestUserExtended$Menu_Style2",
-    "magichem.computercraft.MixinNexusLatestUser"
+    "magichem.computercraft.MixinLastUserExtended",
+    "magichem.computercraft.MixinLastUserExtended$Menu_Style1",
+    "magichem.computercraft.MixinLastUserExtended$Menu_Style2",
+    "magichem.computercraft.MixinNexusLastUser"
   ],
   "client": [
     "AccessorLodestarNode",

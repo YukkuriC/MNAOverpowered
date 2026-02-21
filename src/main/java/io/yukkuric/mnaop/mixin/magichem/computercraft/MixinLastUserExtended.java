@@ -22,11 +22,11 @@ import java.util.UUID;
         GrandFuseryBlockEntity.class,
         PrimeAggregatorBlockEntity.class,
 })
-public class MixinLatestUserExtended extends BlockEntity implements IHasLastUser {
+public class MixinLastUserExtended extends BlockEntity implements IHasLastUser {
     private static final String KEY_USER_SAVE = "mnaop_lastUser";
     private UUID lastUser;
 
-    public MixinLatestUserExtended() {
+    public MixinLastUserExtended() {
         super(null, null, null);
     }
 
