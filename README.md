@@ -48,6 +48,7 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
         - materia container blocks (e.g. Mirror Labyrinth)
         - multi-recipe holder machines (e.g. Alchemical Nexus)
         - Alchemical Nexus specific control (by-stage requirements & auto item supply)
+        - a more detailed Peripheral document can be found [HERE](https://github.com/YukkuriC/MNAOverpowered/blob/main/doc/MagiChemCC.md)
 
 ---
 
