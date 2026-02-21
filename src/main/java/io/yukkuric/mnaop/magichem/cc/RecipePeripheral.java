@@ -31,7 +31,7 @@ public class RecipePeripheral implements GenericPeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public Map<String, ?> getRecipe(IHasDeviceRecipeSlot be) {
+    public Map<String, Object> getRecipe(IHasDeviceRecipeSlot be) {
         ItemStack stack = null;
         try {
             stack = be.getRecipeItem();
