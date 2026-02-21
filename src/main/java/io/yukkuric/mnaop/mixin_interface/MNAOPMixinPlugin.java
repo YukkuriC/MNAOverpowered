@@ -26,6 +26,9 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
     public static boolean isConstructTaskDenied(String path) {
         return INSTANCE.CFG.DeniedConstructTasks.contains(path);
     }
+    public static boolean isPeripheralDenied(String className) {
+        return INSTANCE.CFG.DeniedCCPeripherals.contains(className);
+    }
 
     final MNAOPMixinConfigFile CFG = new MNAOPMixinConfigFile();
     @Override

@@ -13,10 +13,12 @@ public class MNAOPMixinConfigFile {
     static final String CONFIG_PATH = "config/mnaoverpowered-mixin.ini";
     static final String KEY_DeniedMixinClasses = "DeniedMixinClasses";
     static final String KEY_DeniedConstructTasks = "DeniedConstructTasks";
+    static final String KEY_DeniedCCPeripherals = "DeniedCCPeripherals";
 
     final Path configPath = Path.of(CONFIG_PATH);
     final Set<String> DeniedMixinClasses = new HashSet<>();
     final Set<String> DeniedConstructTasks = new HashSet<>();
+    final Set<String> DeniedCCPeripherals = new HashSet<>();
     void dumpSet(String raw, Set<String> target) {
         target.clear();
         for (var sub : raw.split(",")) {
@@ -29,6 +31,7 @@ public class MNAOPMixinConfigFile {
         switch (key) {
             case KEY_DeniedMixinClasses -> dumpSet(val, DeniedMixinClasses);
             case KEY_DeniedConstructTasks -> dumpSet(val, DeniedConstructTasks);
+            case KEY_DeniedCCPeripherals -> dumpSet(val, DeniedCCPeripherals);
         }
     }
 
@@ -77,6 +80,9 @@ public class MNAOPMixinConfigFile {
         sb.append("# construct tasks that won't be registered; input their registry IDs (without namespace) separated by comma\n");
         sb.append("# e.g. batch_provide_materia\n");
         sb.append(String.format("%s=%s\n", KEY_DeniedConstructTasks, String.join(", ", DeniedConstructTasks)));
+        sb.append("# CC:Tweaked peripheral types that won't be registered; input their class simple names without path, separated by comma\n");
+        sb.append("# e.g. AlchemicalNexusPeripheral, MateriaPeripheral\n");
+        sb.append(String.format("%s=%s\n", KEY_DeniedCCPeripherals, String.join(", ", DeniedCCPeripherals)));
         Files.writeString(configPath, sb.toString(), StandardCharsets.UTF_8);
     }
 }
