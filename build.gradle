@@ -93,7 +93,7 @@ dependencies {
     implementation fg.deobf("curse.maven:curios-309927:5066845")
     implementation fg.deobf("curse.maven:mana-and-artifice-406360:6847805")
     // implementation fg.deobf("curse.maven:magichem-982204:7190149")
-    implementation fg.deobf("magichem:magichem:0.5.2-pre15")
+    implementation fg.deobf("magichem:magichem:0.5.2-pre22")
 
     implementation fg.deobf("curse.maven:cc-tweaked-282001:5714507")
     implementation fg.deobf("curse.maven:jade-324717:6855440")
