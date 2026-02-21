@@ -53,18 +53,20 @@ public class MateriaPeripheral implements GenericPeripheral {
     // single-type container
     @LuaFunction(mainThread = true)
     public String getMateriaType(AbstractMateriaStorageSingleTypeBlockEntity be) {
-        return be.getMateriaType().getMateriaName();
+        var mat = be.getMateriaType();
+        if (mat == null) return null;
+        return mat.getMateriaName();
     }
     @LuaFunction(mainThread = true)
     public int getAmount(AbstractMateriaStorageSingleTypeBlockEntity be) {
         return be.getCurrentStock();
     }
     @LuaFunction(mainThread = true)
-    public int getLimit(AbstractMateriaStorageSingleTypeBlockEntity be, String id) {
+    public int getLimit(AbstractMateriaStorageSingleTypeBlockEntity be) {
         return be.getStorageLimit();
     }
     @LuaFunction(mainThread = true)
-    public float getPercent(AbstractMateriaStorageSingleTypeBlockEntity be, String id) {
+    public float getPercent(AbstractMateriaStorageSingleTypeBlockEntity be) {
         return be.getCurrentStockPercent();
     }
 
