@@ -1,6 +1,10 @@
 import os, re
 from collections import defaultdict
 from YukkuriC.minecraft.codegen.jinja import *
+from YukkuriC.algorithm import min_diff_seq
+from functools import partial
+
+open = partial(open, encoding='utf-8')
 
 pat_func = re.compile(
     r'''
@@ -43,7 +47,7 @@ if 'data':
     typesByFile = defaultdict(set)
 
     def check_file(filename):
-        with open(os.path.join(base_dir, filename), encoding='utf-8') as f:
+        with open(os.path.join(base_dir, filename)) as f:
             data = f.read()
         for match in re.findall(pat_func, data):
             rType, func, target, _, _, args = match
@@ -66,3 +70,18 @@ batch_gen(
     ext='.md',
     render_args=globals(),
 )
+
+# keep all raw lines, merge manual doc
+MERGE_TARGETS = [('../doc/MagiChemCC_raw.md', '../doc/MagiChemCC.md')]
+for src, dst in MERGE_TARGETS:
+    if not os.path.isfile(dst):
+        continue
+    with open(src) as f:
+        slines = f.read().strip().splitlines()
+    with open(dst) as f:
+        dlines = f.read().strip().splitlines()
+    seq = min_diff_seq(slines, dlines)
+
+    with open(dst, 'w') as f:
+        for op, l in seq:
+            print(l, file=f)
