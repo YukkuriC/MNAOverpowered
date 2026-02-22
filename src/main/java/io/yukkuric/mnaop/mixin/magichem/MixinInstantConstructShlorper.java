@@ -5,11 +5,12 @@ import com.aranaira.magichem.entities.constructs.ai.ConstructProvideMateria;
 import com.aranaira.magichem.entities.constructs.ai.ConstructSortMateriaFromDevice;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import io.yukkuric.mnaop.MNAOPConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+
+import static io.yukkuric.mnaop.mixin_interface.magichem.ShlorpExt.EditShlorp;
 
 @Mixin(ConstructProvideMateria.class)
 public class MixinInstantConstructShlorper {
@@ -18,12 +19,6 @@ public class MixinInstantConstructShlorper {
         if (entity instanceof ShlorpEntity shlorp)
             EditShlorp(shlorp);
         return original.call(instance, entity);
-    }
-
-    private static void EditShlorp(ShlorpEntity shlorp) {
-        if (!MNAOPConfig.InstantConstructShlorps()) return;
-        shlorp.setInstantPayload();
-        shlorp.speed *= 10;
     }
 
     @Mixin(ConstructSortMateriaFromDevice.class)
