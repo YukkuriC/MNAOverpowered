@@ -21,7 +21,8 @@ public class MNAOPConfig {
     public static ForgeConfigSpec.DoubleValue
             Cfg_ConstructMilkingCooldown,
             Cfg_NaturalWellspringMinStrength,
-            Cfg_NaturalWellspringMaxStrength;
+            Cfg_NaturalWellspringMaxStrength,
+            Cfg_CirclePowerStackMultRatio;
     public static ForgeConfigSpec.EnumValue
             Cfg_EnablesLocateWellspringCommand;
 
@@ -51,6 +52,7 @@ public class MNAOPConfig {
             BUILDER.push("MagiChem");
             Cfg_UnlimitedOrrery = BUILDER.comment("Unlocks the limit that a player can only have 1 orrery").define("UnlimitedOrrery", true);
             Cfg_InstantConstructShlorps = BUILDER.comment("Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators").define("InstantConstructShlorps", true);
+            Cfg_CirclePowerStackMultRatio = BUILDER.comment("Circle of Power vertically stacked on another gets its output rate multiplied by (this value * bottom output rate / base maxa output rate)").defineInRange("CirclePowerStackMultRatio", 10, 1, Double.MAX_VALUE);
             Cfg_ShowReadableAdmixtureFormula = BUILDER.comment("Displays each admixture's translated formula and overall essentia value").define("ShowReadableAdmixtureFormula", true);
             Cfg_ShowDistillationResults = BUILDER.comment("Displays distillation contents for all items supported").define("ShowDistillationResults", true);
             BUILDER.pop();
@@ -92,6 +94,9 @@ public class MNAOPConfig {
     }
     public static boolean InstantConstructShlorps() {
         return Cfg_InstantConstructShlorps.get();
+    }
+    public static double CirclePowerStackMultRatio() {
+        return Cfg_CirclePowerStackMultRatio.get();
     }
     public static boolean ShowReadableAdmixtureFormula() {
         return Cfg_ShowReadableAdmixtureFormula.get();

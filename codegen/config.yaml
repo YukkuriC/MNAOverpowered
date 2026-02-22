@@ -56,6 +56,11 @@
   default: 'true'
   descrip: "Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators"
   category: MagiChem
+- name: CirclePowerStackMultRatio
+  type: double
+  default: "10, 1, Double.MAX_VALUE"
+  descrip: "Circle of Power vertically stacked on another gets its output rate multiplied by (this value * bottom output rate / base maxa output rate)"
+  category: MagiChem
 - name: ShowReadableAdmixtureFormula
   type: boolean
   default: 'true'

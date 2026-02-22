@@ -21,6 +21,7 @@
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
+    "magichem.MixinPowerCircle",
     "magichem.computercraft.MixinClearRecipe",
     "magichem.computercraft.MixinLastUserExtended",
     "magichem.computercraft.MixinLastUserExtended$Menu_Style1",
@@ -29,7 +30,8 @@
   ],
   "client": [
     "AccessorLodestarNode",
-    "MixinLodestarGUI"
+    "MixinLodestarGUI",
+    "magichem.MixinPowerCircle$Screen"
   ],
   "injectors": {
     "defaultRequire": 1
