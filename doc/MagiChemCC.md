@@ -47,4 +47,5 @@ _for example, `legendary` for Admixture of Legendary_
     - or `nil` if there's no recipe
 - `int setRecipe(String input)`
     - input item's registry id with namespace; e.g. `magichem:wisdom_stone_rubedo`
-
+- `void clearRecipe()`
+    - _note: not working on Alchemical Nexus currently :(_

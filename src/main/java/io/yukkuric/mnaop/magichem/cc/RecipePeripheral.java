@@ -8,6 +8,7 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.GenericPeripheral;
 import io.yukkuric.mnaop.MNAOPMod;
+import io.yukkuric.mnaop.mixin_interface.magichem.IClearRecipe;
 import io.yukkuric.mnaop.mixin_interface.magichem.IHasLastUser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -72,6 +73,25 @@ public class RecipePeripheral implements GenericPeripheral {
         } catch (Throwable e) {
             MNAOPMod.LOGGER.error("error in {}.setRecipe: {}", be.getClass().getSimpleName(), e);
             return -1;
+        }
+    }
+    @LuaFunction(mainThread = true)
+    public void clearRecipe(IHasDeviceRecipeSlot be) throws LuaException {
+        // validate block
+        if (be instanceof IRouterBlockEntity router) {
+            var master = router.getMaster();
+            if (!(master instanceof IHasDeviceRecipeSlot masterBE))
+                throw new LuaException("Router has no valid master, why?");
+            be = masterBE;
+        }
+        // if (!(be instanceof BlockEntity beReal)) throw new LuaException("Peripheral not Block Entity, why?");
+
+        try {
+            var clear = (IClearRecipe) be;
+            clear.clearRecipe();
+            clear.syncAndSave();
+        } catch (Throwable e) {
+            throw new LuaException(String.format("error in %s.clearRecipe: %s", be.getClass().getSimpleName(), e));
         }
     }
 }

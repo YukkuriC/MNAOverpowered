@@ -21,6 +21,7 @@
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
+    "magichem.computercraft.MixinClearRecipe",
     "magichem.computercraft.MixinLastUserExtended",
     "magichem.computercraft.MixinLastUserExtended$Menu_Style1",
     "magichem.computercraft.MixinLastUserExtended$Menu_Style2",
