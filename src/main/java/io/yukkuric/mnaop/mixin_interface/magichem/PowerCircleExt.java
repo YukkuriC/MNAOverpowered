@@ -13,6 +13,8 @@ public class PowerCircleExt {
         return res;
     }
     public static double bottomMultRatio(CirclePowerBlockEntity self) {
+        var baseRatio = MNAOPConfig.CirclePowerStackMultRatio();
+        if (baseRatio <= 1) return 1;
         CirclePowerBlockEntity stacked = null;
         var ptr = self.getBlockPos().mutable().move(Direction.DOWN);
         for (int i = 0; i < 3; i++) {
@@ -24,7 +26,7 @@ public class PowerCircleExt {
             ptr.move(Direction.DOWN);
         }
         if (stacked == null) return 1;
-        var ratio = (MNAOPConfig.CirclePowerStackMultRatio() * increasedRate(stacked)) / ServerConfig.circlePowerGen4Reagent;
+        var ratio = (baseRatio * increasedRate(stacked)) / ServerConfig.circlePowerGen4Reagent;
         return Math.max(1, ratio);
     }
     public static int increasedRate(CirclePowerBlockEntity self) {
