@@ -1,5 +1,6 @@
 package io.yukkuric.mnaop.magichem.cc;
 
+import com.aranaira.magichem.block.entity.VariegatorBlockEntity;
 import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
 import com.mojang.authlib.GameProfile;
@@ -14,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,6 +27,13 @@ public class RecipePeripheral implements GenericPeripheral {
     public static final String ID = MNAOPMod.MODID + ":recipe_holder";
     public static RecipePeripheral INSTANCE = new RecipePeripheral();
     private static FakePlayer workerSetRecipe;
+
+    private ServerPlayer getFallbackWorker(Level level) {
+        if (workerSetRecipe == null) {
+            workerSetRecipe = new FakePlayer(level.getServer().overworld(), new GameProfile(UUID.randomUUID(), "worker"));
+        }
+        return workerSetRecipe;
+    }
 
     @Override
     public String id() {
@@ -61,12 +70,7 @@ public class RecipePeripheral implements GenericPeripheral {
         // grab user
         ServerPlayer worker = null;
         if (be instanceof IHasLastUser holder) worker = holder.getLastUser((ServerLevel) beReal.getLevel());
-        if (worker == null) {
-            if (workerSetRecipe == null) {
-                workerSetRecipe = new FakePlayer(beReal.getLevel().getServer().overworld(), new GameProfile(UUID.randomUUID(), "worker"));
-            }
-            worker = workerSetRecipe;
-        }
+        if (worker == null) worker = getFallbackWorker(beReal.getLevel());
 
         try {
             return be.setRecipe(new ItemStack(stack), worker);
@@ -84,7 +88,13 @@ public class RecipePeripheral implements GenericPeripheral {
                 throw new LuaException("Router has no valid master, why?");
             be = masterBE;
         }
-        // if (!(be instanceof BlockEntity beReal)) throw new LuaException("Peripheral not Block Entity, why?");
+        if (!(be instanceof BlockEntity beReal)) throw new LuaException("Peripheral not Block Entity, why?");
+
+        // special cases
+        if (be instanceof VariegatorBlockEntity) {
+            be.setRecipe(ItemStack.EMPTY, getFallbackWorker(beReal.getLevel()));
+            return;
+        }
 
         try {
             var clear = (IClearRecipe) be;

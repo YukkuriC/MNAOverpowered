@@ -49,3 +49,7 @@ _for example, `legendary` for Admixture of Legendary_
     - input item's registry id with namespace; e.g. `magichem:wisdom_stone_rubedo`
 - `void clearRecipe()`
     - _note: not working on Alchemical Nexus currently :(_
+
+- _Special case: Variegator_
+    - input correspond dye item (e.g. `blue_dye`) to set certain coloring mode
+    - call `clearRecipe()` or `setRecipe("air")` to set colorless mode
