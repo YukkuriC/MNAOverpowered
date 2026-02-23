@@ -9,8 +9,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import io.yukkuric.mnaop.MNAOPConfig;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 
 import static io.yukkuric.mnaop.mixin_interface.magichem.PowerCircleExt.increasedRate;
 
@@ -35,6 +34,25 @@ public abstract class MixinPowerCircle {
         private int wrapGenRate(int reagentCount) {
             var self = menu.blockEntity;
             return increasedRate(self, reagentCount);
+        }
+
+        @ModifyArg(method = "renderLabels", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;literal(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"))
+        String shorterRateText(String literal) {
+            if (!literal.matches("\\d+")) return literal;
+            var raw = (float) Integer.parseInt(literal);
+            if (raw < 1e4) return literal;
+            String postfix;
+            if (raw >= 1e9) {
+                raw /= 1e9;
+                postfix = "G";
+            } else if (raw >= 1e6) {
+                raw /= 1e6;
+                postfix = "M";
+            } else {
+                raw /= 1e3;
+                postfix = "K";
+            }
+            return String.format("%.1f %s", raw, postfix);
         }
     }
 }
