@@ -1,6 +1,7 @@
 # MagiChem x CC:Tweaked Extra Peripheral Document
 
 ## Alchemical Nexus Peripheral
+_Source: [AlchemicalNexusPeripheral.java](https://github.com/YukkuriC/MNAOverpowered/tree/main/src/main/java/io/yukkuric/mnaop/magichem/cc/AlchemicalNexusPeripheral.java)_
 ### Alchemical Nexus
 - `List<Integer> getStage()`
     - return a list with 2 numbers
@@ -15,8 +16,10 @@
     - returns slots filled bitwise - starting from `0`, each `i`-th successful fill adds `pow(2, i)` to result
 
 ## Materia Container Peripheral
-_note: all materia string representation currently uses prefix-less id_
-_for example, `legendary` for Admixture of Legendary_
+_Source: [MateriaPeripheral.java](https://github.com/YukkuriC/MNAOverpowered/tree/main/src/main/java/io/yukkuric/mnaop/magichem/cc/MateriaPeripheral.java)_
+
+_note: all materia string representation currently uses prefix-less id  
+for example, `legendary` for __Admixture of Legendary___
 
 ### Multi-type materia storage
 - `List<String> getMateriaTypes()`
@@ -41,12 +44,13 @@ _for example, `legendary` for Admixture of Legendary_
 - `boolean needSorting()`
 
 ## Multi-Recipe Device Peripheral
+_Source: [RecipePeripheral.java](https://github.com/YukkuriC/MNAOverpowered/tree/main/src/main/java/io/yukkuric/mnaop/magichem/cc/RecipePeripheral.java)_
 ### Devices with recipe selection functionality
 - `Map<String, Object> getRecipe()`
     - returns current crafting target item, wrapped with general CC item stack representation
     - or `nil` if there's no recipe
 - `int setRecipe(String input)`
-    - input item's registry id with namespace; e.g. `magichem:wisdom_stone_rubedo`
+    - input item's registry id with namespace (could be omitted if namespace is `minecraft`); e.g. `magichem:wisdom_stone_rubedo`
 - `void clearRecipe()`
     - _note: not working on Alchemical Nexus currently :(_
 
