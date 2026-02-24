@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.command.MNAOPCommands;
 import io.yukkuric.mnaop.gui.GuideBookQueryHandler;
 import io.yukkuric.mnaop.magichem.MagiChemEvents;
+import io.yukkuric.mnaop.magichem.ae2.MagiChemAE2Interop;
 import io.yukkuric.mnaop.magichem.cc.MagiChemCCInterop;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -38,6 +39,7 @@ public class MNAOPMod {
         // interop
         if (IsMagiChemLoaded()) {
             if (IsModLoaded("computercraft")) MagiChemCCInterop.Init();
+            if (IsModLoaded("ae2")) MagiChemAE2Interop.Init();
         }
     }
 

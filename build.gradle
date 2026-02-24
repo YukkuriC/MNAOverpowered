@@ -96,6 +96,8 @@ dependencies {
     implementation fg.deobf("magichem:magichem:0.5.2-pre22")
 
     implementation fg.deobf("curse.maven:cc-tweaked-282001:5714507")
+    implementation fg.deobf("curse.maven:applied-energistics-2-223794:7148487")
+    implementation fg.deobf("curse.maven:guideme-1173950:7127447")
     implementation fg.deobf("curse.maven:jade-324717:6855440")
     implementation fg.deobf("curse.maven:just-enough-characters-250702:7411324")
 
