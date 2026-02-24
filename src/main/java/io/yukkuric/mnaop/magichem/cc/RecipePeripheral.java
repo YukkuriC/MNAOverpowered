@@ -3,37 +3,25 @@ package io.yukkuric.mnaop.magichem.cc;
 import com.aranaira.magichem.block.entity.VariegatorBlockEntity;
 import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
-import com.mojang.authlib.GameProfile;
 import dan200.computercraft.api.detail.VanillaDetailRegistries;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.GenericPeripheral;
 import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.mixin_interface.magichem.IClearRecipe;
-import io.yukkuric.mnaop.mixin_interface.magichem.IHasLastUser;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
-import java.util.UUID;
+
+import static io.yukkuric.mnaop.MNAOPHelpers.getWorker;
 
 public class RecipePeripheral implements GenericPeripheral {
     public static final String ID = MNAOPMod.MODID + ":recipe_holder";
     public static RecipePeripheral INSTANCE = new RecipePeripheral();
-    private static FakePlayer workerSetRecipe;
-
-    private ServerPlayer getFallbackWorker(Level level) {
-        if (workerSetRecipe == null) {
-            workerSetRecipe = new FakePlayer(level.getServer().overworld(), new GameProfile(UUID.randomUUID(), "worker"));
-        }
-        return workerSetRecipe;
-    }
 
     @Override
     public String id() {
@@ -68,9 +56,7 @@ public class RecipePeripheral implements GenericPeripheral {
         if (!(be instanceof BlockEntity beReal)) throw new LuaException("Peripheral not Block Entity, why?");
 
         // grab user
-        ServerPlayer worker = null;
-        if (be instanceof IHasLastUser holder) worker = holder.getLastUser((ServerLevel) beReal.getLevel());
-        if (worker == null) worker = getFallbackWorker(beReal.getLevel());
+        ServerPlayer worker = getWorker(beReal);
 
         try {
             return be.setRecipe(new ItemStack(stack), worker);
@@ -92,7 +78,7 @@ public class RecipePeripheral implements GenericPeripheral {
 
         // special cases
         if (be instanceof VariegatorBlockEntity) {
-            be.setRecipe(ItemStack.EMPTY, getFallbackWorker(beReal.getLevel()));
+            be.setRecipe(ItemStack.EMPTY, getWorker(beReal));
             return;
         }
 
