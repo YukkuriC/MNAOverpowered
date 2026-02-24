@@ -1,4 +1,4 @@
-package io.yukkuric.mnaop.mixin.magichem.computercraft;
+package io.yukkuric.mnaop.mixin.magichem.ext;
 
 import com.aranaira.magichem.block.entity.AlchemicalNexusBlockEntity;
 import io.yukkuric.mnaop.mixin_interface.magichem.IHasLastUser;

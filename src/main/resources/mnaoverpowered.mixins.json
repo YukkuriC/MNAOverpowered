@@ -22,11 +22,11 @@
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
     "magichem.MixinPowerCircle",
-    "magichem.computercraft.MixinClearRecipe",
-    "magichem.computercraft.MixinLastUserExtended",
-    "magichem.computercraft.MixinLastUserExtended$Menu_Style1",
-    "magichem.computercraft.MixinLastUserExtended$Menu_Style2",
-    "magichem.computercraft.MixinNexusLastUser"
+    "magichem.ext.MixinClearRecipe",
+    "magichem.ext.MixinLastUserExtended",
+    "magichem.ext.MixinLastUserExtended$Menu_Style1",
+    "magichem.ext.MixinLastUserExtended$Menu_Style2",
+    "magichem.ext.MixinNexusLastUser"
   ],
   "client": [
     "AccessorLodestarNode",
