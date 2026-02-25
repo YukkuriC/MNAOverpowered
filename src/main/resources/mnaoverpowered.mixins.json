@@ -18,6 +18,7 @@
     "fixes.FixSpellAdjusterRegisterLock",
     "fixes.FixTieredRecipeSorter",
     "magichem.AccessorConstructProvideMateria",
+    "magichem.AccessorPrimeAggregator",
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
