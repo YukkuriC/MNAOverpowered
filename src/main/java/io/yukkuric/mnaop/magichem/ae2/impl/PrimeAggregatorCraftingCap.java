@@ -11,6 +11,7 @@ import io.yukkuric.mnaop.magichem.ae2.AlchemicalCraftingMachineCap;
 import io.yukkuric.mnaop.mixin.magichem.AccessorPrimeAggregator;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.List;
 
@@ -35,6 +36,12 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
     }
     @Override
     public boolean pushPattern(IPatternDetails pattern, KeyCounter[] keyCounters, Direction direction) {
+        var animStage = master.getAnimStage();
+        if (animStage != 0 && animStage != 1) return false;
+        var itemHandler = masterEx.getItemHandler();
+        if (masterEx.getItemsDelivered() > 0 || !itemHandler.getStackInSlot(PrimeAggregatorBlockEntity.SLOT_PROGRESS_HOLDER).isEmpty())
+            return false;
+
         var target = pattern.getPrimaryOutput().what();
         if (!(target instanceof AEItemKey itemKeyOutput)) return false;
         var worker = getWorker(master);
@@ -53,6 +60,8 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
         long currentItem = masterEx.getItemsDelivered();
         long currentMateria = masterEx.getMateriaDelivered();
         long currentSlurry = masterEx.getSlurryDelivered();
+        var changedBottle = false;
+        long bottleCount = itemHandler.getStackInSlot(PrimeAggregatorBlockEntity.SLOT_BOTTLES_OUTPUT).getCount();
 
         for (var kc : keyCounters) {
             for (var pair : kc) {
@@ -71,7 +80,9 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
 
                         // recycle bottles
                         if (!InventoryHelper.hasCustomModelData(itemKeyInput.toStack())) {
-                            // TODO
+                            changedBottle = true;
+                            bottleCount += count;
+                            if (bottleCount > 64) return false;
                         }
                     }
                 } else if (key instanceof AEFluidKey fluidKeyInput) {
@@ -86,23 +97,19 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
 
         // actually fill
         if (changed) {
+            if (changedBottle) {
+                itemHandler.setStackInSlot(PrimeAggregatorBlockEntity.SLOT_BOTTLES_OUTPUT, new ItemStack(Items.GLASS_BOTTLE, (int) bottleCount));
+            }
             masterEx.setItemsDelivered((int) currentItem);
             masterEx.setMateriaDelivered((int) currentMateria);
             masterEx.setSlurryDelivered((int) currentSlurry);
             if (master.getAnimStage() <= 1 && currentItem >= itemRequired) {
                 masterEx.setAnimStage(2);
-                var itemHandler = masterEx.getItemHandler();
                 if (itemHandler.getStackInSlot(PrimeAggregatorBlockEntity.SLOT_PROGRESS_HOLDER).isEmpty())
-                    itemHandler.setStackInSlot((PrimeAggregatorBlockEntity.SLOT_PROGRESS_HOLDER, new ItemStack(ItemRegistry.EXALTATION_IN_PROGRESS.get()));
+                    itemHandler.setStackInSlot(PrimeAggregatorBlockEntity.SLOT_PROGRESS_HOLDER, new ItemStack(ItemRegistry.EXALTATION_IN_PROGRESS.get()));
             }
             master.syncAndSave();
         }
         return true;
-    }
-    @Override
-    public boolean acceptsPlans() {
-        var animStage = master.getAnimStage();
-        if (animStage != 0 && animStage != 1) return false;
-        return masterEx.getItemsDelivered() == 0;
     }
 }

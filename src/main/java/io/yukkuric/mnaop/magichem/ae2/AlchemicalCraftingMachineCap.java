@@ -25,4 +25,9 @@ public abstract class AlchemicalCraftingMachineCap implements ICapabilityProvide
         return _cachedGroupInfo;
     }
     protected abstract PatternContainerGroup getCraftingMachineInfoInner();
+
+    public boolean acceptsPlans() {
+        // never return false here, or AE2 treats it like normal inventory
+        return true;
+    }
 }
