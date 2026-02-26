@@ -17,6 +17,7 @@
     "fixes.FixManaPylon",
     "fixes.FixSpellAdjusterRegisterLock",
     "fixes.FixTieredRecipeSorter",
+    "magichem.AccessorCircleFabrication",
     "magichem.AccessorConstructProvideMateria",
     "magichem.AccessorPrimeAggregator",
     "magichem.MixinInstantConstructShlorper",

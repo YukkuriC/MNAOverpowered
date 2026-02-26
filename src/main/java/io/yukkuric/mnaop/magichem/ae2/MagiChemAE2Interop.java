@@ -2,9 +2,10 @@ package io.yukkuric.mnaop.magichem.ae2;
 
 import appeng.capabilities.Capabilities;
 import com.aranaira.magichem.block.entity.PrimeAggregatorBlockEntity;
-import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
-import com.aranaira.magichem.block.entity.routers.PrimeAggregatorRouterBlockEntity;
+import com.aranaira.magichem.block.entity.ext.AbstractFabricationBlockEntity;
+import com.aranaira.magichem.block.entity.routers.*;
 import io.yukkuric.mnaop.MNAOPHelpers;
+import io.yukkuric.mnaop.magichem.ae2.impl.FabricationCraftingCap;
 import io.yukkuric.mnaop.magichem.ae2.impl.PrimeAggregatorCraftingCap;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -26,17 +27,16 @@ public class MagiChemAE2Interop {
     static ResourceLocation resLocCrafterCap = MNAOPHelpers.modLoc("crafter");
     static void OnAttachForgeCap(AttachCapabilitiesEvent<BlockEntity> event) {
         var attachedBlock = event.getObject();
-        if (attachedBlock instanceof PrimeAggregatorRouterBlockEntity router)
-            event.addCapability(resLocCrafterCap, new RouterCapJumper(router));
+        if (attachedBlock instanceof IRouterBlockEntity router) {
+            if (attachedBlock instanceof PrimeAggregatorRouterBlockEntity || attachedBlock instanceof GrandCircleFabricationRouterBlockEntity || attachedBlock instanceof CircleFabricationRouterBlockEntity)
+                event.addCapability(resLocCrafterCap, new RouterCapJumper(router));
+        }
         if (attachedBlock instanceof PrimeAggregatorBlockEntity pa)
             event.addCapability(resLocCrafterCap, new PrimeAggregatorCraftingCap(pa));
+        if (attachedBlock instanceof AbstractFabricationBlockEntity cf)
+            event.addCapability(resLocCrafterCap, new FabricationCraftingCap(cf));
     }
-    static class RouterCapJumper implements ICapabilityProvider {
-        final IRouterBlockEntity router;
-        RouterCapJumper(IRouterBlockEntity router) {
-            this.router = router;
-        }
-
+    record RouterCapJumper(IRouterBlockEntity router) implements ICapabilityProvider {
         @Override
         public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
             if (!capability.equals(Capabilities.CRAFTING_MACHINE)) return LazyOptional.empty();
