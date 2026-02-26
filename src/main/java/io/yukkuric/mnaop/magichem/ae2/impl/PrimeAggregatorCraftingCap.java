@@ -1,7 +1,6 @@
 package io.yukkuric.mnaop.magichem.ae2.impl;
 
 import appeng.api.crafting.IPatternDetails;
-import appeng.api.implementations.blockentities.PatternContainerGroup;
 import appeng.api.stacks.*;
 import com.aranaira.magichem.block.entity.PrimeAggregatorBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
@@ -12,8 +11,7 @@ import io.yukkuric.mnaop.mixin.magichem.AccessorPrimeAggregator;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
-import java.util.List;
+import net.minecraft.world.level.block.Block;
 
 import static io.yukkuric.mnaop.MNAOPHelpers.getWorker;
 
@@ -26,13 +24,8 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
     }
 
     @Override
-    protected PatternContainerGroup getCraftingMachineInfoInner() {
-        var block = BlockRegistry.PRIME_AGGREGATOR.get();
-        return new PatternContainerGroup(
-                AEItemKey.of(block),
-                block.getName(),
-                List.of()
-        );
+    protected Block getDisplayBlock() {
+        return BlockRegistry.PRIME_AGGREGATOR.get();
     }
     @Override
     public boolean pushPattern(IPatternDetails pattern, KeyCounter[] keyCounters, Direction direction) {
