@@ -39,12 +39,4 @@ public abstract class MixinCircleFabrication extends AbstractFabricationBlockEnt
     public ItemStackHandler getItemHandler() {
         return itemHandler;
     }
-
-    @Mixin({
-            CircleFabricationRouterBlockEntity.class,
-            GrandCircleFabricationRouterBlockEntity.class
-    })
-    public static abstract class Router implements IRouterBlockEntity {
-        // borrow a `getMaster` here
-    }
 }

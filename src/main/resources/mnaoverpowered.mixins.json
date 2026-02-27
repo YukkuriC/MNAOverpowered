@@ -24,7 +24,6 @@
     "magichem.MixinOrreryLimitBreak",
     "magichem.MixinPowerCircle",
     "magichem.ext.MixinCircleFabrication",
-    "magichem.ext.MixinCircleFabrication$Router",
     "magichem.ext.MixinClearRecipe",
     "magichem.ext.MixinLastUserExtended",
     "magichem.ext.MixinLastUserExtended$Menu_Style1",
