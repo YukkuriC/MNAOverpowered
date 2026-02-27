@@ -5,5 +5,6 @@
   "mnaop.codex.query.sneak": "Sneak & Right-Click to view",
   "mnaop.codex.query.view": "Right-Click to view",
   "mnaop.constructs.feedback.batch_provide_materia.summary": "Loaded %d tasks from %d marks.",
-  "mnaop.constructs.feedback.batch_provide_materia.sub_task": "Starting task #%d (target: %s)..."
+  "mnaop.constructs.feedback.batch_provide_materia.sub_task": "Starting task #%d (target: %s)...",
+  "mnaop.magichem.ae2.fabrication.tooltip": "Uses Glass Bottle as input placeholder"
 }

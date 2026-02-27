@@ -52,6 +52,18 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
         - multi-recipe holder machines (e.g. Alchemical Nexus)
         - Alchemical Nexus specific control (by-stage requirements & auto item supply)
         - a more detailed Peripheral document can be found [HERE](https://github.com/YukkuriC/MNAOverpowered/blob/main/doc/MagiChemCC.md)
+    - `☆` AE2 interop (crafting machine support):
+        - Prime Aggregator (Exaltation)
+            - Supported inputs: source item
+                - Optional: materia (at most 64 if bottled, since bottle slot cannot overflow), slurry fluid
+            - Only allowing materials no more than those for 1 exaltation process in each pattern, or the whole pattern will be rejected
+            - Machine needs not to be in-progress to receive pattern inputs
+        - (Grand) Circle of Fabrication
+            - Supporting both item and fluid crafting
+            - Uses Glass Bottle as input placeholder, because AE2 doesn't allow patterns with empty input
+            - Machine needs to have no recipe set and glass bottle slot not full to receive
+            - pattern output amount cannot exceed max allowed size for one craft (e.g. a recipe with max batch 8 & rate 25% allows at most 32 as output)
+            - _NOT YET supporting direct materia input in patterns_
 
 ---
 

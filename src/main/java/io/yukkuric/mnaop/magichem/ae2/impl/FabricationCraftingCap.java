@@ -2,35 +2,36 @@ package io.yukkuric.mnaop.magichem.ae2.impl;
 
 import appeng.api.crafting.IPatternDetails;
 import appeng.api.stacks.*;
-import com.aranaira.magichem.block.entity.*;
+import com.aranaira.magichem.block.entity.CircleFabricationBlockEntity;
+import com.aranaira.magichem.block.entity.GrandCircleFabricationBlockEntity;
 import com.aranaira.magichem.block.entity.ext.AbstractFabricationBlockEntity;
 import com.aranaira.magichem.item.MateriaItem;
 import com.aranaira.magichem.recipe.DistillationFabricationRecipe;
 import com.aranaira.magichem.recipe.FluidDistillationFabricationRecipe;
-import com.aranaira.magichem.registry.BlockRegistry;
 import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.magichem.ae2.AlchemicalCraftingMachineCap;
 import io.yukkuric.mnaop.mixin_interface.magichem.ICoFEx;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
+
+import java.util.List;
 
 public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final AbstractFabricationBlockEntity master;
     protected final ICoFEx masterEx;
     protected final int slotBottle;
+    static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.fabrication.tooltip"));
+
     public FabricationCraftingCap(AbstractFabricationBlockEntity target) {
+        super(target.getBlockState().getBlock(), CRAFTER_TOOLTIP);
         master = target;
         masterEx = (ICoFEx) target;
         slotBottle = master instanceof GrandCircleFabricationBlockEntity ? GrandCircleFabricationBlockEntity.SLOT_BOTTLES :
                 CircleFabricationBlockEntity.SLOT_BOTTLES;
     }
 
-    @Override
-    protected Block getDisplayBlock() {
-        return BlockRegistry.GRAND_CIRCLE_FABRICATION.get();
-    }
     @Override
     public boolean pushPattern(IPatternDetails pattern, KeyCounter[] keyCounters, Direction direction) {
         var output = pattern.getPrimaryOutput();

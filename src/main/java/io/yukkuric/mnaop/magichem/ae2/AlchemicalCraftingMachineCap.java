@@ -5,6 +5,7 @@ import appeng.api.implementations.blockentities.PatternContainerGroup;
 import appeng.api.stacks.AEItemKey;
 import appeng.capabilities.Capabilities;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -23,19 +24,24 @@ public abstract class AlchemicalCraftingMachineCap implements ICapabilityProvide
         return myProvider.cast();
     }
 
+    protected final List<Component> crafterInfoTooltip;
+    protected final Block displayBlock;
+    protected AlchemicalCraftingMachineCap(Block myBlock, List<Component> tooltips) {
+        displayBlock = myBlock;
+        crafterInfoTooltip = tooltips;
+    }
+
     PatternContainerGroup _cachedGroupInfo;
     public PatternContainerGroup getCraftingMachineInfo() {
         if (_cachedGroupInfo == null) {
-            var block = getDisplayBlock();
             _cachedGroupInfo = new PatternContainerGroup(
-                    AEItemKey.of(block),
-                    block.getName(),
-                    List.of()
+                    AEItemKey.of(displayBlock),
+                    displayBlock.getName(),
+                    crafterInfoTooltip
             );
         }
         return _cachedGroupInfo;
     }
-    protected abstract Block getDisplayBlock();
 
     public boolean acceptsPlans() {
         // never return false here, or AE2 treats it like normal inventory

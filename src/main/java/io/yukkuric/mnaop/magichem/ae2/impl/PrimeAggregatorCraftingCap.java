@@ -11,22 +11,20 @@ import io.yukkuric.mnaop.mixin.magichem.AccessorPrimeAggregator;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
+
+import java.util.List;
 
 import static io.yukkuric.mnaop.MNAOPHelpers.getWorker;
 
 public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
-    protected PrimeAggregatorBlockEntity master;
-    protected AccessorPrimeAggregator masterEx;
+    protected final PrimeAggregatorBlockEntity master;
+    protected final AccessorPrimeAggregator masterEx;
     public PrimeAggregatorCraftingCap(PrimeAggregatorBlockEntity target) {
+        super(target.getBlockState().getBlock(), List.of());
         master = target;
         masterEx = (AccessorPrimeAggregator) master;
     }
 
-    @Override
-    protected Block getDisplayBlock() {
-        return BlockRegistry.PRIME_AGGREGATOR.get();
-    }
     @Override
     public boolean pushPattern(IPatternDetails pattern, KeyCounter[] keyCounters, Direction direction) {
         var animStage = master.getAnimStage();
