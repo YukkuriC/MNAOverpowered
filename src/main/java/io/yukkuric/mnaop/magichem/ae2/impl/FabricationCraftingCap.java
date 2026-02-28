@@ -8,7 +8,6 @@ import com.aranaira.magichem.block.entity.ext.AbstractFabricationBlockEntity;
 import com.aranaira.magichem.item.MateriaItem;
 import com.aranaira.magichem.recipe.DistillationFabricationRecipe;
 import com.aranaira.magichem.recipe.FluidDistillationFabricationRecipe;
-import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.magichem.ae2.AlchemicalCraftingMachineCap;
 import io.yukkuric.mnaop.mixin_interface.magichem.ICoFEx;
 import net.minecraft.core.Direction;
@@ -46,7 +45,6 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
             targetRecipe = masterEx.queryRecipe(targetItemKey.getItem());
             if (targetRecipe == null) return false;
             batchCount = (int) Math.ceil(output.amount() / targetRecipe.getOutputRate() / targetRecipe.getAlchemyObject().getCount());
-            MNAOPMod.LOGGER.error("test3 batch={} target={}", batchCount, targetRecipe.getBatchSize());
             if (batchCount > targetRecipe.getBatchSize()) return false;
         } else if (target instanceof AEFluidKey targetFluidKey) {
             targetFluidRecipe = masterEx.queryRecipe(targetFluidKey.getFluid());
