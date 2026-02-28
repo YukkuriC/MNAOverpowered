@@ -21,13 +21,15 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final AbstractFabricationBlockEntity master;
     protected final ICoFEx masterEx;
     protected final int slotBottle;
+    protected final boolean isGrand;
     static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.fabrication.tooltip"));
 
     public FabricationCraftingCap(AbstractFabricationBlockEntity target) {
         super(target.getBlockState().getBlock(), CRAFTER_TOOLTIP);
         master = target;
         masterEx = (ICoFEx) target;
-        slotBottle = master instanceof GrandCircleFabricationBlockEntity ? GrandCircleFabricationBlockEntity.SLOT_BOTTLES :
+        isGrand = master instanceof GrandCircleFabricationBlockEntity;
+        slotBottle = isGrand ? GrandCircleFabricationBlockEntity.SLOT_BOTTLES :
                 CircleFabricationBlockEntity.SLOT_BOTTLES;
     }
 
@@ -36,6 +38,7 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         var output = pattern.getPrimaryOutput();
         var target = output.what();
         if (masterEx.hasAnyRecipe()) return false;
+        var wisdomLevel = isGrand ? master.getCurrentWisdom(GrandCircleFabricationBlockEntity::getVar) : 0;
 
         // query recipe & size
         DistillationFabricationRecipe targetRecipe = null;
@@ -43,12 +46,12 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         int batchCount;
         if (target instanceof AEItemKey targetItemKey) {
             targetRecipe = masterEx.queryRecipe(targetItemKey.getItem());
-            if (targetRecipe == null) return false;
+            if (targetRecipe == null || targetRecipe.getWisdom() > wisdomLevel) return false;
             batchCount = (int) Math.ceil(output.amount() / targetRecipe.getOutputRate() / targetRecipe.getAlchemyObject().getCount());
             if (batchCount > targetRecipe.getBatchSize()) return false;
         } else if (target instanceof AEFluidKey targetFluidKey) {
             targetFluidRecipe = masterEx.queryRecipe(targetFluidKey.getFluid());
-            if (targetFluidRecipe == null) return false;
+            if (targetFluidRecipe == null || targetFluidRecipe.getWisdom() > wisdomLevel) return false;
             batchCount = (int) Math.ceil(output.amount() / targetFluidRecipe.getOutputRate() / targetFluidRecipe.getAlchemyFluid().getAmount());
             if (batchCount > targetFluidRecipe.getBatchSize()) return false;
         } else return false;
