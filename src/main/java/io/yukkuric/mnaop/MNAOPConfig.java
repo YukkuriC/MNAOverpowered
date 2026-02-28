@@ -25,6 +25,8 @@ public class MNAOPConfig {
             Cfg_CirclePowerStackMultRatio;
     public static ForgeConfigSpec.EnumValue
             Cfg_EnablesLocateWellspringCommand;
+    public static ForgeConfigSpec.IntValue
+            Cfg_PrimeAggregatorExtraAnimationSpeed;
 
     static {
         Cfg_FastRegenManaIgnoresSaturation = BUILDER.comment("Speed-up casting resource regeneration, regardless of player's food saturation").define("FastRegenManaIgnoresSaturation", true);
@@ -53,6 +55,7 @@ public class MNAOPConfig {
             Cfg_UnlimitedOrrery = BUILDER.comment("Unlocks the limit that a player can only have 1 orrery").define("UnlimitedOrrery", true);
             Cfg_InstantConstructShlorps = BUILDER.comment("Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators").define("InstantConstructShlorps", true);
             Cfg_CirclePowerStackMultRatio = BUILDER.comment("Circle of Power vertically stacked on another gets its output rate multiplied by (this value * bottom output rate / base maxa output rate)").defineInRange("CirclePowerStackMultRatio", 10, 1, Double.MAX_VALUE);
+            Cfg_PrimeAggregatorExtraAnimationSpeed = BUILDER.comment("Extra animation ticking between stages during Prime Aggregator crafting; for example, 4 for 5x speed, and 0 for vanilla").defineInRange("PrimeAggregatorExtraAnimationSpeed", 4, 0, 100);
             Cfg_ShowReadableAdmixtureFormula = BUILDER.comment("Displays each admixture's translated formula and overall essentia value").define("ShowReadableAdmixtureFormula", true);
             Cfg_ShowDistillationResults = BUILDER.comment("Displays distillation contents for all items supported").define("ShowDistillationResults", true);
             BUILDER.pop();
@@ -97,6 +100,9 @@ public class MNAOPConfig {
     }
     public static double CirclePowerStackMultRatio() {
         return Cfg_CirclePowerStackMultRatio.get();
+    }
+    public static int PrimeAggregatorExtraAnimationSpeed() {
+        return Cfg_PrimeAggregatorExtraAnimationSpeed.get();
     }
     public static boolean ShowReadableAdmixtureFormula() {
         return Cfg_ShowReadableAdmixtureFormula.get();

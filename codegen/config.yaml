@@ -61,6 +61,11 @@
   default: "10, 1, Double.MAX_VALUE"
   descrip: "Circle of Power vertically stacked on another gets its output rate multiplied by (this value * bottom output rate / base maxa output rate)"
   category: MagiChem
+- name: PrimeAggregatorExtraAnimationSpeed
+  type: int
+  default: "4, 0, 100"
+  descrip: "Extra animation ticking between stages during Prime Aggregator crafting; for example, 4 for 5x speed, and 0 for vanilla"
+  category: MagiChem
 - name: ShowReadableAdmixtureFormula
   type: boolean
   default: 'true'

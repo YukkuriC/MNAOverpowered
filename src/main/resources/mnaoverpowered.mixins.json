@@ -23,6 +23,8 @@
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
     "magichem.MixinPowerCircle",
+    "magichem.MixinPrimeAggregator",
+    "magichem.MixinPrimeAggregator$AccessorAggregator",
     "magichem.ext.MixinCircleFabrication",
     "magichem.ext.MixinClearRecipe",
     "magichem.ext.MixinLastUserExtended",

@@ -41,6 +41,7 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
     - Multiple-stacked Circle of Power gains more multiplicative output rate on top
         - `Actual scale` = `Configured scale` * `Actual output rate below` / `Original max output rate`
         - `△` displays output rate value with units (`K`, `M`, `G`) inside screen
+    - Faster Prime Aggregator crafting by inserting extra animation ticks between stages
     - Tooltip enhanced:
         - displays each admixture's translated formula and overall essentia value
         - displays distillation contents for all items supported
