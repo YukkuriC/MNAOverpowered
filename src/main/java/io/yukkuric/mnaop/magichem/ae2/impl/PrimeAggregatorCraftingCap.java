@@ -45,7 +45,7 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
         var itemRequired = recipe.getItemsRequired();
         var materiaType = recipe.getMateriaType();
         var materiaRequired = recipe.getMateriaRequired();
-        var slurryRequired = recipe.getSlurryRequired();
+        var slurryRequired = Math.round((float) recipe.getSlurryRequired() * (1 - master.reductionRate));
 
         var changed = false;
         long currentItem = masterEx.getItemsDelivered();
