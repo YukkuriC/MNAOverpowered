@@ -47,12 +47,12 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         if (target instanceof AEItemKey targetItemKey) {
             targetRecipe = masterEx.queryRecipe(targetItemKey.getItem());
             if (targetRecipe == null || targetRecipe.getWisdom() > wisdomLevel) return false;
-            batchCount = (int) Math.ceil(output.amount() / targetRecipe.getOutputRate() / targetRecipe.getAlchemyObject().getCount());
+            batchCount = (int) Math.ceil(output.amount() * targetRecipe.getOutputRate() / targetRecipe.getAlchemyObject().getCount());
             if (batchCount > targetRecipe.getBatchSize()) return false;
         } else if (target instanceof AEFluidKey targetFluidKey) {
             targetFluidRecipe = masterEx.queryRecipe(targetFluidKey.getFluid());
             if (targetFluidRecipe == null || targetFluidRecipe.getWisdom() > wisdomLevel) return false;
-            batchCount = (int) Math.ceil(output.amount() / targetFluidRecipe.getOutputRate() / targetFluidRecipe.getAlchemyFluid().getAmount());
+            batchCount = (int) Math.ceil(output.amount() * targetFluidRecipe.getOutputRate() / targetFluidRecipe.getAlchemyFluid().getAmount());
             if (batchCount > targetFluidRecipe.getBatchSize()) return false;
         } else return false;
 
