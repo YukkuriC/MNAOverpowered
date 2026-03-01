@@ -16,7 +16,8 @@ public class MixinPrimeAggregator {
     @Inject(method = "tick", at = @At("HEAD"), remap = false)
     private static void fasterProgress(Level pLevel, BlockPos pPos, BlockState pBlockState, PrimeAggregatorBlockEntity pEntity, CallbackInfo ci) {
         var extraAnimTick = MNAOPConfig.PrimeAggregatorExtraAnimationSpeed();
-        if (extraAnimTick > 0 && pEntity.getCurrentRecipe() != null && pEntity.getAnimStage() % 2 == 0) {
+        var animStage = pEntity.getAnimStage();
+        if (extraAnimTick > 0 && animStage > 0 && animStage % 2 == 0) {
             var ex = (AccessorAggregator) pEntity;
             ex.setProgress(pEntity.getProgress() + 4);
         }
