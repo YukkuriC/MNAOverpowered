@@ -54,7 +54,7 @@
 - name: InstantConstructShlorps
   type: boolean
   default: 'true'
-  descrip: "Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators"
+  descrip: "Constructs with advanced transport ability moves materia shlorps as fast as max-powered Labyrinth Navigators"
   category: MagiChem
 - name: CirclePowerStackMultRatio
   type: double
@@ -65,6 +65,11 @@
   type: int
   default: "4, 0, 100"
   descrip: "Extra animation ticking between stages during Prime Aggregator crafting; for example, 4 for 5x speed, and 0 for vanilla"
+  category: MagiChem
+- name: LabyrinthNavigatorExtraOutputBatch
+  type: int
+  default: "5, 0, 18"
+  descrip: "Extra shlorps created each tick outputting materia from distillery & centrifuge devices for max-powered Labyrinth Navigators"
   category: MagiChem
 - name: ShowReadableAdmixtureFormula
   type: boolean

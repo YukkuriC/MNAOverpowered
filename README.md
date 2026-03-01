@@ -37,11 +37,12 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
 
 - `MagiChem` stuff (only available when installed):
     - Unlocks the limit that a player can only have 1 orrery
-    - Constructs with advanced transport ability moves materia shlorps as fast as max-powered labyrinth navigators
+    - Constructs with advanced transport ability moves materia shlorps as fast as max-powered Labyrinth Navigators
     - Multiple-stacked Circle of Power gains more multiplicative output rate on top
         - `Actual scale` = `Configured scale` * `Actual output rate below` / `Original max output rate`
         - `△` displays output rate value with units (`K`, `M`, `G`) inside screen
     - Faster Prime Aggregator crafting by inserting extra animation ticks between stages
+    - Max-powered Labyrinth Navigators create extra shlorps outputting materia from distillery & centrifuge devices
     - Tooltip enhanced:
         - displays each admixture's translated formula and overall essentia value
         - displays distillation contents for all items supported

@@ -19,6 +19,8 @@
     "fixes.FixTieredRecipeSorter",
     "magichem.AccessorConstructProvideMateria",
     "magichem.AccessorPrimeAggregator",
+    "magichem.MixinFasterLabyrinthNavigator$Centrifuge",
+    "magichem.MixinFasterLabyrinthNavigator$Distillery",
     "magichem.MixinInstantConstructShlorper",
     "magichem.MixinInstantConstructShlorper$MateriaSort",
     "magichem.MixinOrreryLimitBreak",
