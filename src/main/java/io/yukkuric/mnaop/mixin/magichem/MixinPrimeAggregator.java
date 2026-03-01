@@ -19,7 +19,7 @@ public class MixinPrimeAggregator {
         var animStage = pEntity.getAnimStage();
         if (extraAnimTick > 0 && animStage > 0 && animStage % 2 == 0) {
             var ex = (AccessorAggregator) pEntity;
-            ex.setProgress(pEntity.getProgress() + 4);
+            ex.setProgress(Math.min(100, pEntity.getProgress() + 4));
         }
     }
 
