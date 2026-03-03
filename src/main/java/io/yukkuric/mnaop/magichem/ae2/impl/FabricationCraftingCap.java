@@ -16,11 +16,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final AbstractFabricationBlockEntity master;
     protected final ICoFEx masterEx;
-    protected final int slotBottle;
+    protected final Function<AbstractFabricationBlockEntity.IDs, Integer> varFunc;
     protected final boolean isGrand;
     static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.fabrication.tooltip"));
 
@@ -29,8 +30,8 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         master = target;
         masterEx = (ICoFEx) target;
         isGrand = master instanceof GrandCircleFabricationBlockEntity;
-        slotBottle = isGrand ? GrandCircleFabricationBlockEntity.SLOT_BOTTLES :
-                CircleFabricationBlockEntity.SLOT_BOTTLES;
+        varFunc = isGrand ? GrandCircleFabricationBlockEntity::getVar :
+                CircleFabricationBlockEntity::getVar;
     }
 
     @Override
@@ -39,6 +40,11 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         var target = output.what();
         if (masterEx.hasAnyRecipe()) return false;
         var wisdomLevel = isGrand ? master.getCurrentWisdom(GrandCircleFabricationBlockEntity::getVar) : 0;
+
+        int
+                slotBottle = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_BOTTLES),
+                slotInputStart = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_INPUT_START),
+                inputCounts = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_INPUT_COUNT);
 
         // query recipe & size
         DistillationFabricationRecipe targetRecipe = null;
