@@ -20,8 +20,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
-import static io.yukkuric.mnaop.MNAOPHelpers.IsMagiChemLoaded;
-import static io.yukkuric.mnaop.MNAOPHelpers.IsModLoaded;
+import static io.yukkuric.mnaop.MNAOPHelpers.*;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(MNAOPMod.MODID)
@@ -39,14 +38,20 @@ public class MNAOPMod {
         // interop
         if (IsMagiChemLoaded()) {
             if (IsModLoaded("computercraft")) MagiChemCCInterop.Init();
-            if (IsModLoaded("ae2")) MagiChemAE2Interop.Init();
+            if (IsAE2Loaded()) MagiChemAE2Interop.Init();
         }
     }
 
     public static boolean ConfigGroupActive(String grp) {
+        if (grp.contains("_")) {
+            for (var sub : grp.split("_")) if (!ConfigGroupActive(sub)) return false;
+            return true;
+        }
         switch (grp) {
             case "MagiChem":
                 return IsMagiChemLoaded();
+            case "AE2":
+                return IsAE2Loaded();
         }
         return true;
     }

@@ -38,6 +38,11 @@
   default: 'true'
   descrip: "Shift-right click blocks using Codex Arcana to open related entry (like what Patchouli does)"
   category: Display
+- name: UndeadFactionMobFriendly
+  type: boolean
+  default: 'true'
+  descrip: "Undead non-boss monsters won't target and attack players of Undead faction"
+  category: misc
 
 - name: EnablesLocateWellspringCommand
   type: enum
@@ -81,3 +86,8 @@
   default: 'true'
   descrip: "Displays distillation contents for all items supported"
   category: MagiChem
+- name: LabyrinthMEStorageVoidInput
+  type: boolean
+  default: 'true'
+  descrip: "Whether excess materia inputs into Mirror Labyrinth via ME system gets voided"
+  category: MagiChem_AE2

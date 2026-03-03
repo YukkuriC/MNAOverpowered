@@ -9,6 +9,7 @@ import com.aranaira.magichem.block.entity.MirrorLabyrinthBlockEntity;
 import com.aranaira.magichem.foundation.MagiChemBlockStateProperties;
 import com.aranaira.magichem.item.MateriaItem;
 import com.aranaira.magichem.util.InventoryHelper;
+import io.yukkuric.mnaop.MNAOPConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -55,7 +56,7 @@ public class LabyrinthMEStorageCap implements MEStorage, ICapabilityProvider {
     }
 
     public boolean isVoidExcess() {
-        return true;
+        return MNAOPConfig.LabyrinthMEStorageVoidInput();
     }
     public boolean isPreferredStorageFor(AEKey what, IActionSource source) {
         return toMateria(what) != null;

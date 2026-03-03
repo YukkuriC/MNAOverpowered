@@ -15,6 +15,9 @@ public class MNAOPHelpers {
     public static boolean IsModLoaded(String modId) {
         return ModList.get().isLoaded(modId);
     }
+    public static boolean IsAE2Loaded() {
+        return ModList.get().isLoaded("ae2");
+    }
     public static boolean IsMagiChemLoaded() {
         return ModList.get().isLoaded("magichem");
     }

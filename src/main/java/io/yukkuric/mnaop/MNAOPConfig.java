@@ -14,10 +14,12 @@ public class MNAOPConfig {
             Cfg_EmpoweredEldrinMatrix,
             Cfg_RuneForgeHybridCrystalUpgrade,
             Cfg_CodexArcanaShiftQuery,
+            Cfg_UndeadFactionMobFriendly,
             Cfg_UnlimitedOrrery,
             Cfg_InstantConstructShlorps,
             Cfg_ShowReadableAdmixtureFormula,
-            Cfg_ShowDistillationResults;
+            Cfg_ShowDistillationResults,
+            Cfg_LabyrinthMEStorageVoidInput;
     public static ForgeConfigSpec.DoubleValue
             Cfg_ConstructMilkingCooldown,
             Cfg_NaturalWellspringMinStrength,
@@ -34,6 +36,7 @@ public class MNAOPConfig {
         Cfg_ConstructMilkingCooldown = BUILDER.comment("Configurable construct's milking cooldown (in minutes);\nset to values < 0 to disable this feature;\nthe real cooldown will be a random value between 1-2 times of this set value").defineInRange("ConstructMilkingCooldown", 3, Double.MIN_VALUE, Double.MAX_VALUE);
         Cfg_NaturalWellspringMinStrength = BUILDER.comment("Minimum strength for natural random wellsprings").defineInRange("NaturalWellspringMinStrength", 5, 0, Double.MAX_VALUE);
         Cfg_NaturalWellspringMaxStrength = BUILDER.comment("Maximum strength for natural random wellsprings").defineInRange("NaturalWellspringMaxStrength", 25, 0, Double.MAX_VALUE);
+        Cfg_UndeadFactionMobFriendly = BUILDER.comment("Undead non-boss monsters won't target and attack players of Undead faction").define("UndeadFactionMobFriendly", true);
         if (MNAOPMod.ConfigGroupActive("Blocks")) {
             BUILDER.push("Blocks");
             Cfg_NonDiminishingEldrinMatrix = BUILDER.comment("Eldrin Matrices no more diminish when placed more than 1").define("NonDiminishingEldrinMatrix", true);
@@ -60,6 +63,11 @@ public class MNAOPConfig {
             Cfg_LabyrinthNavigatorExtraOutputBatch = BUILDER.comment("Extra shlorps created each tick outputting materia from distillery & centrifuge devices for max-powered Labyrinth Navigators").defineInRange("LabyrinthNavigatorExtraOutputBatch", 5, 0, 18);
             Cfg_ShowReadableAdmixtureFormula = BUILDER.comment("Displays each admixture's translated formula and overall essentia value").define("ShowReadableAdmixtureFormula", true);
             Cfg_ShowDistillationResults = BUILDER.comment("Displays distillation contents for all items supported").define("ShowDistillationResults", true);
+            BUILDER.pop();
+        }
+        if (MNAOPMod.ConfigGroupActive("MagiChem_AE2")) {
+            BUILDER.push("MagiChem_AE2");
+            Cfg_LabyrinthMEStorageVoidInput = BUILDER.comment("Whether excess materia inputs into Mirror Labyrinth via ME system gets voided").define("LabyrinthMEStorageVoidInput", true);
             BUILDER.pop();
         }
     }
@@ -91,6 +99,9 @@ public class MNAOPConfig {
     public static boolean CodexArcanaShiftQuery() {
         return Cfg_CodexArcanaShiftQuery.get();
     }
+    public static boolean UndeadFactionMobFriendly() {
+        return Cfg_UndeadFactionMobFriendly.get();
+    }
     public static MNAOPEnums.CommandStatus EnablesLocateWellspringCommand() {
         return (MNAOPEnums.CommandStatus) Cfg_EnablesLocateWellspringCommand.get();
     }
@@ -114,5 +125,8 @@ public class MNAOPConfig {
     }
     public static boolean ShowDistillationResults() {
         return Cfg_ShowDistillationResults.get();
+    }
+    public static boolean LabyrinthMEStorageVoidInput() {
+        return Cfg_LabyrinthMEStorageVoidInput.get();
     }
 }
