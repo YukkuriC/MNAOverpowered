@@ -32,6 +32,7 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
     - (experimental) `Ctrl + Z` to undo; `Ctrl + Y` or `Ctrl + Shift + Z` to redo
         - ONLY DURING SCREEN OPEN, will lose all undos after closing menu and saving changes
 - Shift-right-clicking blocks in world when holding Codex Arcana to query related pages
+- Undead non-boss monsters won't target and attack players of Undead faction
 
 ---
 
