@@ -57,7 +57,7 @@ public class LabyrinthMEStorageCap implements MEStorage, ICapabilityProvider {
             return Math.max(0, Math.min(amount, master.getStorageLimit(mat) - master.getCurrentStock(mat)));
         }
         var inserted = amount - master.fill(mat, (int) amount, voidExcess); // inserted = target - overflow
-        if (inserted > 0 && isBottled(what)) { // handle bottles left
+        if (inserted > 0 && isBottled((AEItemKey) what)) { // handle bottles left
             var targetBottle = new ItemStack(Items.GLASS_BOTTLE, (int) inserted);
             if (source.player().isPresent()) {
                 var player = source.player().get();

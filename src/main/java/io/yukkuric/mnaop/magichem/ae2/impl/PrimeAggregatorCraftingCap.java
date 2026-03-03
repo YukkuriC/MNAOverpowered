@@ -4,8 +4,8 @@ import appeng.api.crafting.IPatternDetails;
 import appeng.api.stacks.*;
 import com.aranaira.magichem.block.entity.PrimeAggregatorBlockEntity;
 import com.aranaira.magichem.foundation.IHasDeviceRecipeSlot;
-import com.aranaira.magichem.registry.*;
-import com.aranaira.magichem.util.InventoryHelper;
+import com.aranaira.magichem.registry.FluidRegistry;
+import com.aranaira.magichem.registry.ItemRegistry;
 import io.yukkuric.mnaop.magichem.ae2.AlchemicalCraftingMachineCap;
 import io.yukkuric.mnaop.mixin.magichem.AccessorPrimeAggregator;
 import net.minecraft.core.Direction;
@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items;
 import java.util.List;
 
 import static io.yukkuric.mnaop.MNAOPHelpers.getWorker;
+import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.isBottled;
 
 public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
     protected final PrimeAggregatorBlockEntity master;
@@ -70,7 +71,7 @@ public class PrimeAggregatorCraftingCap extends AlchemicalCraftingMachineCap {
                         if (currentMateria > materiaRequired) return false;
 
                         // recycle bottles
-                        if (!InventoryHelper.hasCustomModelData(itemKeyInput.toStack())) {
+                        if (!isBottled(itemKeyInput)) {
                             changedBottle = true;
                             bottleCount += count;
                             if (bottleCount > 64) return false;

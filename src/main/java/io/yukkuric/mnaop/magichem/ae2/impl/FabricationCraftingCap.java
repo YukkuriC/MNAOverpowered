@@ -18,6 +18,9 @@ import net.minecraft.world.item.Items;
 import java.util.List;
 import java.util.function.Function;
 
+import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.MateriaInventoryFiller;
+import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.isBottled;
+
 public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final AbstractFabricationBlockEntity master;
     protected final ICoFEx masterEx;
@@ -66,6 +69,7 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         var itemHandler = masterEx.getItemHandler();
         var changedBottle = false;
         long bottleCount = itemHandler.getStackInSlot(slotBottle).getCount();
+        var filler = new MateriaInventoryFiller(itemHandler, slotInputStart, inputCounts);
         for (var kc : keyCounters) {
             for (var pair : kc) {
                 var count = pair.getLongValue();
@@ -76,16 +80,10 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
                         changedBottle = true;
                         bottleCount += count;
                         if (bottleCount > 64) return false;
-                    } else if (itemInput instanceof MateriaItem) {
-                        // TODO manual materia input
-                        return false;
-                        /*
-                        if (!InventoryHelper.hasCustomModelData(itemKeyInput.toStack())) {
-                            changedBottle = true;
-                            bottleCount += count;
-                            if (bottleCount > 64) return false;
-                        }
-                        */
+                    } else if (itemInput instanceof MateriaItem materia) {
+                        // manual materia input
+                        if (!filler.receive(materia, (int) count, isBottled(itemKeyInput)))
+                            return false;
                     }
                 } else return false;
             }
@@ -96,6 +94,7 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         }
         masterEx.setRecipes(targetRecipe, targetFluidRecipe, batchCount);
         master.clearRecipeAfterNextProcess = true;
+        filler.actuallyFill();
         master.syncAndSave();
         return true;
     }
