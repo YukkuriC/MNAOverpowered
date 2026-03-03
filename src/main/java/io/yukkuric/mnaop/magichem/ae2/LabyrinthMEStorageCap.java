@@ -7,17 +7,12 @@ import appeng.api.storage.MEStorage;
 import appeng.capabilities.Capabilities;
 import com.aranaira.magichem.block.entity.MirrorLabyrinthBlockEntity;
 import com.aranaira.magichem.foundation.MagiChemBlockStateProperties;
-import com.aranaira.magichem.item.MateriaItem;
-import com.aranaira.magichem.util.InventoryHelper;
 import io.yukkuric.mnaop.MNAOPConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -25,6 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+
+import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.*;
 
 public class LabyrinthMEStorageCap implements MEStorage, ICapabilityProvider {
     LazyOptional<?> myProvider;
@@ -44,16 +41,6 @@ public class LabyrinthMEStorageCap implements MEStorage, ICapabilityProvider {
     static CompoundTag GLOB_NBT = new CompoundTag() {{
         putInt("CustomModelData", 1);
     }};
-    static MateriaItem toMateria(AEKey what) {
-        if (what instanceof AEItemKey ik && ik.getItem() instanceof MateriaItem mat) return mat;
-        return null;
-    }
-    static boolean isBottled(AEKey what) {
-        return !InventoryHelper.hasCustomModelData(((AEItemKey) what).getReadOnlyStack());
-    }
-    static void popBottle(ItemStack bottle, Level level, Vec3 pos) {
-        level.addFreshEntity(new ItemEntity(level, pos.x, pos.y, pos.z, bottle));
-    }
 
     public boolean isVoidExcess() {
         return MNAOPConfig.LabyrinthMEStorageVoidInput();
