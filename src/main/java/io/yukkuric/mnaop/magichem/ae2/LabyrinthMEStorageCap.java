@@ -9,7 +9,6 @@ import com.aranaira.magichem.block.entity.MirrorLabyrinthBlockEntity;
 import com.aranaira.magichem.foundation.MagiChemBlockStateProperties;
 import io.yukkuric.mnaop.MNAOPConfig;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -37,10 +36,6 @@ public class LabyrinthMEStorageCap implements MEStorage, ICapabilityProvider {
     public LabyrinthMEStorageCap(MirrorLabyrinthBlockEntity storage) {
         master = storage;
     }
-
-    static CompoundTag GLOB_NBT = new CompoundTag() {{
-        putInt("CustomModelData", 1);
-    }};
 
     public boolean isVoidExcess() {
         return MNAOPConfig.LabyrinthMEStorageVoidInput();
@@ -79,8 +74,7 @@ public class LabyrinthMEStorageCap implements MEStorage, ICapabilityProvider {
         if (mode.isSimulate()) {
             return Math.min(amount, master.getCurrentStock(mat));
         }
-        var extracted = master.drain(mat, (int) amount, false);
-        return extracted;
+        return master.drain(mat, (int) amount, false);
     }
     public void getAvailableStacks(KeyCounter out) {
         for (var mat : master.getMateriaTypes())
