@@ -23,7 +23,7 @@ import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.isBottled;
 public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final AbstractFabricationBlockEntity master;
     protected final ICoFEx masterEx;
-    protected final Function<AbstractFabricationBlockEntity.IDs, Integer> varFunc;
+    protected final int slotBottle, slotInputStart, inputCounts;
     protected final boolean isGrand;
     static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.place_holder.tooltip"));
 
@@ -32,8 +32,11 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         master = target;
         masterEx = (ICoFEx) target;
         isGrand = master instanceof GrandCircleFabricationBlockEntity;
-        varFunc = isGrand ? GrandCircleFabricationBlockEntity::getVar :
+        Function<AbstractFabricationBlockEntity.IDs, Integer> varFunc = isGrand ? GrandCircleFabricationBlockEntity::getVar :
                 CircleFabricationBlockEntity::getVar;
+        slotBottle = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_BOTTLES);
+        slotInputStart = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_INPUT_START);
+        inputCounts = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_INPUT_COUNT);
     }
 
     @Override
@@ -42,11 +45,6 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
         var target = output.what();
         if (masterEx.hasAnyRecipe()) return false;
         var wisdomLevel = isGrand ? master.getCurrentWisdom(GrandCircleFabricationBlockEntity::getVar) : 0;
-
-        int
-                slotBottle = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_BOTTLES),
-                slotInputStart = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_INPUT_START),
-                inputCounts = varFunc.apply(AbstractFabricationBlockEntity.IDs.SLOT_INPUT_COUNT);
 
         // query recipe & size
         DistillationFabricationRecipe targetRecipe = null;
