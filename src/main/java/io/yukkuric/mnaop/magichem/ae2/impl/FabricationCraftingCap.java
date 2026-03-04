@@ -25,7 +25,7 @@ public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final ICoFEx masterEx;
     protected final Function<AbstractFabricationBlockEntity.IDs, Integer> varFunc;
     protected final boolean isGrand;
-    static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.fabrication.tooltip"));
+    static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.place_holder.tooltip"));
 
     public FabricationCraftingCap(AbstractFabricationBlockEntity target) {
         super(target.getBlockState().getBlock(), CRAFTER_TOOLTIP);
