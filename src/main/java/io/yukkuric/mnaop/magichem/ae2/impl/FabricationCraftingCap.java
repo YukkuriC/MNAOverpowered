@@ -10,25 +10,22 @@ import com.aranaira.magichem.recipe.FluidDistillationFabricationRecipe;
 import io.yukkuric.mnaop.magichem.ae2.AlchemicalCraftingMachineCap;
 import io.yukkuric.mnaop.mixin_interface.magichem.ICoFEx;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.List;
 import java.util.function.Function;
 
-import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.MateriaInventoryFiller;
-import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.isBottled;
+import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.*;
 
 public class FabricationCraftingCap extends AlchemicalCraftingMachineCap {
     protected final AbstractFabricationBlockEntity master;
     protected final ICoFEx masterEx;
     protected final int slotBottle, slotInputStart, inputCounts;
     protected final boolean isGrand;
-    static final List<Component> CRAFTER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.place_holder.tooltip"));
 
     public FabricationCraftingCap(AbstractFabricationBlockEntity target) {
-        super(target.getBlockState().getBlock(), CRAFTER_TOOLTIP);
+        super(target.getBlockState().getBlock(), PLACEHOLDER_TOOLTIP);
         master = target;
         masterEx = (ICoFEx) target;
         isGrand = master instanceof GrandCircleFabricationBlockEntity;

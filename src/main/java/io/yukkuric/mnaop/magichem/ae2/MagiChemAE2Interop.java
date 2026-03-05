@@ -2,8 +2,7 @@ package io.yukkuric.mnaop.magichem.ae2;
 
 import appeng.capabilities.Capabilities;
 import com.aranaira.magichem.block.entity.*;
-import com.aranaira.magichem.block.entity.ext.AbstractFabricationBlockEntity;
-import com.aranaira.magichem.block.entity.ext.AbstractMateriaStorageMultiTypeBlockEntity;
+import com.aranaira.magichem.block.entity.ext.*;
 import io.yukkuric.mnaop.MNAOPHelpers;
 import io.yukkuric.mnaop.magichem.ae2.impl.*;
 import net.minecraft.core.Direction;
@@ -27,11 +26,18 @@ public class MagiChemAE2Interop {
     static ResourceLocation resLocMateriaStorageCap = MNAOPHelpers.modLoc("storage");
     static void OnAttachForgeCap(AttachCapabilitiesEvent<BlockEntity> event) {
         var attachedBlock = event.getObject();
+
+        // crafters
+        // centrifuge uses default item handler method, ignored
         if (attachedBlock instanceof PrimeAggregatorBlockEntity pa)
             event.addCapability(resLocCrafterCap, new PrimeAggregatorCraftingCap(pa));
-        if (attachedBlock instanceof AbstractFabricationBlockEntity cf)
+        else if (attachedBlock instanceof AbstractFabricationBlockEntity cf)
             event.addCapability(resLocCrafterCap, new FabricationCraftingCap(cf));
-        if (attachedBlock instanceof AbstractMateriaStorageMultiTypeBlockEntity matStorage) {
+        else if (attachedBlock instanceof AbstractFixationBlockEntity fu)
+            event.addCapability(resLocCrafterCap, new FuseryCraftingCap(fu));
+
+            // labyrinth MEStorage
+        else if (attachedBlock instanceof AbstractMateriaStorageMultiTypeBlockEntity matStorage) {
             if (matStorage instanceof MirrorLabyrinthBlockEntity labyrinth) {
                 event.addCapability(resLocMateriaStorageCap, new LabyrinthMEStorageCap(labyrinth));
             } else if (matStorage instanceof MagicMirrorBlockEntity mirror) {

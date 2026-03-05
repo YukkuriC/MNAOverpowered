@@ -29,6 +29,7 @@
     "magichem.MixinPrimeAggregator$AccessorAggregator",
     "magichem.ext.MixinCircleFabrication",
     "magichem.ext.MixinClearRecipe",
+    "magichem.ext.MixinFixSepDevice",
     "magichem.ext.MixinLastUserExtended",
     "magichem.ext.MixinLastUserExtended$Menu_Style1",
     "magichem.ext.MixinLastUserExtended$Menu_Style2",

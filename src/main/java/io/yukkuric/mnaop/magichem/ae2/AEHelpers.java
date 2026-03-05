@@ -5,6 +5,7 @@ import appeng.api.stacks.AEKey;
 import com.aranaira.magichem.item.MateriaItem;
 import com.aranaira.magichem.util.InventoryHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,7 @@ public class AEHelpers {
     static CompoundTag GLOB_NBT = new CompoundTag() {{
         putInt("CustomModelData", 1);
     }};
+    public static final List<Component> PLACEHOLDER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.place_holder.tooltip"));
     public static ItemStack toStack(MateriaItem materia, int count, boolean bottled) {
         var stack = new ItemStack(materia, count);
         if (!bottled) stack.setTag(GLOB_NBT);
@@ -113,7 +115,7 @@ public class AEHelpers {
                         if (ptr > SLOT_PER_ROW) break; // shouldn't happen
                         int step = Math.min(STACK_CAP, count);
                         count -= step;
-                        handler.setStackInSlot(rowStart + ptr, toStack(mat, count, map == mapBottled));
+                        handler.setStackInSlot(rowStart + ptr, toStack(mat, step, map == mapBottled));
                         ptr++;
                     }
                 }
