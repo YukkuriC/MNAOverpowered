@@ -15,6 +15,7 @@ public class MNAOPMixinPlugin implements IMixinConfigPlugin {
         {
             put("magichem", "com.aranaira.magichem.MagiChemMod");
             put("computercraft", "dan200.computercraft.ComputerCraft");
+            put("ae2", "appeng.core.AppEng");
         }
     };
 

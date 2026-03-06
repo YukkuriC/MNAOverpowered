@@ -17,3 +17,7 @@
 
 - note: inserting bottled materia stacks to labyrinth by hand receives glass bottles of same amount
 - and will **split bottles directly into the world** if no player is present
+
+## Misc. changes
+
+- AE2 blocks with internal inventory (Interface & Pattern Provider) is valid Navigator targets now (output only)

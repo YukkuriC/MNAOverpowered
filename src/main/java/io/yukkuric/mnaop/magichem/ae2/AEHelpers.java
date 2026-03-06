@@ -16,7 +16,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.*;
 
 public class AEHelpers {
-    static CompoundTag GLOB_NBT = new CompoundTag() {{
+    public static CompoundTag GLOB_NBT = new CompoundTag() {{
         putInt("CustomModelData", 1);
     }};
     public static final List<Component> PLACEHOLDER_TOOLTIP = List.of(Component.translatable("mnaop.magichem.ae2.place_holder.tooltip"));

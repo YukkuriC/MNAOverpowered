@@ -27,6 +27,8 @@
     "magichem.MixinPowerCircle",
     "magichem.MixinPrimeAggregator",
     "magichem.MixinPrimeAggregator$AccessorAggregator",
+    "magichem.ae2.MixinGeneralShlorpReceiver",
+    "magichem.ae2.MixinNavigatorTarget",
     "magichem.ext.MixinCircleFabrication",
     "magichem.ext.MixinClearRecipe",
     "magichem.ext.MixinFixSepDevice",
