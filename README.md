@@ -59,6 +59,8 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
         - Pattern provider & crafting machine support
             - Prime Aggregator (Exaltation)
             - (Grand) Circle of Fabrication
+            - (Grand) Fusery
+            - _(Grand) Centrifuge already supports arbitrary input without set recipe, so here's no further support_
         - Mirror Labyrinth (with bound Magic Mirror) can get recognized by Storage Bus, providing unbottled materia blobs
         - AE2 blocks with internal inventory (Interface & Pattern Provider) is valid Navigator targets now (output only)
         - a more detailed document can be found [HERE](https://github.com/YukkuriC/MNAOverpowered/blob/main/doc/MagiChemAE.md)

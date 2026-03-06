@@ -8,7 +8,6 @@ import com.aranaira.magichem.item.MateriaItem;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mna.tools.math.Vector3;
-import io.yukkuric.mnaop.MNAOPMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
