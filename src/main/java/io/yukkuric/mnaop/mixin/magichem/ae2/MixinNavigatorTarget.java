@@ -32,7 +32,6 @@ public class MixinNavigatorTarget {
     void checkTargetInv(CallbackInfoReturnable<BlockEntity> cir/*, @Local BlockEntity entityQuery*/) {
         // @Local does not match any or matched multiple local variables in the target method
         // wtf MixinExtras ??
-        MNAOPMod.LOGGER.error("test target: {}", picked);
         if (cir.getReturnValue() == null && picked != null) {
             var invCap = picked.getCapability(Capabilities.GENERIC_INTERNAL_INV);
             if (invCap.isPresent()) cir.setReturnValue(picked);
