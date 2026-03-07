@@ -27,3 +27,4 @@
 ## Misc. changes
 
 - AE2 blocks with internal inventory (Interface & Pattern Provider) is valid Navigator targets now (output only)
+    - NOTE: if target block overflows, shlorps with nowhere to go becomes item drops in world, so make sure never targets offline or occupied Interface or Pattern Provider blocks

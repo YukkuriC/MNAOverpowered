@@ -35,16 +35,11 @@ public class MixinGeneralShlorpReceiver extends BlockEntity implements IShlorpRe
         mnaop$unwrapBottle(toInsert);
         var inv = mnaop$getGeneralInventory();
         if (inv == null || !inv.canInsert()) return 0;
-        int maxCap = 0;
-        int maxStackSize = toInsert.getMaxStackSize();
-        for (int i = 0; i < inv.size(); i++) {
+        for (int i = inv.size() - 1; i >= 0; i--) { // checking reversed, more likely to hit empty slots
             var content = inv.getStack(i);
             if (content == null) return toInsert.getCount();
-            if (content.what() instanceof AEItemKey itemKey && itemKey.matches(toInsert)) {
-                maxCap += (int) Math.max(0, maxStackSize - content.amount());
-            }
         }
-        return Math.min(toInsert.getCount(), maxCap);
+        return 0;
     }
     @Override
     public int insertStackFromShlorp(ItemStack toInsert) {
@@ -67,6 +62,9 @@ public class MixinGeneralShlorpReceiver extends BlockEntity implements IShlorpRe
                 if (countLeft <= 0) return 0;
             }
         }
-        return countLeft;
+
+        // pop contents to world
+        AEHelpers.popBottle(toInsert.copyWithCount(countLeft), getLevel(), getBlockPos().getCenter());
+        return 0;
     }
 }
