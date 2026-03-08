@@ -63,6 +63,7 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
             - (Grand) Centrifuge
         - Mirror Labyrinth (with bound Magic Mirror) can get recognized by Storage Bus, providing unbottled materia blobs
         - AE2 blocks with internal inventory (Interface & Pattern Provider) is valid Navigator targets now (output only)
+        - A crafting recipe to manually combine materia glob with glass bottle for bottled materia
         - a more detailed document can be found [HERE](https://github.com/YukkuriC/MNAOverpowered/blob/main/doc/MagiChemAE.md)
 
 ---
