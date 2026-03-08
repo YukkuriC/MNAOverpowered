@@ -14,6 +14,8 @@ import io.yukkuric.mnaop.mixin_interface.magichem.IFixSepEx;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.function.Function;
 
@@ -51,6 +53,7 @@ public class FuseryCraftingCap extends AlchemicalCraftingMachineCap {
         long bottleCount = itemHandler.getStackInSlot(slotBottle).getCount();
         var filler = new AEHelpers.MateriaInventoryFiller(itemHandler, slotInputStart, inputCounts, recipe.getComponentMateria());
         if (filler.init()) return false;
+        int slurryCount = 0;
         for (var kc : keyCounters) {
             for (var pair : kc) {
                 var count = pair.getLongValue();
@@ -60,8 +63,8 @@ public class FuseryCraftingCap extends AlchemicalCraftingMachineCap {
                 if (key instanceof AEFluidKey fluidKeyInput) {
                     var fluidType = fluidKeyInput.getFluid().getFluidType();
                     if (fluidType != FluidRegistry.ACADEMIC_SLURRY_FLUID_TYPE.get()) return false;
-                    // TODO handle slurry
-                    return false;
+                    slurryCount += (int) count;
+                    continue;
                 }
                 if (!(key instanceof AEItemKey itemKeyInput)) return false;
 
@@ -74,12 +77,18 @@ public class FuseryCraftingCap extends AlchemicalCraftingMachineCap {
                 } else if (filler.receive(itemInput, (int) count, isBottled(itemKeyInput))) return false;
             }
         }
+        if (slurryCount > 0) {
+            if (master.fill(new FluidStack(FluidRegistry.ACADEMIC_SLURRY.get(), slurryCount), IFluidHandler.FluidAction.SIMULATE) < slurryCount)
+                return false;
+        }
         if (filler.finalCheck()) return false;
 
         // apply recipe
         if (changedBottle) {
             itemHandler.setStackInSlot(slotBottle, new ItemStack(Items.GLASS_BOTTLE, (int) bottleCount));
         }
+        if (slurryCount > 0)
+            master.fill(new FluidStack(FluidRegistry.ACADEMIC_SLURRY.get(), slurryCount), IFluidHandler.FluidAction.EXECUTE);
         masterEx.setRecipe(recipe);
         master.clearRecipeAfterNextProcess = true;
         filler.actuallyFill();
