@@ -33,3 +33,4 @@
     - NOTE: if target block overflows, shlorps with nowhere to go becomes item drops in world, so make sure never targets offline or occupied Interface or Pattern Provider blocks
 - A crafting recipe to manually combine materia glob with glass bottle for bottled materia
     - currently not supporting importing crafting pattern from JEI sadly :V
+- _Knocking a processing pattern with bottled materia on Mirror Labyrinth or AE blocks to remove all bottles inside_
