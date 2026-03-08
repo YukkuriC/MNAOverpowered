@@ -35,6 +35,8 @@ public class MagiChemAE2Interop {
             event.addCapability(resLocCrafterCap, new FabricationCraftingCap(cf));
         else if (attachedBlock instanceof AbstractFixationBlockEntity fu)
             event.addCapability(resLocCrafterCap, new FuseryCraftingCap(fu));
+        else if (attachedBlock instanceof AbstractSeparationBlockEntity ce)
+            event.addCapability(resLocCrafterCap, new CentrifugeCraftingCap(ce));
 
             // labyrinth MEStorage
         else if (attachedBlock instanceof AbstractMateriaStorageMultiTypeBlockEntity matStorage) {

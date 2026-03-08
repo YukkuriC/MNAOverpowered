@@ -7,4 +7,5 @@ public interface IFixSepEx {
     boolean hasAnyRecipe();
     void setRecipe(FixationSeparationRecipe recipe);
     ItemStackHandler getItemHandler();
+    int getBatchSize();
 }

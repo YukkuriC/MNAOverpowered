@@ -14,9 +14,13 @@
     - pattern output amount cannot exceed max allowed size for one craft (e.g. a recipe with max batch 8 & rate 25% allows at most 32 as output)
 - (Grand) Fusery
     - Supports materia input via pattern
+    - Pattern output batch cannot exceed the batch size machine is set (the minimum of `4 * air actuator setting` and certain admixture's max allowed size)
+        - 4 for AoLegend, and 3 for Philosopher's Concoction
     - _NOT YET supports slurry input_
     - ___NOTE: navigator directly to labyrinth (or mirror) will result that crafting tasks won't finish, and it's recommended to link navigators to Interface or Patter Provider blocks___
-- _(Grand) Centrifuge already supports arbitrary input without set recipe, so here's no further support_
+- (Grand) Centrifuge
+    - Supports materia input via pattern
+    - Pattern input batch cannot exceed the batch size machine is set (`4 * air actuator setting`)
     - ___NOTE: navigator directly to labyrinth (or mirror) will result that crafting tasks won't finish, and it's recommended to link navigators to Interface or Patter Provider blocks___
 
 ## Mirror Labyrinth (with bound Magic Mirror) can get recognized by Storage Bus, providing unbottled materia blobs

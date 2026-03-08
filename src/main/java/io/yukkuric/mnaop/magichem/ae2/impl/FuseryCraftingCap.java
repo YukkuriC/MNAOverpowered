@@ -21,7 +21,6 @@ import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.PLACEHOLDER_TOOLTIP;
 import static io.yukkuric.mnaop.magichem.ae2.AEHelpers.isBottled;
 
 public class FuseryCraftingCap extends AlchemicalCraftingMachineCap {
-    // lateinit vars
     protected final IFixSepEx masterEx;
     protected final int slotBottle, slotInputStart, inputCounts;
     protected final AbstractFixationBlockEntity master;
@@ -41,7 +40,7 @@ public class FuseryCraftingCap extends AlchemicalCraftingMachineCap {
     public boolean pushPattern(IPatternDetails pattern, KeyCounter[] keyCounters, Direction direction) {
         if (masterEx.hasAnyRecipe()) return false;
         var output = pattern.getPrimaryOutput();
-        if (!(output.what() instanceof AEItemKey itemKey && itemKey.getItem() instanceof MateriaItem materia))
+        if (!(output.what() instanceof AEItemKey itemKey && itemKey.getItem() instanceof MateriaItem materia) || output.amount() > masterEx.getBatchSize())
             return false;
         var recipe = FixationSeparationRecipe.getSeparatingRecipe(master.getLevel(), materia);
         if (recipe == null) return false;
@@ -62,7 +61,7 @@ public class FuseryCraftingCap extends AlchemicalCraftingMachineCap {
                     var fluidType = fluidKeyInput.getFluid().getFluidType();
                     if (fluidType != FluidRegistry.ACADEMIC_SLURRY_FLUID_TYPE.get()) return false;
                     // TODO handle slurry
-                    continue;
+                    return false;
                 }
                 if (!(key instanceof AEItemKey itemKeyInput)) return false;
 
