@@ -98,7 +98,7 @@ public class AEHelpers {
                 for (var map : allMaps) {
                     int count = map.getOrDefault(mat, 0);
                     slots += count / STACK_CAP;
-                    if (slots % 64 > 0) slots++;
+                    if (count % STACK_CAP > 0) slots++;
                 }
                 if (slots > SLOT_PER_ROW) return true;
             }
