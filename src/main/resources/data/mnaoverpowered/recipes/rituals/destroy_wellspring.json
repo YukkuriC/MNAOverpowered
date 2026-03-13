@@ -1,0 +1,65 @@
+{
+	"type": "mna:ritual",
+	"tier": 5,
+	"pattern":
+	[
+		[ 0, 0, 0, 0,-1, 0, 0, 0, 0 ],
+		[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		[ 0,-1, 0, 0, 0, 0, 0,-1, 0 ],
+		[ 0, 0, 0, 2, 3, 4, 0, 0, 0 ],
+		[ 0, 0, 0, 9, 1, 5, 0, 0, 0 ],
+		[ 0, 0, 0, 8, 7, 6, 0, 0, 0 ],
+		[ 0,-1, 0, 0, 0, 0, 0,-1, 0 ],
+		[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		[ 0, 0, 0, 0,-1, 0, 0, 0, 0 ]
+	],
+	"displayPattern":
+	[
+		[ 0, 0, 0, 0, 3, 0, 0, 0, 0 ],
+		[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		[ 0,10, 0, 0, 0, 0, 0, 7, 0 ],
+		[ 0, 0, 0,-1,-1,-1, 0, 0, 0 ],
+		[ 0, 0, 0,-1, 1,-1, 0, 0, 0 ],
+		[ 0, 0, 0,-1,-1,-1, 0, 0, 0 ],
+		[ 0, 6, 0, 0, 0, 0, 0, 9, 0 ],
+		[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		[ 0, 0, 0, 0, 4, 0, 0, 0, 0 ]
+	],
+	"reagents":
+	[
+		"         ",
+		"         ",
+		"         ",
+		"    W    ",
+		"   QCQ   ",
+		"    W    ",
+		"         ",
+		"         ",
+		"         "
+	],
+	"keys": {
+		"Q": {
+			"item": "mna:eldrin_rift",
+			"optional": false,
+			"consume": true
+		},
+		"W": {
+			"item": "mna:rune_projection",
+			"optional": false,
+			"consume": true
+		},
+		"C": {
+			"item": "mna:transitory_tunnel",
+			"optional": false,
+			"consume": false
+		}
+	},
+	"parameters":
+	{
+		"innerColor": "0x165e45",
+		"outerColor": "0x24976e",
+		"displayIndexes": false,
+		"connectBeam": true,
+		"beamColor": "0x165e45"
+	}
+}

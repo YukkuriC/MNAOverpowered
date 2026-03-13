@@ -1,11 +1,13 @@
 package io.yukkuric.mnaop;
 
+import com.mna.Registries;
 import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.command.MNAOPCommands;
 import io.yukkuric.mnaop.gui.GuideBookQueryHandler;
 import io.yukkuric.mnaop.magichem.MagiChemEvents;
 import io.yukkuric.mnaop.magichem.ae2.MagiChemAE2Interop;
 import io.yukkuric.mnaop.magichem.cc.MagiChemCCInterop;
+import io.yukkuric.mnaop.ritual.MNAOPRituals;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -18,6 +20,8 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
 import static io.yukkuric.mnaop.MNAOPHelpers.*;
@@ -30,10 +34,15 @@ public class MNAOPMod {
 
     @SuppressWarnings("removal")
     public MNAOPMod() {
-        // IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MNAOPConfig.SPEC);
         eventBus.addListener((RegisterCommandsEvent event) -> MNAOPCommands.register(event.getDispatcher()));
+
+        // register
+        modBus.addListener((RegisterEvent e) -> {
+            e.register(Registries.RitualEffect.get().getRegistryKey(), MNAOPRituals::register);
+        });
 
         // interop
         if (IsMagiChemLoaded()) {

@@ -33,6 +33,9 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
         - ONLY DURING SCREEN OPEN, will lose all undos after closing menu and saving changes
 - Shift-right-clicking blocks in world when holding Codex Arcana to query related pages
 - Undead non-boss monsters won't target and attack players of Undead faction
+- `△` Custom overpowered rituals
+    - Ritual of Creating Wellspring: creates a fresh new random wellspring at center of the ritual
+    - Ritual of Destroying Wellspring: destroys the wellspring at center of the ritual
 
 ---
 
