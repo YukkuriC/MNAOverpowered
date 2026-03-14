@@ -56,10 +56,10 @@
 	},
 	"parameters":
 	{
-		"innerColor": "0x165e45",
-		"outerColor": "0x24976e",
+		"innerColor": "0xee3333",
+		"outerColor": "0xee3333",
 		"displayIndexes": false,
 		"connectBeam": true,
-		"beamColor": "0x165e45"
+		"beamColor": "0xee3333"
 	}
 }
