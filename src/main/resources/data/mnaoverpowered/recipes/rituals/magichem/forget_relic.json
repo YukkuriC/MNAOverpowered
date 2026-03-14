@@ -1,0 +1,73 @@
+{
+	"type": "forge:conditional",
+	"recipes": [
+		{
+			"conditions": [
+				{
+					"type": "forge:mod_loaded",
+					"modid": "magichem"
+				}
+			],
+			"recipe": {
+				"type": "mna:ritual",
+				"tier": 5,
+				"pattern":
+				[
+					[-1,-1, 1,-1,-1,-1, 1,-1,-1 ],
+					[-1, 0,-1,-1, 0,-1,-1, 0,-1 ],
+					[ 1,-1, 1,-1,-1,-1, 2,-1, 1 ],
+					[-1,-1,-1, 0, 0, 0,-1,-1,-1 ],
+					[-1, 0,-1, 0, 5, 0,-1, 0,-1 ],
+					[-1,-1,-1, 0, 0, 0,-1,-1,-1 ],
+					[ 1,-1, 4,-1,-1,-1, 3,-1, 1 ],
+					[-1, 0,-1,-1, 0,-1,-1, 0,-1 ],
+					[-1,-1, 1,-1,-1,-1, 1,-1,-1 ]
+				],
+				"displayPattern":
+				[
+					[ 3,-1,-1,-1, 7,-1,-1,-1, 3 ],
+					[-1,-1,-1,-1,-1,-1,-1,-1,-1 ],
+					[-1,-1, 5,-1,-1,-1, 5,-1,-1 ],
+					[-1,-1,-1,-1,-1,-1,-1,-1,-1 ],
+					[ 7,-1,-1,-1, 1,-1,-1,-1, 7 ],
+					[-1,-1,-1,-1,-1,-1,-1,-1,-1 ],
+					[-1,-1, 5,-1,-1,-1, 5,-1,-1 ],
+					[-1,-1,-1,-1,-1,-1,-1,-1,-1 ],
+					[ 3,-1,-1,-1, 7,-1,-1,-1, 3 ]
+				],
+				"reagents":
+				[
+					"  L   L  ",
+					"         ",
+					"L L   L L",
+					"         ",
+					"    C    ",
+					"         ",
+					"L L   L L",
+					"         ",
+					"  L   L  "
+				],
+				"keys": {
+					"L": {
+						"item": "magichem:admixture_legend",
+						"optional": false,
+						"consume": true
+					},
+					"C": {
+						"item": "magichem:admixture_philosophers_concoction",
+						"optional": false,
+						"consume": true
+					}
+				},
+				"parameters":
+				{
+					"innerColor": "0x5e4516",
+					"outerColor": "0x976e24",
+					"displayIndexes": false,
+					"connectBeam": false,
+					"beamColor": "0x5e4516"
+				}
+			}
+		}
+	]
+}

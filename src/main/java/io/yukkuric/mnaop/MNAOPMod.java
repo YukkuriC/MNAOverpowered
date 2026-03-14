@@ -8,6 +8,7 @@ import io.yukkuric.mnaop.magichem.MagiChemEvents;
 import io.yukkuric.mnaop.magichem.ae2.MagiChemAE2Interop;
 import io.yukkuric.mnaop.magichem.cc.MagiChemCCInterop;
 import io.yukkuric.mnaop.ritual.MNAOPRituals;
+import io.yukkuric.mnaop.ritual.magichem.MagiChemOPRituals;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -46,6 +47,7 @@ public class MNAOPMod {
 
         // interop
         if (IsMagiChemLoaded()) {
+            MagiChemOPRituals.load();
             if (IsModLoaded("computercraft")) MagiChemCCInterop.Init();
             if (IsAE2Loaded()) MagiChemAE2Interop.Init();
         }

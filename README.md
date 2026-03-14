@@ -53,6 +53,8 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
     - `△` Custom construct task nodes
         - Batch provide materia to all locations inside a Book of Marks
             - including actuators connected to the root machine (starting from `v0.5.2-pre16`)
+    - `△` Custom overpowered rituals
+        - Ritual of Relic Reset: let the caster and the world forget they've crafted a relic, using AoLegend and Philosopher's Concoction
     - `△` CC:Tweaked interop (peripheral support):
         - materia container blocks (e.g. Mirror Labyrinth)
         - multi-recipe holder machines (e.g. Alchemical Nexus)
