@@ -13,8 +13,8 @@ import java.util.function.Function;
 import static io.yukkuric.mnaop.MNAOPHelpers.modLoc;
 
 public class MNAOPRituals {
-    static final Map<ResourceLocation, RitualEffect> RITUALS = new HashMap<>();
-    static RitualEffect create(String path, Function<ResourceLocation, RitualEffect> getter) {
+    protected static final Map<ResourceLocation, RitualEffect> RITUALS = new HashMap<>();
+    protected static RitualEffect create(String path, Function<ResourceLocation, RitualEffect> getter) {
         if (MNAOPMixinPlugin.isRitualEffectDenied(path)) {
             MNAOPMod.LOGGER.warn("ritual {} denied; will not take effect", path);
             return null;

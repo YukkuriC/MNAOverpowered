@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.item.ItemEntity;
 
-public abstract class RitualEffectChangeWellspring extends RitualEffect {
+public abstract class RitualEffectChangeWellspring extends RitualEffect implements IRitualHelpers {
     final boolean isDelete;
     public RitualEffectChangeWellspring(ResourceLocation ritualName, boolean shouldWellspringExist) {
         super(ritualName);
@@ -84,6 +84,7 @@ public abstract class RitualEffectChangeWellspring extends RitualEffect {
     }
 
     protected void tryReturnItems(IRitualContext context) {
+        giveItemsAtCenter(context, context.getCollectedReagents());
         context.getCaster().sendSystemMessage(failMsg);
         var center = context.getCenter().getCenter();
         var level = context.getLevel();
@@ -119,10 +120,7 @@ public abstract class RitualEffectChangeWellspring extends RitualEffect {
 
             // manually return the tunnel
             if (ret) {
-                var level = context.getLevel();
-                var pos = context.getCenter().getCenter();
-                var entity = new ItemEntity(level, pos.x, pos.y, pos.z, ItemInit.TRANSITORY_TUNNEL.get().getDefaultInstance());
-                level.addFreshEntity(entity);
+                giveItemsAtCenter(context, ItemInit.TRANSITORY_TUNNEL.get().getDefaultInstance());
             }
 
             return ret;
