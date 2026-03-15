@@ -95,6 +95,7 @@ public class RitualEffectForgetRelic extends RitualEffect implements IRitualHelp
         MateriaItem materia = (MateriaItem) BuiltInRegistries.ITEM.get(ResourceLocation.parse("magichem:admixture_" + materiaId));
 
         var shlorp = new ShlorpEntity(EntitiesRegistry.SHLORP_ENTITY.get(), level);
+        shlorp.setPos(dst);
         shlorp.configure(
                 // Vector3 pStartLocation, Vector3 pStartOrigin, Vector3 pStartTangent
                 new Vector3(src), Vector3.zero(), new Vector3(Math.random() * 2 - 1, Math.random() * height + height, Math.random() * 2 - 1),
