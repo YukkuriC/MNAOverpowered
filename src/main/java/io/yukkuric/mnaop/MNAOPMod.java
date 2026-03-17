@@ -1,5 +1,9 @@
 package io.yukkuric.mnaop;
 
+import com.aranaira.magichem.foundation.NameCountPair;
+import com.aranaira.magichem.item.AdmixtureItem;
+import com.aranaira.magichem.item.EssentiaItem;
+import com.aranaira.magichem.registry.ItemRegistry;
 import com.mna.Registries;
 import com.mojang.logging.LogUtils;
 import io.yukkuric.mnaop.command.MNAOPCommands;
@@ -25,6 +29,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
+import java.util.List;
+
 import static io.yukkuric.mnaop.MNAOPHelpers.*;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -35,6 +41,10 @@ public class MNAOPMod {
 
     @SuppressWarnings("removal")
     public MNAOPMod() {
+        // test materia
+        ItemRegistry.ADMIXTURES.register("admixture_overpowered", () -> new AdmixtureItem("overpowered", "000000", 6, List.of(new NameCountPair("rubedo", (byte) 64)), List.of(new NameCountPair("legend", (byte) 64), new NameCountPair("philosophers_concoction", (byte) 64)), 1, 2));
+        ItemRegistry.ESSENTIA.register("essentia_meow", () -> new EssentiaItem("meow", "meow", "elements", 114514, "000000"));
+
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MNAOPConfig.SPEC);

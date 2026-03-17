@@ -1,0 +1,20 @@
+{
+  "type": "magichem:fixation_separation",
+  "object": {
+    "item": "magichem:admixture_overpowered"
+  },
+  "components": [
+    {
+      "item": "magichem:essentia_rubedo",
+      "count": 64
+    },
+    {
+      "item": "magichem:admixture_legend",
+      "count": 64
+    },
+    {
+      "item": "magichem:admixture_philosophers_concoction",
+      "count": 64
+    }
+  ]
+}

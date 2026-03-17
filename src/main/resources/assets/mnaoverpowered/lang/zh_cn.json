@@ -1,4 +1,10 @@
 {
+  "item.magichem.essentia_meow" : "喵喵基础原质",
+  "item.magichem.essentia_meow.short": "喵喵",
+  "item.magichem.essentia_meow.truncated": "喵喵",
+  "item.magichem.admixture_overpowered" : "滥强复合原质",
+  "item.magichem.admixture_overpowered.short": "滥强",
+  "item.magichem.admixture_overpowered.truncated": "滥强",
   "mnaoverpowered:rituals/create_wellspring" : "制造源泉仪式",
   "mnaoverpowered:rituals/destroy_wellspring" : "摧毁源泉仪式",
   "mnaoverpowered:rituals/magichem/forget_relic" : "遗物重置仪式",
