@@ -2,13 +2,13 @@ package io.yukkuric.mnaop.magichem.tooltip;
 
 import com.aranaira.magichem.foundation.NameCountPair;
 import com.aranaira.magichem.item.AdmixtureItem;
-import com.aranaira.magichem.registry.MateriaRegistry;
-import com.google.gson.JsonObject;
+import com.aranaira.magichem.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static io.yukkuric.mnaop.magichem.tooltip.TooltipHelpers.*;
@@ -23,19 +23,29 @@ public class ReadableAdmixtureTooltip {
         }
     }
     public static Map<String, List<NameCountPairWithMark>> admixtureRaw = new HashMap<>();
+    static Field fEss, fAdm;
 
     static {
-        for (var eRaw : MateriaRegistry.ADMIXTURE_JSON.get("admixtures").getAsJsonArray()) {
-            var e = (JsonObject) eRaw;
-            var key = e.get("name").getAsString();
+        try {
+            fEss = AdmixtureItem.class.getDeclaredField("formulaEssentiaPortions");
+            fAdm = AdmixtureItem.class.getDeclaredField("formulaAdmixturePortions");
+            fEss.setAccessible(true);
+            fAdm.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static void initAdmixtureRaw() throws IllegalAccessException {
+        if (admixtureRaw.size() > 0) return;
+        for (var reg : ItemRegistry.ADMIXTURES.getEntries()) {
+            var mat = (AdmixtureItem) reg.get();
+            var key = mat.getMateriaName();
             var data = new ArrayList<NameCountPairWithMark>();
-            for (var compRaw : e.get("components").getAsJsonArray()) {
-                var comp = (JsonObject) compRaw;
-                if (comp.has("admixture"))
-                    data.add(new NameCountPairWithMark(true, comp.get("admixture").getAsString(), comp.get("count").getAsByte()));
-                else
-                    data.add(new NameCountPairWithMark(false, comp.get("essentia").getAsString(), comp.get("count").getAsByte()));
-            }
+            for (var pair : (List<NameCountPair>) fEss.get(mat))
+                data.add(new NameCountPairWithMark(false, pair.getName(), pair.getCount()));
+            for (var pair : (List<NameCountPair>) fAdm.get(mat))
+                data.add(new NameCountPairWithMark(true, pair.getName(), pair.getCount()));
             admixtureRaw.put(key, data);
         }
     }
@@ -118,6 +128,7 @@ public class ReadableAdmixtureTooltip {
         var tooltips = e.getToolTip();
         var isShift = Screen.hasShiftDown();
         try {
+            initAdmixtureRaw();
             var formula = getFormula(name, isShift);
             tooltips.add(Component.translatable("tooltip.magichem.admixture_formula").withStyle(ChatFormatting.DARK_GRAY).append(" [ ").append(formula).append(" ]"));
             if (isShift) {
