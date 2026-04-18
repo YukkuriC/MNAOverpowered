@@ -73,7 +73,7 @@
   category: MagiChem
 - name: LabyrinthNavigatorExtraOutputBatch
   type: int
-  default: "5, 0, 18"
+  default: "5, 0, 17"
   descrip: "Extra shlorps created each tick outputting materia from distillery & centrifuge devices for max-powered Labyrinth Navigators"
   category: MagiChem
 - name: ShowReadableAdmixtureFormula

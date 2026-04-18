@@ -60,7 +60,7 @@ public class MNAOPConfig {
             Cfg_InstantConstructShlorps = BUILDER.comment("Constructs with advanced transport ability moves materia shlorps as fast as max-powered Labyrinth Navigators").define("InstantConstructShlorps", true);
             Cfg_CirclePowerStackMultRatio = BUILDER.comment("Circle of Power vertically stacked on another gets its output rate multiplied by (this value * bottom output rate / base maxa output rate)").defineInRange("CirclePowerStackMultRatio", 10, 1, Double.MAX_VALUE);
             Cfg_PrimeAggregatorExtraAnimationSpeed = BUILDER.comment("Extra animation ticking between stages during Prime Aggregator crafting; for example, 4 for 5x speed, and 0 for vanilla").defineInRange("PrimeAggregatorExtraAnimationSpeed", 4, 0, 100);
-            Cfg_LabyrinthNavigatorExtraOutputBatch = BUILDER.comment("Extra shlorps created each tick outputting materia from distillery & centrifuge devices for max-powered Labyrinth Navigators").defineInRange("LabyrinthNavigatorExtraOutputBatch", 5, 0, 18);
+            Cfg_LabyrinthNavigatorExtraOutputBatch = BUILDER.comment("Extra shlorps created each tick outputting materia from distillery & centrifuge devices for max-powered Labyrinth Navigators").defineInRange("LabyrinthNavigatorExtraOutputBatch", 5, 0, 17);
             Cfg_ShowReadableAdmixtureFormula = BUILDER.comment("Displays each admixture's translated formula and overall essentia value").define("ShowReadableAdmixtureFormula", true);
             Cfg_ShowDistillationResults = BUILDER.comment("Displays distillation contents for all items supported").define("ShowDistillationResults", true);
             BUILDER.pop();
