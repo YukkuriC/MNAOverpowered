@@ -53,10 +53,13 @@ public class MNAOPMod {
         }
     }
 
+    private static final String[] CONFIG_GROUP_SPLITS = new String[]{"/", "_"};
     public static boolean ConfigGroupActive(String grp) {
-        if (grp.contains("_")) {
-            for (var sub : grp.split("_")) if (!ConfigGroupActive(sub)) return false;
-            return true;
+        for (var sep : CONFIG_GROUP_SPLITS) {
+            if (grp.contains(sep)) {
+                for (var sub : grp.split(sep)) if (!ConfigGroupActive(sub)) return false;
+                return true;
+            }
         }
         switch (grp) {
             case "MagiChem":
