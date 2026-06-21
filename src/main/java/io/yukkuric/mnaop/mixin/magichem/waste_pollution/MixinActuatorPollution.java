@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(ActuatorEarthBlockEntity.class)
 public class MixinActuatorPollution {
-    @WrapMethod(method = "tick")
+    @WrapMethod(method = "tick", remap = false)
     private static <T extends BlockEntity> void wrapTick(Level level, BlockPos pos, BlockState blockState, T t, Operation<Void> original) {
         if (level.isClientSide() || !MNAOPConfig.EnablesAlchemicalWastePollution() || !(t instanceof ActuatorEarthBlockEntity actuator) || actuator.getPaused()) {
             original.call(level, pos, blockState, t);

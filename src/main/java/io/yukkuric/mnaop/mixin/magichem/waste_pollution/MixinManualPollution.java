@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(CommonEventHelper.class)
 public class MixinManualPollution {
-    @WrapOperation(method = "generateWasteFromCleanedApparatus", at = @At(value = "INVOKE", target = "Lcom/aranaira/magichem/block/entity/ext/AbstractBlockEntityWithEfficiency;clean()I"))
+    @WrapOperation(method = "generateWasteFromCleanedApparatus", at = @At(value = "INVOKE", target = "Lcom/aranaira/magichem/block/entity/ext/AbstractBlockEntityWithEfficiency;clean()I"), remap = false)
     private static int genPollution(AbstractBlockEntityWithEfficiency instance, Operation<Integer> original) {
         var ret = original.call(instance);
         if (MNAOPConfig.EnablesAlchemicalWastePollution())
