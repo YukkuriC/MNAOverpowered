@@ -37,7 +37,8 @@
     "magichem.ext.MixinLastUserExtended$Menu_Style1",
     "magichem.ext.MixinLastUserExtended$Menu_Style2",
     "magichem.ext.MixinNexusLastUser",
-    "magichem.waste_pollution.MixinActuatorPollution"
+    "magichem.waste_pollution.MixinActuatorPollution",
+    "magichem.waste_pollution.MixinManualPollution"
   ],
   "client": [
     "AccessorLodestarNode",
