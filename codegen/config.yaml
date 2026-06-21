@@ -100,7 +100,7 @@
   category: MagiChem/WastePollution
 - name: WastePollutionSpreadChunkRange
   type: int
-  default: "2, 0, 10"
+  default: "7, 0, 30"
   descrip: "Each residual magic addition generated at chunk (X, Z) also applies to a random chunk within (X ± this value, Z ± this value)"
   category: MagiChem/WastePollution
 - name: PollutionPerManualWaste
