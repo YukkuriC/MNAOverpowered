@@ -22,7 +22,8 @@ public class MNAOPConfig {
         {%- endfor %}
         {%- else %}
         if (MNAOPMod.ConfigGroupActive("{{grp}}")) {
-            BUILDER.push("{{grp}}");
+            {%- for sub in grp.split('/') %}
+            BUILDER.push("{{sub}}");{% endfor %}
             {%- for line in lines %}
             Cfg_{{line.name}} = BUILDER.comment("{{line.descrip}}").define{{define_sub(line)}}("{{line.name}}", {% if line.type == 'enum' %}MNAOPEnums.{{line.enumType}}.{% endif %}{{line.default}});
             {%- endfor %}
