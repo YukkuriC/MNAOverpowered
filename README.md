@@ -71,6 +71,10 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
         - A crafting recipe to manually combine materia glob with glass bottle for bottled materia
         - _Knocking a processing pattern with bottled materia on Mirror Labyrinth or AE blocks to wrap off all bottles inside_
         - a more detailed document can be found [HERE](https://github.com/YukkuriC/MNAOverpowered/blob/main/doc/MagiChemAE.md)
+    - Waste Pollution:
+        - _OFF by default_, since it could cause unwanted mess
+        - Alchemical Waste also generate residual magic to nearby chunks at the same time
+        - Configurable spread range, amounts per waste item from different ways
 
 ---
 
