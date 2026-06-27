@@ -64,8 +64,11 @@ public class DistillationResultsTooltip {
             tooltips.add(Component.literal(ex.toString()));
         }
     }
-    public static void Refresh() {
-        recipes.clear();
+    public static void RefreshRecipes() {
+        recipes = null;
+        RefreshDisplayCache();
+    }
+    public static void RefreshDisplayCache() {
         cache.clear();
     }
 }

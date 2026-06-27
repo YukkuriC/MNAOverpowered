@@ -139,4 +139,7 @@ public class ReadableAdmixtureTooltip {
             tooltips.add(Component.literal(ex.toString()));
         }
     }
+    public static void RefreshDisplayCache() {
+        cachedAdmixtureCountsDisplay.clear();
+    }
 }

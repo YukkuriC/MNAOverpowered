@@ -17,6 +17,11 @@ public class MagiChemEvents {
     @SubscribeEvent
     public static void HandleRecipesUpdate(RecipesUpdatedEvent e) {
         // no formula hotswap yet
-        DistillationResultsTooltip.Refresh();
+        DistillationResultsTooltip.RefreshRecipes();
+    }
+
+    public static void HandleResourcesReload() {
+        ReadableAdmixtureTooltip.RefreshDisplayCache();
+        DistillationResultsTooltip.RefreshDisplayCache();
     }
 }

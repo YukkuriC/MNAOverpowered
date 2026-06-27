@@ -9,6 +9,9 @@ import io.yukkuric.mnaop.magichem.ae2.MagiChemAE2Interop;
 import io.yukkuric.mnaop.magichem.cc.MagiChemCCInterop;
 import io.yukkuric.mnaop.ritual.MNAOPRituals;
 import io.yukkuric.mnaop.ritual.magichem.MagiChemOPRituals;
+import io.yukkuric.mnaop.utils.ResourceReloadTrigger;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -77,6 +80,9 @@ public class MNAOPMod {
             // client spec
             if (IsMagiChemLoaded()) {
                 MinecraftForge.EVENT_BUS.register(MagiChemEvents.class);
+                if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager rrm) {
+                    rrm.registerReloadListenerIfNotPresent(new ResourceReloadTrigger(MagiChemEvents::HandleResourcesReload));
+                }
             }
 
             // book shift-click
