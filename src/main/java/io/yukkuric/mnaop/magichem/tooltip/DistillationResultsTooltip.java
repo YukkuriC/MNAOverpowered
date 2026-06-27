@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +64,8 @@ public class DistillationResultsTooltip {
             tooltips.add(Component.literal(ex.toString()));
         }
     }
-    public static void HandleLoggedIn(PlayerEvent.PlayerLoggedInEvent e) {
+    public static void Refresh() {
+        recipes.clear();
         cache.clear();
     }
 }

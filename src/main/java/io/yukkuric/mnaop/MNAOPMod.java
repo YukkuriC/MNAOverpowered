@@ -76,8 +76,7 @@ public class MNAOPMod {
         public static void onClientSetup(FMLClientSetupEvent event) {
             // client spec
             if (IsMagiChemLoaded()) {
-                MinecraftForge.EVENT_BUS.addListener(MagiChemEvents::HandleTooltips);
-                MinecraftForge.EVENT_BUS.addListener(MagiChemEvents::HandleLoggedIn);
+                MinecraftForge.EVENT_BUS.register(MagiChemEvents.class);
             }
 
             // book shift-click
