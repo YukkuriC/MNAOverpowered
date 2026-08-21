@@ -1,6 +1,5 @@
 package io.yukkuric.mnaop.construct.magichem;
 
-import com.aranaira.magichem.block.entity.ext.AbstractDirectionalPluginBlockEntity;
 import com.aranaira.magichem.block.entity.routers.IRouterBlockEntity;
 import com.aranaira.magichem.entities.constructs.ai.ConstructProvideMateria;
 import com.aranaira.magichem.foundation.ICanTakePlugins;
@@ -10,9 +9,7 @@ import com.mna.api.ManaAndArtificeMod;
 import com.mna.api.entities.construct.IConstruct;
 import com.mna.api.entities.construct.ai.ConstructAITask;
 import com.mna.api.entities.construct.ai.parameter.*;
-import com.mna.inventory.ItemInventoryBase;
 import com.mna.items.runes.BookOfMarks;
-import com.mna.items.runes.ItemRuneMarking;
 import io.yukkuric.mnaop.MNAOPHelpers;
 import io.yukkuric.mnaop.MNAOPMod;
 import io.yukkuric.mnaop.mixin.magichem.AccessorConstructProvideMateria;
@@ -120,31 +117,19 @@ public class ConstructBatchProvideMateria extends ConstructAITask<ConstructBatch
         super.start();
         markExecIndex = -1;
         targetsExtracted.clear();
-        int cntMarks = 0;
-        if (targetBookOfMark != null && targetBookOfMark.getItem() instanceof BookOfMarks) {
-            var inv = new ItemInventoryBase(targetBookOfMark);
-            for (int i = 0; i < BookOfMarks.INVENTORY_SIZE; i++) {
-                var innerMark = inv.getStackInSlot(i);
-                if (innerMark.isEmpty() || !(innerMark.getItem() instanceof ItemRuneMarking rune)) continue;
-                var pos = rune.getLocation(innerMark);
-                // validate
-                if (pos == null) continue;
-                cntMarks++;
-                var be = construct.asEntity().level().getBlockEntity(pos);
-                if (be instanceof IRouterBlockEntity router) be = router.getMaster();
-                if (be instanceof IMateriaProvisionRequester) targetsExtracted.add(be.getBlockPos());
-                // collect actuators
-                if (GET_PLUGINS_WORKING && be instanceof ICanTakePlugins root) {
-                    List<AbstractDirectionalPluginBlockEntity> plugins;
-                    try {
-                        for (var p : root.getPlugins()) targetsExtracted.add(p.getBlockPos());
-                    } catch (Throwable e) {
-                        MNAOPMod.LOGGER.error("UNSUPPORTED", e);
-                        GET_PLUGINS_WORKING = false;
-                    }
+        int cntMarks = MagiChemTaskHelpers.CollectTargetsFromBookOfMarks(construct.asEntity().level(), targetBookOfMark, (be, pos) -> {
+            if (be instanceof IRouterBlockEntity router) be = router.getMaster();
+            if (be instanceof IMateriaProvisionRequester) targetsExtracted.add(be.getBlockPos());
+            // collect actuators
+            if (GET_PLUGINS_WORKING && be instanceof ICanTakePlugins root) {
+                try {
+                    for (var p : root.getPlugins()) targetsExtracted.add(p.getBlockPos());
+                } catch (Throwable e) {
+                    MNAOPMod.LOGGER.error("UNSUPPORTED", e);
+                    GET_PLUGINS_WORKING = false;
                 }
             }
-        }
+        });
         construct.getDiagnostics().pushDiagnosticMessage(
                 translate(FEEDBACK_SUMMARY, targetsExtracted.size(), cntMarks),
                 guiIcon, false
