@@ -1,5 +1,6 @@
 package io.yukkuric.mnaop.construct.magichem;
 
+import com.mna.blocks.tileentities.PedestalTile;
 import com.mna.inventory.ItemInventoryBase;
 import com.mna.items.runes.BookOfMarks;
 import com.mna.items.runes.ItemRuneMarking;
@@ -12,10 +13,12 @@ import java.util.HashSet;
 import java.util.function.BiConsumer;
 
 public class MagiChemTaskHelpers {
+    public static final int MAX_PEDESTAL_DEPTH = 5;
+
     public static int CollectTargetsFromBookOfMarks(Level level, ItemStack targetBookOfMark, BiConsumer<BlockEntity, BlockPos> collector) {
-        return _CollectTargetsFromBookOfMarksImp(level, targetBookOfMark, collector, new HashSet<>());
+        return _CollectTargetsFromBookOfMarksImp(level, targetBookOfMark, collector, new HashSet<>(), 0);
     }
-    private static int _CollectTargetsFromBookOfMarksImp(Level level, ItemStack targetBookOfMark, BiConsumer<BlockEntity, BlockPos> collector, HashSet<BlockPos> visited) {
+    private static int _CollectTargetsFromBookOfMarksImp(Level level, ItemStack targetBookOfMark, BiConsumer<BlockEntity, BlockPos> collector, HashSet<BlockPos> visited, int depth) {
         if (!(targetBookOfMark != null && targetBookOfMark.getItem() instanceof BookOfMarks)) return 0;
         int cntMarks = 0;
         var inv = new ItemInventoryBase(targetBookOfMark);
@@ -28,7 +31,11 @@ public class MagiChemTaskHelpers {
             visited.add(pos);
             cntMarks++;
             var be = level.getBlockEntity(pos);
-            collector.accept(be, pos);
+            if (be instanceof PedestalTile pedestal) {
+                var inner = pedestal.getItem(0);
+                if (depth < MAX_PEDESTAL_DEPTH)
+                    cntMarks += _CollectTargetsFromBookOfMarksImp(level, inner, collector, visited, depth + 1);
+            } else collector.accept(be, pos);
         }
         return cntMarks;
     }
