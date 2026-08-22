@@ -60,9 +60,10 @@ public class MagiChemAE2Interop {
             event.addCapability(resLocCrafterCap, new CentrifugeCraftingCap(ce));
 
             // labyrinth MEStorage
+            // plus 4-jars
         else if (attachedBlock instanceof AbstractMateriaStorageMultiTypeBlockEntity matStorage) {
             if (matStorage instanceof MirrorLabyrinthBlockEntity labyrinth) {
-                event.addCapability(resLocMateriaStorageCap, new LabyrinthMEStorageCap(labyrinth));
+                event.addCapability(resLocMateriaStorageCap, new MateriaMEStorageCap.Labyrinth(labyrinth));
             } else if (matStorage instanceof MagicMirrorBlockEntity mirror) {
                 event.addCapability(resLocMateriaStorageCap, new ICapabilityProvider() {
                     @Override
@@ -75,6 +76,12 @@ public class MagiChemAE2Interop {
                     }
                 });
             }
+            // 4-jars, but not today (MagiChem/#93)
+            // else event.addCapability(resLocMateriaStorageCap, new MateriaMEStorageCap.Multi<>(matStorage));
+        }
+        // 1-jars
+        else if (attachedBlock instanceof AbstractMateriaStorageSingleTypeBlockEntity matStorage) {
+            event.addCapability(resLocMateriaStorageCap, new MateriaMEStorageCap.Single<>(matStorage));
         }
     }
 

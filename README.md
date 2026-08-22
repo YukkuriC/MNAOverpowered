@@ -67,7 +67,9 @@ _note 2: features which are controlled by `mnaoverpowered-mixin.ini` rather than
             - (Grand) Circle of Fabrication
             - (Grand) Fusery
             - (Grand) Centrifuge
-        - Mirror Labyrinth (with bound Magic Mirror) can get recognized by Storage Bus, providing unbottled materia blobs
+        - Certain materia storage blocks can get recognized by Storage Bus, providing unbottled materia blobs
+            - Mirror Labyrinth (with bound Magic Mirror)
+            - Materia Jar/Vessel
         - AE2 blocks with internal inventory (Interface & Pattern Provider) is valid Navigator targets now (output only)
         - A crafting recipe to manually combine materia glob with glass bottle for bottled materia
         - _Knocking a processing pattern with bottled materia on Mirror Labyrinth or AE blocks to wrap off all bottles inside_
